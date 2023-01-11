@@ -1,18 +1,23 @@
-﻿using CodeBase.Infrastructure.Services;
+﻿using CodeBase.Data;
+using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Services.Input;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace CodeBase.Hero
 {
-    public class HeroMove : MonoBehaviour
+    public class HeroMove : MonoBehaviour, ISavedProgress
     {
-        public CharacterController CharacterController;
         public float MovementSpeed = 4.0f;
+
+        private CharacterController _characterController;
         private IInputService _inputService;
 
         private void Awake()
         {
             _inputService = AllServices.Container.Single<IInputService>();
+            _characterController = GetComponent<CharacterController>();
         }
 
         private void Update()
@@ -31,7 +36,33 @@ namespace CodeBase.Hero
 
             movementVector += Physics.gravity;
 
-            CharacterController.Move(MovementSpeed * movementVector * Time.deltaTime);
+            _characterController.Move(MovementSpeed * movementVector * Time.deltaTime);
         }
+
+        public void LoadProgress(PlayerProgress progress)
+        {
+            if (GetCurrentLevel() != progress.WorldData.PositionOnLevel.Level) return;
+
+            Vector3Data savedPosition = progress.WorldData.PositionOnLevel.Position;
+            if (savedPosition != null)
+            {
+                Warp(savedPosition);    
+            }
+        }
+
+        public void UpdateProgress(PlayerProgress progress)
+        {
+            progress.WorldData.PositionOnLevel = new PositionOnLevel(GetCurrentLevel(), transform.position.AsVector3Data());
+        }
+
+        private void Warp(Vector3Data to)
+        {
+            _characterController.enabled = false;
+            transform.position = to.AsUnityVector3();
+            _characterController.enabled = true;
+        }
+
+        private static string GetCurrentLevel() => 
+            SceneManager.GetActiveScene().name;
     }
 }

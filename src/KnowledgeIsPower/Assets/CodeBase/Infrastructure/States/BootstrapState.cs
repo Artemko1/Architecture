@@ -1,6 +1,8 @@
 ﻿using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.Services.PersistentProgress;
+using CodeBase.Infrastructure.Services.SaveLoad;
 using CodeBase.Services.Input;
 using UnityEngine;
 
@@ -9,7 +11,6 @@ namespace CodeBase.Infrastructure.States
     public class BootstrapState : IState
     {
         private const string Initial = "Initial";
-        private const string Main = "Main";
         private readonly SceneLoader _sceneLoader;
         private readonly AllServices _services;
 
@@ -37,6 +38,8 @@ namespace CodeBase.Infrastructure.States
         {
             _services.RegisterSingle<IInputService>(InputService());
             _services.RegisterSingle<IAssetProvider>(new AssetProvider());
+            _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
+            _services.RegisterSingle<ISaveLoadService>(new SaveLoadService());
             _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>()));
         }
 
@@ -47,7 +50,7 @@ namespace CodeBase.Infrastructure.States
 
         private void EnterLoadLevel()
         {
-            _stateMachine.Enter<LoadLevelState, string>(Main);
+            _stateMachine.Enter<LoadProgressState>();
         }
     }
 }
