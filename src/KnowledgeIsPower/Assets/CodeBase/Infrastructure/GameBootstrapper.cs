@@ -6,16 +6,25 @@ namespace CodeBase.Infrastructure
 {
     public class GameBootstrapper : MonoBehaviour, ICoroutineRunner
     {
-        [SerializeField] private LoadingCurtain _loadingCurtain;
+        [SerializeField] private LoadingCurtain _loadingCurtainPrefab;
+
+        private static GameBootstrapper _instance;
 
         private Game _game;
 
         private void Awake()
         {
-            _game = new Game(this, _loadingCurtain);
-            _game.StateMachine.Enter<BootstrapState>();
+            if (_instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
 
+            _instance = this;
             DontDestroyOnLoad(this);
+
+            _game = new Game(this, Instantiate(_loadingCurtainPrefab));
+            _game.StateMachine.Enter<BootstrapState>();
         }
     }
 }

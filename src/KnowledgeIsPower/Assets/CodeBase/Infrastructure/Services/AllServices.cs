@@ -1,4 +1,6 @@
-﻿namespace CodeBase.Infrastructure.Services
+﻿using UnityEngine;
+
+namespace CodeBase.Infrastructure.Services
 {
     public class AllServices
     {
@@ -12,7 +14,13 @@
 
         public TService Single<TService>() where TService : IService
         {
-            return Implementation<TService>.ServiceInstance;
+            TService serviceInstance = Implementation<TService>.ServiceInstance;
+            if (serviceInstance == null)
+            {
+                Debug.LogWarning($"Requested service of type {typeof(TService)} is not registered");
+            }
+
+            return serviceInstance;
         }
 
         private static class Implementation<TService> where TService : IService

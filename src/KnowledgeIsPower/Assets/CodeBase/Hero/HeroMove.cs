@@ -46,7 +46,7 @@ namespace CodeBase.Hero
             Vector3Data savedPosition = progress.WorldData.PositionOnLevel.Position;
             if (savedPosition != null)
             {
-                Warp(savedPosition);    
+                Warp(savedPosition);
             }
         }
 
@@ -58,11 +58,11 @@ namespace CodeBase.Hero
         private void Warp(Vector3Data to)
         {
             _characterController.enabled = false;
-            transform.position = to.AsUnityVector3();
+            transform.position = to.AsUnityVector3().AddY(_characterController.height / 2);
             _characterController.enabled = true;
         }
 
-        private static string GetCurrentLevel() => 
+        private static string GetCurrentLevel() =>
             SceneManager.GetActiveScene().name;
     }
 }
