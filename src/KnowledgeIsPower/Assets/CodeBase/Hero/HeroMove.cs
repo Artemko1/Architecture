@@ -9,7 +9,7 @@ namespace CodeBase.Hero
 {
     public class HeroMove : MonoBehaviour, ISavedProgress
     {
-        public float MovementSpeed = 4.0f;
+        [SerializeField] private float _movementSpeed = 4.0f;
 
         private CharacterController _characterController;
         private IInputService _inputService;
@@ -36,7 +36,7 @@ namespace CodeBase.Hero
 
             movementVector += Physics.gravity;
 
-            _characterController.Move(MovementSpeed * movementVector * Time.deltaTime);
+            _characterController.Move(_movementSpeed * movementVector * Time.deltaTime);
         }
 
         public void LoadProgress(PlayerProgress progress)
