@@ -22,8 +22,10 @@ namespace CodeBase.Enemy
 
         private Animator _animator;
 
-        private void Awake() =>
+        private void Awake()
+        {
             _animator = GetComponent<Animator>();
+        }
 
         public AnimatorState State { get; private set; }
 
@@ -42,12 +44,35 @@ namespace CodeBase.Enemy
         public event Action<AnimatorState> StateEntered;
         public event Action<AnimatorState> StateExited;
 
-        public void PlayHit() => _animator.SetTrigger(Hit);
-        public void PlayDeath() => _animator.SetTrigger(Die);
-        public void PlayWin() => _animator.SetTrigger(Win);
-        public void PlayAttack() => _animator.SetTrigger(Attack);
-        public void Move(float speed) => _animator.SetFloat(Speed, speed);
-        public void StopMoving() => _animator.SetFloat(Speed, 0);
+        public void PlayHit()
+        {
+            _animator.SetTrigger(Hit);
+        }
+
+        public void PlayDeath()
+        {
+            _animator.SetTrigger(Die);
+        }
+
+        public void PlayWin()
+        {
+            _animator.SetTrigger(Win);
+        }
+
+        public void PlayAttack()
+        {
+            _animator.SetTrigger(Attack);
+        }
+
+        public void PlayMove(float speed)
+        {
+            _animator.SetFloat(Speed, speed);
+        }
+
+        public void StopMoving()
+        {
+            _animator.SetFloat(Speed, 0);
+        }
 
         private AnimatorState StateFor(int stateHash)
         {
