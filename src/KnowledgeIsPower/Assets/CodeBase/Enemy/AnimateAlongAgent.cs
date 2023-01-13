@@ -18,7 +18,6 @@ namespace CodeBase.Enemy
         private void Update()
         {
             _enemyAnimator.PlayMove(_agent.velocity.magnitude);
-            Debug.Log(_agent.velocity.magnitude);
         }
     }
 }

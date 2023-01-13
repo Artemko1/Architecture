@@ -5,7 +5,8 @@ using UnityEngine.AI;
 
 namespace CodeBase.Enemy
 {
-    public class AgentMoveToPlayer : MonoBehaviour
+    [RequireComponent(typeof(NavMeshAgent))]
+    public class AgentMoveToHero : Follow
     {
         private const float MinimalDistance = 1f;
 
@@ -13,21 +14,8 @@ namespace CodeBase.Enemy
         private IGameFactory _gameFactory;
         private Transform _heroTransform;
 
-        private void Awake()
-        {
+        private void Awake() =>
             _agent = GetComponent<NavMeshAgent>();
-            _gameFactory = AllServices.Container.Single<IGameFactory>();
-
-
-            if (_gameFactory.HeroGameObject != null)
-            {
-                InitializeHeroTransform();
-            }
-            else
-            {
-                _gameFactory.HeroCreated += InitializeHeroTransform;
-            }
-        }
 
         private void Update()
         {
@@ -37,8 +25,37 @@ namespace CodeBase.Enemy
             }
         }
 
-        private void OnDestroy()
-            => _gameFactory.HeroCreated -= InitializeHeroTransform;
+        private void OnEnable()
+        {
+            _gameFactory = AllServices.Container.Single<IGameFactory>();
+
+            if (IsHeroExist())
+            {
+                InitializeHeroTransform();
+            }
+            else
+            {
+                _gameFactory.HeroCreated += InitializeHeroTransform;
+            }
+        }
+
+        private void OnDisable()
+        {
+            _gameFactory.HeroCreated -= InitializeHeroTransform;
+            _gameFactory = null;
+            StopAgentMove();
+        }
+
+        private void StopAgentMove()
+        {
+            if (_agent.isOnNavMesh)
+            {
+                _agent.ResetPath();
+            }
+        }
+
+        private bool IsHeroExist() =>
+            _gameFactory.HeroGameObject != null;
 
         private bool IsInitialized() =>
             _heroTransform != null;

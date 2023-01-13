@@ -19,7 +19,6 @@ namespace CodeBase.Logic
         {
             if (!other.GetComponent<CharacterController>()) return;
             _saveLoadService.SaveProgress();
-            Debug.Log("Progress saved!");
             gameObject.SetActive(false);
         }
 

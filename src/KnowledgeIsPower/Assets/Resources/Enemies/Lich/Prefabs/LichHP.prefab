@@ -822,8 +822,9 @@ GameObject:
   - component: {fileID: 9500000}
   - component: {fileID: 4073728962471009513}
   - component: {fileID: -7764588784546328981}
-  - component: {fileID: -4649616546684560695}
   - component: {fileID: 808917859521053645}
+  - component: {fileID: -4649616546684560695}
+  - component: {fileID: 2962617765625918661}
   m_Layer: 0
   m_Name: LichHP
   m_TagString: Untagged
@@ -845,6 +846,7 @@ Transform:
   m_Children:
   - {fileID: 400046}
   - {fileID: 400044}
+  - {fileID: 6948497736173577467}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -890,7 +892,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.3
-  m_Speed: 4.5
+  m_Speed: 3
   m_Acceleration: 15
   avoidancePriority: 50
   m_AngularSpeed: 1200
@@ -902,6 +904,18 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &808917859521053645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b59e98677838457a96912e8b5307378c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-4649616546684560695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -914,7 +928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc7aede07bc45b58c1b02115f3d00f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &808917859521053645
+--- !u!114 &2962617765625918661
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -923,6 +937,65 @@ MonoBehaviour:
   m_GameObject: {fileID: 100048}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b59e98677838457a96912e8b5307378c, type: 3}
+  m_Script: {fileID: 11500000, guid: 54f5a0adf7264c5ebe451501b29ffb21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _triggerObserver: {fileID: 1981952199250094360}
+--- !u!1 &6686475751549000599
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6948497736173577467}
+  - component: {fileID: 5937922799675166571}
+  - component: {fileID: 1981952199250094360}
+  m_Layer: 0
+  m_Name: AggroZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6948497736173577467
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6686475751549000599}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 400048}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &5937922799675166571
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6686475751549000599}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 5
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &1981952199250094360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6686475751549000599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb798796f1e748afb8d9001cb085a418, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
