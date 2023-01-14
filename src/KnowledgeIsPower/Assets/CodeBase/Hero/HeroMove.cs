@@ -52,13 +52,14 @@ namespace CodeBase.Hero
 
         public void UpdateProgress(PlayerProgress progress)
         {
+            Debug.Log($"Saved position {transform.position}");
             progress.WorldData.PositionOnLevel = new PositionOnLevel(GetCurrentLevel(), transform.position.AsVector3Data());
         }
 
         private void Warp(Vector3Data to)
         {
             _characterController.enabled = false;
-            transform.position = to.AsUnityVector3().AddY(_characterController.height / 2);
+            transform.position = to.AsUnityVector3().AddY(_characterController.height * 2f);
             _characterController.enabled = true;
         }
 

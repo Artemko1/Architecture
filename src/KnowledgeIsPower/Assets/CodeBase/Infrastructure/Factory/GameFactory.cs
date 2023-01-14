@@ -61,7 +61,7 @@ namespace CodeBase.Infrastructure.Factory
 
         private void Register(ISavedProgressReader progressReader)
         {
-            if (progressReader is ISavedProgress progressWriter)
+            if (progressReader is ISavedProgress progressWriter) // todo fix after interface segregation
             {
                 ProgressWriters.Add(progressWriter);
             }

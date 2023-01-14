@@ -17,9 +17,13 @@ namespace CodeBase.Enemy
             _gameFactory = AllServices.Container.Single<IGameFactory>();
 
             if (IsHeroExist())
+            {
                 InitializeHeroTransform();
+            }
             else
+            {
                 _gameFactory.HeroCreated += InitializeHeroTransform;
+            }
         }
 
         private void Update()

@@ -7,7 +7,7 @@ namespace CodeBase.Infrastructure.Services.PersistentProgress
         void LoadProgress(PlayerProgress progress);
     }
 
-    public interface ISavedProgress : ISavedProgressReader
+    public interface ISavedProgress : ISavedProgressReader // todo segregate completely
     {
         void UpdateProgress(PlayerProgress progress);
     }
