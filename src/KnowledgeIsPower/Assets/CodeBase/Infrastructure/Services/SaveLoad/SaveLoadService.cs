@@ -19,9 +19,9 @@ namespace CodeBase.Infrastructure.Services.SaveLoad
 
         public void SaveProgress()
         {
-            foreach (ISavedProgress progressWriter in _gameFactory.ProgressWriters)
+            foreach (ISavedProgressWriter progressWriter in _gameFactory.ProgressWriters)
             {
-                progressWriter.UpdateProgress(_progressService.Progress);
+                progressWriter.WriteToProgress(_progressService.Progress);
             }
 
             PlayerPrefs.SetString(ProgressKey, _progressService.Progress.ToJson());
@@ -29,7 +29,7 @@ namespace CodeBase.Infrastructure.Services.SaveLoad
 
         public PlayerProgress LoadProgress()
         {
-            var progressJson = PlayerPrefs.GetString(ProgressKey);
+            string progressJson = PlayerPrefs.GetString(ProgressKey);
             return progressJson?.ToDeserialized<PlayerProgress>();
         }
     }

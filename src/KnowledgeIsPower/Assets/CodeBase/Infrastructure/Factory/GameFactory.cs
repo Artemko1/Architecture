@@ -16,7 +16,7 @@ namespace CodeBase.Infrastructure.Factory
         }
 
         public List<ISavedProgressReader> ProgressReaders { get; } = new List<ISavedProgressReader>();
-        public List<ISavedProgress> ProgressWriters { get; } = new List<ISavedProgress>();
+        public List<ISavedProgressWriter> ProgressWriters { get; } = new List<ISavedProgressWriter>();
         public GameObject HeroGameObject { get; private set; }
         public event Action HeroCreated;
 
@@ -34,6 +34,8 @@ namespace CodeBase.Infrastructure.Factory
 
         public void Cleanup()
         {
+            ProgressReaders.Clear();
+            ProgressWriters.Clear();
         }
 
         private GameObject InstantiateRegistered(string prefabPath)
@@ -55,18 +57,15 @@ namespace CodeBase.Infrastructure.Factory
             ISavedProgressReader[] progressReaders = gameObject.GetComponentsInChildren<ISavedProgressReader>();
             foreach (ISavedProgressReader progressReader in progressReaders)
             {
-                Register(progressReader);
+                ProgressReaders.Add(progressReader);
             }
-        }
-
-        private void Register(ISavedProgressReader progressReader)
-        {
-            if (progressReader is ISavedProgress progressWriter) // todo fix after interface segregation
+            
+            ISavedProgressWriter[] progressUpdaters = gameObject.GetComponentsInChildren<ISavedProgressWriter>();
+            
+            foreach (ISavedProgressWriter progressUpdater in progressUpdaters)
             {
-                ProgressWriters.Add(progressWriter);
+                ProgressWriters.Add(progressUpdater);
             }
-
-            ProgressReaders.Add(progressReader);
         }
     }
 }

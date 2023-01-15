@@ -51,7 +51,7 @@ namespace CodeBase.Infrastructure.States
         {
             foreach (ISavedProgressReader progressReader in _gameFactory.ProgressReaders)
             {
-                progressReader.LoadProgress(_progressService.Progress);
+                progressReader.ReadFromProgress(_progressService.Progress);
             }
         }
 

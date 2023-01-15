@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 namespace CodeBase.Hero
 {
-    public class HeroMove : MonoBehaviour, ISavedProgress
+    public class HeroMove : MonoBehaviour, ISavedProgressWriter, ISavedProgressReader
     {
         [SerializeField] private float _movementSpeed = 4.0f;
 
@@ -39,7 +39,7 @@ namespace CodeBase.Hero
             _characterController.Move(_movementSpeed * movementVector * Time.deltaTime);
         }
 
-        public void LoadProgress(PlayerProgress progress)
+        public void ReadFromProgress(PlayerProgress progress)
         {
             if (GetCurrentLevel() != progress.WorldData.PositionOnLevel.Level) return;
 
@@ -50,7 +50,7 @@ namespace CodeBase.Hero
             }
         }
 
-        public void UpdateProgress(PlayerProgress progress)
+        public void WriteToProgress(PlayerProgress progress)
         {
             Debug.Log($"Saved position {transform.position}");
             progress.WorldData.PositionOnLevel = new PositionOnLevel(GetCurrentLevel(), transform.position.AsVector3Data());
