@@ -20,16 +20,16 @@ namespace CodeBase.Infrastructure.Factory
         public GameObject HeroGameObject { get; private set; }
         public event Action HeroCreated;
 
-        public GameObject CreateHero(GameObject initialPoint)
+        public GameObject CreateHero(Vector3 initialPoint)
         {
-            HeroGameObject = InstantiateRegistered(AssetPath.HeroPath, initialPoint.transform.position);
+            HeroGameObject = InstantiateRegistered(AssetPath.HeroPath, initialPoint);
             HeroCreated?.Invoke();
             return HeroGameObject;
         }
 
-        public void CreateHud()
+        public GameObject CreateHud()
         {
-            InstantiateRegistered(AssetPath.HudPath);
+            return InstantiateRegistered(AssetPath.HudPath);
         }
 
         public void Cleanup()

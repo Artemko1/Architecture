@@ -13,8 +13,8 @@ namespace CodeBase.Infrastructure.Factory
         GameObject HeroGameObject { get; }
         event Action HeroCreated;
 
-        GameObject CreateHero(GameObject initialPoint);
-        void CreateHud();
+        GameObject CreateHero(Vector3 initialPoint);
+        GameObject CreateHud();
         void Cleanup();
     }
 }

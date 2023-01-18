@@ -1,7 +1,9 @@
 ﻿using CodeBase.CameraLogic;
+using CodeBase.Hero;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Logic;
+using CodeBase.UI;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
@@ -47,6 +49,30 @@ namespace CodeBase.Infrastructure.States
             _stateMachine.Enter<GameLoopState>();
         }
 
+        private void InitGameWorld()
+        {
+            GameObject hero = InitHero();
+            CameraFollow(hero);
+
+            InitHud(hero);
+        }
+
+        private GameObject InitHero() => 
+            _gameFactory.CreateHero(GameObject.
+                FindWithTag(InitialPointTag)
+                .transform.position);
+
+        private void InitHud(GameObject hero)
+        {
+            GameObject hud = _gameFactory.CreateHud();
+            hud.GetComponentInChildren<ActorUI>().Construct(hero.GetComponent<HeroHealth>());
+        }
+
+        private void CameraFollow(GameObject hero) =>
+            Camera.main
+                .GetComponent<CameraFollow>()
+                .Follow(hero);
+
         private void InformProgressReaders()
         {
             foreach (ISavedProgressReader progressReader in _gameFactory.ProgressReaders)
@@ -54,18 +80,5 @@ namespace CodeBase.Infrastructure.States
                 progressReader.ReadFromProgress(_progressService.Progress);
             }
         }
-
-        private void InitGameWorld()
-        {
-            GameObject hero = _gameFactory.CreateHero(GameObject.FindWithTag(InitialPointTag));
-            CameraFollow(hero);
-
-            _gameFactory.CreateHud();
-        }
-
-        private void CameraFollow(GameObject hero) =>
-            Camera.main
-                .GetComponent<CameraFollow>()
-                .Follow(hero);
     }
 }
