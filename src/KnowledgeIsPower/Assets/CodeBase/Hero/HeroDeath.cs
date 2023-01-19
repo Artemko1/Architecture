@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using CodeBase.Logic;
+using UnityEngine;
 
 namespace CodeBase.Hero
 {
@@ -8,28 +9,28 @@ namespace CodeBase.Hero
         [SerializeField] private GameObject _deathFx;
 
         private HeroAnimator _heroAnimator;
-        private HeroHealth _heroHealth;
-        private HeroMove _heroMove;
         private HeroAttack _heroAttack;
+        private IHealth _health;
+        private HeroMove _heroMove;
         private bool _isDead;
 
         private void Awake()
         {
-            _heroHealth = GetComponent<HeroHealth>();
-            _heroMove = GetComponent<HeroMove>();
             _heroAnimator = GetComponent<HeroAnimator>();
+            _health = GetComponent<IHealth>();
             _heroAttack = GetComponent<HeroAttack>();
+            _heroMove = GetComponent<HeroMove>();
         }
 
         private void Start() =>
-            _heroHealth.HealthChanged += HealthChanged;
+            _health.HealthChanged += HealthChanged;
 
         private void OnDestroy() =>
-            _heroHealth.HealthChanged -= HealthChanged;
+            _health.HealthChanged -= HealthChanged;
 
         private void HealthChanged()
         {
-            if (!_isDead && _heroHealth.Current <= 0)
+            if (!_isDead && _health.Current <= 0)
             {
                 Die();
             }

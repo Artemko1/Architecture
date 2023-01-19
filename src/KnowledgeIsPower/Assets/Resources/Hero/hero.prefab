@@ -1321,6 +1321,7 @@ GameObject:
   - component: {fileID: 8458298697950396676}
   - component: {fileID: 86484590802779094}
   - component: {fileID: 37736485378174527}
+  - component: {fileID: 6484023180964816096}
   m_Layer: 12
   m_Name: hero
   m_TagString: Player
@@ -1434,6 +1435,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _deathFx: {fileID: 100006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
+--- !u!114 &6484023180964816096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ff77f98f599481e98f1e9eb01d6e14a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &178646
 GameObject:
   m_ObjectHideFlags: 0

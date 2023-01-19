@@ -9,7 +9,6 @@ namespace CodeBase.UI
 
         public void SetValue(float current, float max)
         {
-            Debug.Log($"Current: {current}, max: {max}");
             _imageCurrentHp.fillAmount = current / max;
         }
     }

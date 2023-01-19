@@ -41,7 +41,7 @@ namespace CodeBase.Infrastructure.States
             playerProgress.HeroState.ResetHP();
 
             playerProgress.HeroStats.Damage = 1f;
-            playerProgress.HeroStats.DamageRadius = 0.5f;
+            playerProgress.HeroStats.DamageRadius = 0.75f;
 
             return playerProgress;
         }

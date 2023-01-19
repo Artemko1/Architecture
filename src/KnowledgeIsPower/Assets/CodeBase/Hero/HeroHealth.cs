@@ -1,17 +1,21 @@
 ﻿using System;
 using CodeBase.Data;
 using CodeBase.Infrastructure.Services.PersistentProgress;
+using CodeBase.Logic;
 using UnityEngine;
 
 namespace CodeBase.Hero
 {
     [RequireComponent(typeof(HeroAnimator))]
-    public class HeroHealth : MonoBehaviour, ISavedProgressReader, ISavedProgressWriter
+    public class HeroHealth : MonoBehaviour, ISavedProgressReader, ISavedProgressWriter, IHealth
     {
         private HeroAnimator _heroAnimator;
         private State _state;
 
-        public Action HealthChanged;
+        private void Awake() => 
+            _heroAnimator = GetComponent<HeroAnimator>();
+
+        public event Action HealthChanged;
 
         public float Current
         {
@@ -26,14 +30,20 @@ namespace CodeBase.Hero
             }
         }
 
+
         public float Max
         {
             get => _state.MaxHP;
             private set => _state.MaxHP = value;
         }
 
-        private void Awake() => 
-            _heroAnimator = GetComponent<HeroAnimator>();
+        public void TakeDamage(float damage)
+        {
+            if (Current <= 0) return;
+            Current -= damage;
+
+            _heroAnimator.PlayHit();
+        }
 
         public void ReadFromProgress(PlayerProgress progress)
         {
@@ -45,14 +55,6 @@ namespace CodeBase.Hero
         {
             progress.HeroState.CurrentHP = Current;
             progress.HeroState.MaxHP = Max;
-        }
-
-        public void TakeDamage(float damage)
-        {
-            if (Current <= 0) return;
-
-            Current -= damage;
-            _heroAnimator.PlayHit();
         }
     }
 }

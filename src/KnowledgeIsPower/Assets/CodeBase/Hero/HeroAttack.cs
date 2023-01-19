@@ -2,6 +2,7 @@
 using CodeBase.Enemy;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.PersistentProgress;
+using CodeBase.Logic;
 using CodeBase.Services.Input;
 using UnityEngine;
 
@@ -16,8 +17,8 @@ namespace CodeBase.Hero
 
         private CharacterController _characterController;
         private HeroAnimator _heroAnimator;
-        private IInputService _inputService;
         private Stats _heroStats;
+        private IInputService _inputService;
 
         private void Awake()
         {
@@ -37,27 +38,34 @@ namespace CodeBase.Hero
             }
         }
 
-        public void OnAttack()
+        public void ReadFromProgress(PlayerProgress progress) =>
+            _heroStats = progress.HeroStats;
+
+        public void OnAttack() // called from animation events
         {
-            if (Hit() > 0)
+            int hitCount = Hit();
+
+            PhysicsDebug.DrawDebug(StartPoint(), _heroStats.DamageRadius, 3f);
+
+            for (var i = 0; i < hitCount; i++)
             {
-                PhysicsDebug.DrawDebug(StartPoint(), _heroStats.DamageRadius, 1.5f);
-                // todo apply damage to enemy
+                Collider hit = _hits[i];
+                hit.transform.parent.GetComponent<IHealth>().TakeDamage(_heroStats.Damage);
             }
         }
 
         private int Hit()
         {
-            return Physics.OverlapSphereNonAlloc(StartPoint() + transform.forward, _heroStats.DamageRadius, _hits, _layerMask);
+            return Physics.OverlapSphereNonAlloc(StartPoint(), _heroStats.DamageRadius, _hits, _layerMask);
         }
 
         private Vector3 StartPoint()
         {
-            Vector3 transformPosition = transform.position;
-            return new Vector3(transformPosition.x, _characterController.center.y / 2, transformPosition.z);
-        }
+            Transform transform1 = transform;
 
-        public void ReadFromProgress(PlayerProgress progress) => 
-            _heroStats = progress.HeroStats;
+            Vector3 transformPosition = transform1.position + transform1.forward;
+            transformPosition.y += _characterController.center.y / 2;
+            return transformPosition;
+        }
     }
 }

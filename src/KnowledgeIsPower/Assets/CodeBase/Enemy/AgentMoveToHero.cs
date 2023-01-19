@@ -8,8 +8,6 @@ namespace CodeBase.Enemy
     [RequireComponent(typeof(NavMeshAgent))]
     public class AgentMoveToHero : Follow
     {
-        private const float MinimalDistance = 0.9f;
-
         private NavMeshAgent _agent;
         private IGameFactory _gameFactory;
         private Transform _heroTransform;
@@ -19,7 +17,7 @@ namespace CodeBase.Enemy
 
         private void Update()
         {
-            if (IsInitialized() /*&& HeroNotReached()*/)
+            if (IsInitialized())
             {
                 _agent.destination = _heroTransform.position;
             }
@@ -62,8 +60,5 @@ namespace CodeBase.Enemy
 
         private void InitializeHeroTransform() =>
             _heroTransform = _gameFactory.HeroGameObject.transform;
-
-        private bool HeroNotReached() =>
-            Vector3.Distance(transform.position, _heroTransform.position) >= MinimalDistance;
     }
 }
