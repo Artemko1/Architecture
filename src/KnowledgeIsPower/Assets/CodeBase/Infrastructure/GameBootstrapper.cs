@@ -6,9 +6,8 @@ namespace CodeBase.Infrastructure
 {
     public class GameBootstrapper : MonoBehaviour, ICoroutineRunner
     {
-        [SerializeField] private LoadingCurtain _loadingCurtainPrefab;
-
         private static GameBootstrapper _instance;
+        [SerializeField] private LoadingCurtain _loadingCurtainPrefab;
 
         private Game _game;
 

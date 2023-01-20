@@ -7,10 +7,10 @@ namespace CodeBase.Hero
     public class HeroDeath : MonoBehaviour
     {
         [SerializeField] private GameObject _deathFx;
+        private IHealth _health;
 
         private HeroAnimator _heroAnimator;
         private HeroAttack _heroAttack;
-        private IHealth _health;
         private HeroMove _heroMove;
         private bool _isDead;
 

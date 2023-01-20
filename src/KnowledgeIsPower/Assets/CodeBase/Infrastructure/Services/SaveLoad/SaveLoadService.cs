@@ -8,8 +8,8 @@ namespace CodeBase.Infrastructure.Services.SaveLoad
     public class SaveLoadService : ISaveLoadService
     {
         private const string ProgressKey = "Progress";
-        private readonly IPersistentProgressService _progressService;
         private readonly IGameFactory _gameFactory;
+        private readonly IPersistentProgressService _progressService;
 
         public SaveLoadService(IPersistentProgressService progressService, IGameFactory gameFactory)
         {

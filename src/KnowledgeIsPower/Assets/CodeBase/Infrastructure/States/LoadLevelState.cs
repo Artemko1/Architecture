@@ -12,12 +12,12 @@ namespace CodeBase.Infrastructure.States
     {
         private const string InitialPointTag = "InitialPoint";
         private const string EnemySpawnerTag = "EnemySpawner";
-
-        private readonly GameStateMachine _stateMachine;
-        private readonly SceneLoader _sceneLoader;
         private readonly LoadingCurtain _curtain;
         private readonly IGameFactory _gameFactory;
         private readonly IPersistentProgressService _progressService;
+        private readonly SceneLoader _sceneLoader;
+
+        private readonly GameStateMachine _stateMachine;
 
         public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory,
             IPersistentProgressService progressService)

@@ -36,6 +36,12 @@ namespace CodeBase.Infrastructure.Factory
             ProgressWriters.Clear();
         }
 
+        public void RegisterWriter(ISavedProgressWriter progressUpdater) =>
+            ProgressWriters.Add(progressUpdater);
+
+        public void RegisterReader(ISavedProgressReader progressReader) =>
+            ProgressReaders.Add(progressReader);
+
         private GameObject InstantiateRegistered(string prefabPath)
         {
             GameObject gameObject = _assetProvider.Instantiate(prefabPath);
@@ -65,11 +71,5 @@ namespace CodeBase.Infrastructure.Factory
                 RegisterWriter(progressUpdater);
             }
         }
-
-        public void RegisterWriter(ISavedProgressWriter progressUpdater) =>
-            ProgressWriters.Add(progressUpdater);
-
-        public void RegisterReader(ISavedProgressReader progressReader) =>
-            ProgressReaders.Add(progressReader);
     }
 }
