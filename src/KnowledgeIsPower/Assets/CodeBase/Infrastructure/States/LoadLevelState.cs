@@ -11,6 +11,7 @@ namespace CodeBase.Infrastructure.States
     public class LoadLevelState : IPayloadedState<string>
     {
         private const string InitialPointTag = "InitialPoint";
+        private const string EnemySpawnerTag = "EnemySpawner";
 
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
@@ -51,10 +52,23 @@ namespace CodeBase.Infrastructure.States
 
         private void InitGameWorld()
         {
+            InitSpawners();
+            
             GameObject hero = InitHero();
             CameraFollow(hero);
 
             InitHud(hero);
+        }
+
+        private void InitSpawners()
+        {
+            GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag(EnemySpawnerTag);
+            foreach (GameObject go in objectsWithTag)
+            {
+                var spawner = go.GetComponent<EnemySpawner>();
+                _gameFactory.RegisterReader(spawner);
+                _gameFactory.RegisterWriter(spawner);
+            }
         }
 
         private GameObject InitHero() => 

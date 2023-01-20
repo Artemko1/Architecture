@@ -16,5 +16,9 @@ namespace CodeBase.Infrastructure.Factory
         GameObject CreateHero(Vector3 initialPoint);
         GameObject CreateHud();
         void Cleanup();
+
+
+        void RegisterWriter(ISavedProgressWriter progressUpdater);
+        void RegisterReader(ISavedProgressReader progressReader);
     }
 }

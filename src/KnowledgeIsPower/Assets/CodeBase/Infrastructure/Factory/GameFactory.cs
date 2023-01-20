@@ -57,15 +57,21 @@ namespace CodeBase.Infrastructure.Factory
             ISavedProgressReader[] progressReaders = gameObject.GetComponentsInChildren<ISavedProgressReader>();
             foreach (ISavedProgressReader progressReader in progressReaders)
             {
-                ProgressReaders.Add(progressReader);
+                RegisterReader(progressReader);
             }
-            
+
             ISavedProgressWriter[] progressUpdaters = gameObject.GetComponentsInChildren<ISavedProgressWriter>();
-            
+
             foreach (ISavedProgressWriter progressUpdater in progressUpdaters)
             {
-                ProgressWriters.Add(progressUpdater);
+                RegisterWriter(progressUpdater);
             }
         }
+
+        public void RegisterWriter(ISavedProgressWriter progressUpdater) =>
+            ProgressWriters.Add(progressUpdater);
+
+        public void RegisterReader(ISavedProgressReader progressReader) =>
+            ProgressReaders.Add(progressReader);
     }
 }
