@@ -15,9 +15,7 @@ namespace CodeBase.Enemy
             _enemyAnimator = GetComponent<EnemyAnimator>();
         }
 
-        private void Update()
-        {
+        private void Update() =>
             _enemyAnimator.PlayMove(_agent.velocity.magnitude);
-        }
     }
 }

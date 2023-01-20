@@ -18,14 +18,8 @@ namespace CodeBase.Enemy
             _attack.DisableAttack();
         }
 
-        private void OnTriggerEnter(Collider obj)
-        {
-            _attack.EnableAttack();
-        }
+        private void OnTriggerEnter(Collider obj) => _attack.EnableAttack();
 
-        private void OnTriggerExit(Collider obj)
-        {
-            _attack.DisableAttack();
-        }
+        private void OnTriggerExit(Collider obj) => _attack.DisableAttack();
     }
 }

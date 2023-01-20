@@ -29,13 +29,17 @@ namespace CodeBase.Enemy
         private void Update()
         {
             if (IsInitialized())
+            {
                 RotateTowardsHero();
+            }
         }
 
         private void OnDestroy()
         {
             if (_gameFactory != null)
+            {
                 _gameFactory.HeroCreated -= InitializeHeroTransform;
+            }
         }
 
         private bool IsHeroExist() =>

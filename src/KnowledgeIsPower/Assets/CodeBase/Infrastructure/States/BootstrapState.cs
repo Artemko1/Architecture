@@ -25,10 +25,8 @@ namespace CodeBase.Infrastructure.States
             RegisterServices();
         }
 
-        public void Enter()
-        {
+        public void Enter() =>
             _sceneLoader.Load(Initial, EnterLoadLevel);
-        }
 
         public void Exit()
         {
@@ -44,14 +42,10 @@ namespace CodeBase.Infrastructure.States
                 _services.Single<IGameFactory>()));
         }
 
-        private static IInputService InputService()
-        {
-            return Application.isEditor ? new StandaloneInputService() : new MobileInputService();
-        }
+        private static IInputService InputService() =>
+            Application.isEditor ? new StandaloneInputService() : new MobileInputService();
 
-        private void EnterLoadLevel()
-        {
+        private void EnterLoadLevel() =>
             _stateMachine.Enter<LoadProgressState>();
-        }
     }
 }

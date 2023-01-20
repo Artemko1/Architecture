@@ -38,7 +38,7 @@ namespace CodeBase.Infrastructure.States
                 {
                     typeof(GameLoopState),
                     new GameLoopState(this)
-                }
+                },
             };
         }
 
@@ -63,9 +63,7 @@ namespace CodeBase.Infrastructure.States
             return state;
         }
 
-        private TState GetState<TState>() where TState : class, IExitableState
-        {
-            return _states[typeof(TState)] as TState;
-        }
+        private TState GetState<TState>() where TState : class, IExitableState =>
+            _states[typeof(TState)] as TState;
     }
 }

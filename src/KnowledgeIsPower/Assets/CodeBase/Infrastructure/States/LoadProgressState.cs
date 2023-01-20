@@ -28,10 +28,8 @@ namespace CodeBase.Infrastructure.States
         {
         }
 
-        private void LoadProgressOrInitNew()
-        {
+        private void LoadProgressOrInitNew() =>
             _progressService.Progress = _saveLoadService.LoadProgress() ?? NewProgress();
-        }
 
         private PlayerProgress NewProgress()
         {

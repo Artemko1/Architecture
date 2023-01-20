@@ -36,10 +36,8 @@ namespace CodeBase.Infrastructure.States
             _sceneLoader.Load(sceneName, OnLoaded);
         }
 
-        public void Exit()
-        {
+        public void Exit() =>
             _curtain.Hide();
-        }
 
         private void OnLoaded()
         {

@@ -10,10 +10,8 @@ namespace CodeBase.Logic
 
         [SerializeField] private BoxCollider boxCollider;
 
-        private void Awake()
-        {
+        private void Awake() =>
             _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
-        }
 
         private void OnTriggerEnter(Collider other)
         {

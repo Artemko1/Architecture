@@ -36,9 +36,6 @@ namespace CodeBase.Logic
             }
         }
 
-        private void Spawn()
-        {
-            Debug.Log("Spawn!", this);
-        }
+        private void Spawn() => Debug.Log("Spawn!", this);
     }
 }

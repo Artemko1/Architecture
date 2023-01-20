@@ -22,10 +22,7 @@ namespace CodeBase.Hero
 
         public bool IsAttacking => State == AnimatorState.Attack;
 
-        private void Update()
-        {
-            _animator.SetFloat(MoveHash, _characterController.velocity.magnitude, 0.1f, Time.deltaTime);
-        }
+        private void Update() => _animator.SetFloat(MoveHash, _characterController.velocity.magnitude, 0.1f, Time.deltaTime);
 
         public AnimatorState State { get; private set; }
 
@@ -35,10 +32,7 @@ namespace CodeBase.Hero
             StateEntered?.Invoke(State);
         }
 
-        public void ExitedState(int stateHash)
-        {
-            StateExited?.Invoke(StateFor(stateHash));
-        }
+        public void ExitedState(int stateHash) => StateExited?.Invoke(StateFor(stateHash));
 
         public event Action<AnimatorState> StateEntered;
         public event Action<AnimatorState> StateExited;
@@ -52,15 +46,25 @@ namespace CodeBase.Hero
         {
             AnimatorState state;
             if (stateHash == IdleStateHash)
+            {
                 state = AnimatorState.Idle;
+            }
             else if (stateHash == AttackStateHash)
+            {
                 state = AnimatorState.Attack;
+            }
             else if (stateHash == WalkingStateHash)
+            {
                 state = AnimatorState.Walking;
+            }
             else if (stateHash == DeathStateHash)
+            {
                 state = AnimatorState.Died;
+            }
             else
+            {
                 state = AnimatorState.Unknown;
+            }
 
             return state;
         }

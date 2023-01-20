@@ -24,8 +24,7 @@ namespace CodeBase.Logic
 
         private void FindReader(Animator animator)
         {
-            if (_stateReader != null)
-                return;
+            if (_stateReader != null) return;
 
             _stateReader = animator.gameObject.GetComponent<IAnimationStateReader>();
         }

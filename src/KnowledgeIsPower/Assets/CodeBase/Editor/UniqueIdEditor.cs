@@ -30,12 +30,10 @@ namespace CodeBase.Editor
             }
         }
 
-        private static bool IsPrefabAsset(GameObject uniqueId)
-        {
-            return IsInPrefabEditingWorkflow(out PrefabStage currentPrefabStage)
+        private static bool IsPrefabAsset(GameObject uniqueId) =>
+            IsInPrefabEditingWorkflow(out PrefabStage currentPrefabStage)
                 ? currentPrefabStage.IsPartOfPrefabContents(uniqueId)
                 : PrefabUtility.IsPartOfPrefabAsset(uniqueId);
-        }
 
         private static bool IsInPrefabEditingWorkflow(out PrefabStage currentPrefabStage)
         {

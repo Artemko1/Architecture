@@ -12,10 +12,8 @@ namespace CodeBase.Enemy
 
         private EnemyAnimator _enemyAnimator;
 
-        private void Awake()
-        {
+        private void Awake() =>
             _enemyAnimator = GetComponent<EnemyAnimator>();
-        }
 
         public float Current => current;
         public float Max => max;

@@ -7,9 +7,7 @@ namespace CodeBase.UI
     {
         [SerializeField] private Image _imageCurrentHp;
 
-        public void SetValue(float current, float max)
-        {
+        public void SetValue(float current, float max) =>
             _imageCurrentHp.fillAmount = current / max;
-        }
     }
 }

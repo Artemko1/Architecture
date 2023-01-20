@@ -13,17 +13,15 @@ namespace CodeBase.CameraLogic
 
         private void LateUpdate()
         {
-            if (_following == null)
-                return;
+            if (_following == null) return;
+
             Quaternion rotation = Quaternion.Euler(RotationAngleX, 0, 0);
             Vector3 position = rotation * new Vector3(0, 0, -Distance) + FollowingPointPosition();
             transform.SetPositionAndRotation(position, rotation);
         }
 
-        public void Follow(GameObject following)
-        {
+        public void Follow(GameObject following) =>
             _following = following.transform;
-        }
 
         private Vector3 FollowingPointPosition()
         {

@@ -54,10 +54,8 @@ namespace CodeBase.Hero
             }
         }
 
-        private int Hit()
-        {
-            return Physics.OverlapSphereNonAlloc(StartPoint(), _heroStats.DamageRadius, _hits, _layerMask);
-        }
+        private int Hit() =>
+            Physics.OverlapSphereNonAlloc(StartPoint(), _heroStats.DamageRadius, _hits, _layerMask);
 
         private Vector3 StartPoint()
         {
