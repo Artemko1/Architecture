@@ -13,11 +13,12 @@ namespace CodeBase.Services.Input
                 {
                     axis = UnityAxis();
                 }
+
                 return axis;
             }
         }
 
-        private static Vector2 UnityAxis() => 
+        private static Vector2 UnityAxis() =>
             new Vector2(UnityEngine.Input.GetAxis(Horizontal), UnityEngine.Input.GetAxis(Vertical));
     }
 }

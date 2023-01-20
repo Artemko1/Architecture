@@ -1,11 +1,11 @@
 namespace CodeBase.Logic
 {
-  public enum AnimatorState
-  {
-    Unknown,
-    Idle,
-    Attack,
-    Walking,
-    Died,
-  }
+    public enum AnimatorState
+    {
+        Unknown,
+        Idle,
+        Attack,
+        Walking,
+        Died,
+    }
 }

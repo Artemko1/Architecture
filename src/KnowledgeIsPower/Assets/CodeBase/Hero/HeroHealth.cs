@@ -12,7 +12,7 @@ namespace CodeBase.Hero
         private HeroAnimator _heroAnimator;
         private State _state;
 
-        private void Awake() => 
+        private void Awake() =>
             _heroAnimator = GetComponent<HeroAnimator>();
 
         public event Action HealthChanged;

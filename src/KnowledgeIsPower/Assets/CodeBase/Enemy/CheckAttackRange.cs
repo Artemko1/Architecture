@@ -14,7 +14,7 @@ namespace CodeBase.Enemy
 
             _triggerObserver.TriggerEnter += OnTriggerEnter;
             _triggerObserver.TriggerExit += OnTriggerExit;
-            
+
             _attack.DisableAttack();
         }
 

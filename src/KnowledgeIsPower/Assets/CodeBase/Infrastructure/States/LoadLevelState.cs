@@ -53,7 +53,7 @@ namespace CodeBase.Infrastructure.States
         private void InitGameWorld()
         {
             InitSpawners();
-            
+
             GameObject hero = InitHero();
             CameraFollow(hero);
 
@@ -71,9 +71,8 @@ namespace CodeBase.Infrastructure.States
             }
         }
 
-        private GameObject InitHero() => 
-            _gameFactory.CreateHero(GameObject.
-                FindWithTag(InitialPointTag)
+        private GameObject InitHero() =>
+            _gameFactory.CreateHero(GameObject.FindWithTag(InitialPointTag)
                 .transform.position);
 
         private void InitHud(GameObject hero)

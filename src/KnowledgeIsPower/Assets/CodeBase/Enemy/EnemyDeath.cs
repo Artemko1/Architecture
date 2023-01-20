@@ -39,13 +39,13 @@ namespace CodeBase.Enemy
             _enemyAnimator.PlayDeath();
             SpawnDeathFx();
             GetComponent<Follow>().enabled = false;
-            
+
             Destroy(gameObject, 4f);
-            
+
             Happend?.Invoke();
         }
 
-        private void SpawnDeathFx() => 
+        private void SpawnDeathFx() =>
             Instantiate(_deathFx, transform.position, Quaternion.identity);
     }
 }
