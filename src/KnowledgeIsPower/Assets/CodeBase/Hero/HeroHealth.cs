@@ -20,7 +20,7 @@ namespace CodeBase.Hero
         public float Current
         {
             get => _state.CurrentHP;
-            private set
+            set
             {
                 float clampedHP = Mathf.Clamp(value, 0, Max);
                 if (clampedHP == _state.CurrentHP) return;
@@ -34,7 +34,7 @@ namespace CodeBase.Hero
         public float Max
         {
             get => _state.MaxHP;
-            private set => _state.MaxHP = value;
+            set => _state.MaxHP = value;
         }
 
         public void TakeDamage(float damage)

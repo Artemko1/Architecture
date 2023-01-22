@@ -15,8 +15,17 @@ namespace CodeBase.Enemy
         private void Awake() =>
             _enemyAnimator = GetComponent<EnemyAnimator>();
 
-        public float Current => current;
-        public float Max => max;
+        public float Current
+        {
+            get => current;
+            set => current = value;
+        }
+
+        public float Max
+        {
+            get => max;
+            set => max = value;
+        }
 
         public event Action HealthChanged;
 

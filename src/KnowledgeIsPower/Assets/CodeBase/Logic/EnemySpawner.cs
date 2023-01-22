@@ -1,6 +1,9 @@
 ﻿using CodeBase.Data;
+using CodeBase.Enemy;
+using CodeBase.Infrastructure.Factory;
+using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.PersistentProgress;
-using CodeBase.StaticData;
+using CodeBase.Infrastructure.StaticData;
 using UnityEngine;
 
 namespace CodeBase.Logic
@@ -10,11 +13,15 @@ namespace CodeBase.Logic
         [SerializeField] private MonsterTypeId _monsterTypeId;
 
         [SerializeField] private bool _slain;
+        private IGameFactory _factory;
 
         private string _id;
 
-        private void Awake() =>
+        private void Awake()
+        {
             _id = GetComponent<UniqueId>().Id;
+            _factory = AllServices.Container.Single<IGameFactory>();
+        }
 
         public void ReadFromProgress(PlayerProgress progress)
         {
@@ -36,6 +43,13 @@ namespace CodeBase.Logic
             }
         }
 
-        private void Spawn() => Debug.Log("Spawn!", this);
+        private void Spawn()
+        {
+            GameObject monster = _factory.CreateMonster(_monsterTypeId, transform);
+            monster.GetComponent<EnemyDeath>().Happend += Slay;
+        }
+
+        private void Slay() =>
+            _slain = true;
     }
 }

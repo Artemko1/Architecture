@@ -1,6 +1,4 @@
 ﻿using System.Linq;
-using CodeBase.Infrastructure.Factory;
-using CodeBase.Infrastructure.Services;
 using CodeBase.Logic;
 using UnityEngine;
 
@@ -9,9 +7,9 @@ namespace CodeBase.Enemy
     [RequireComponent(typeof(EnemyAnimator))]
     public class Attack : MonoBehaviour
     {
-        private const float Cleavage = 0.8f;
-        private const float EffectiveDistance = 0.75f;
-        private const float Damage = 5;
+        public float Cleavage = 0.8f;
+        public float EffectiveDistance = 0.75f;
+        public float Damage = 5;
 
         [SerializeField] private float _attackCooldown = 2.5f;
 
@@ -22,7 +20,6 @@ namespace CodeBase.Enemy
 
         private EnemyAnimator _enemyAnimator;
 
-        private IGameFactory _gameFactory;
         private Transform _heroTransform;
         private bool _isAttacking;
         private int _layerMask;
@@ -30,11 +27,7 @@ namespace CodeBase.Enemy
         private void Awake()
         {
             _enemyAnimator = GetComponent<EnemyAnimator>();
-
             _layerMask = 1 << LayerMask.NameToLayer("Player");
-
-            _gameFactory = AllServices.Container.Single<IGameFactory>();
-            _gameFactory.HeroCreated += InitializeHeroTransform;
         }
 
         private void Update()
@@ -46,6 +39,9 @@ namespace CodeBase.Enemy
                 StartAttack();
             }
         }
+
+        public void Construct(Transform heroTransform) =>
+            _heroTransform = heroTransform;
 
         public void EnableAttack() =>
             _attackIsActive = true;
@@ -104,8 +100,5 @@ namespace CodeBase.Enemy
             _enemyAnimator.PlayAttack();
             _isAttacking = true;
         }
-
-        private void InitializeHeroTransform() =>
-            _heroTransform = _gameFactory.HeroGameObject.transform;
     }
 }
