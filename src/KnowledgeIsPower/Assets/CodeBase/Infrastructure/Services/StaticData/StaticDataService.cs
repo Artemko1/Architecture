@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CodeBase.Infrastructure.StaticData.Monsters;
 using UnityEngine;
 
-namespace CodeBase.Infrastructure.StaticData
+namespace CodeBase.Infrastructure.Services.StaticData
 {
     public class StaticDataService : IStaticDataService
     {

@@ -1,6 +1,6 @@
-﻿using CodeBase.Infrastructure.Services;
+﻿using CodeBase.Infrastructure.StaticData.Monsters;
 
-namespace CodeBase.Infrastructure.StaticData
+namespace CodeBase.Infrastructure.Services.StaticData
 {
     public interface IStaticDataService : IService
     {

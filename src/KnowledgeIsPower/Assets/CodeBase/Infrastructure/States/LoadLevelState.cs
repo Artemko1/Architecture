@@ -1,8 +1,9 @@
-﻿using CodeBase.CameraLogic;
+﻿using CodeBase.Enemy;
 using CodeBase.Hero;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Logic;
+using CodeBase.Logic.Camera;
 using CodeBase.UI;
 using UnityEngine;
 

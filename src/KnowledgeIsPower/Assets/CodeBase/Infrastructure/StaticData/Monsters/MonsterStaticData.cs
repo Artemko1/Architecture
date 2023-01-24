@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CodeBase.Infrastructure.StaticData
+namespace CodeBase.Infrastructure.StaticData.Monsters
 {
     [CreateAssetMenu(fileName = "MonsterData", menuName = "StaticData/Monster", order = 0)]
     public class MonsterStaticData : ScriptableObject
@@ -14,6 +14,9 @@ namespace CodeBase.Infrastructure.StaticData
         [Range(0.5f, 1f)] public float AttackCleavage = 0.75f;
 
         [Range(1f, 10f)] public float MoveSpeed = 4f;
+
+        public int MinLoot;
+        public int MaxLoot;
 
         public GameObject Prefab;
     }

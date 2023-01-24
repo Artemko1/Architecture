@@ -1,4 +1,4 @@
-using CodeBase.Logic;
+using CodeBase.Enemy;
 using UnityEditor;
 using UnityEngine;
 

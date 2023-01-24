@@ -1,5 +1,5 @@
 ﻿using System;
-using CodeBase.Logic;
+using CodeBase.Logic.Animator;
 using UnityEngine;
 
 namespace CodeBase.Enemy

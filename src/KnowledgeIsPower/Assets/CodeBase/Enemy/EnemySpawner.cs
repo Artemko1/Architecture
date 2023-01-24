@@ -1,12 +1,12 @@
 ﻿using CodeBase.Data;
-using CodeBase.Enemy;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.PersistentProgress;
-using CodeBase.Infrastructure.StaticData;
+using CodeBase.Infrastructure.StaticData.Monsters;
+using CodeBase.Logic;
 using UnityEngine;
 
-namespace CodeBase.Logic
+namespace CodeBase.Enemy
 {
     public class EnemySpawner : MonoBehaviour, ISavedProgressReader, ISavedProgressWriter
     {

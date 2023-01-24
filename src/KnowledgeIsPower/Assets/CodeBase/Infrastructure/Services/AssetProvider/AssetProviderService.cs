@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace CodeBase.Infrastructure.AssetManagement
+namespace CodeBase.Infrastructure.Services.AssetProvider
 {
-    public class AssetProvider : IAssetProvider
+    public class AssetProviderService : IAssetProviderService
     {
         public GameObject Instantiate(string path)
         {
