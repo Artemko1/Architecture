@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using CodeBase.Enemy.Loot;
-using CodeBase.Enemy.Spawner;
-using CodeBase.Infrastructure.Services;
-using CodeBase.Infrastructure.Services.PersistentProgress;
-using CodeBase.Infrastructure.StaticData.Monsters;
+using CodeBase.Logic.Enemy.Loot;
+using CodeBase.Logic.Enemy.Spawner;
+using CodeBase.Services;
+using CodeBase.Services.PersistentProgress;
+using CodeBase.StaticData.Monsters;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factory

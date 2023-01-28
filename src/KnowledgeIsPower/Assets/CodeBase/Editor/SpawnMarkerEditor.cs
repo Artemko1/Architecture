@@ -1,4 +1,4 @@
-using CodeBase.Enemy.Spawner;
+using CodeBase.Logic.Enemy.Spawner;
 using UnityEditor;
 using UnityEngine;
 

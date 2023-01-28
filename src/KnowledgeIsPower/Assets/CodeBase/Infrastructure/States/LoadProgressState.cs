@@ -1,6 +1,6 @@
 ﻿using CodeBase.Data;
-using CodeBase.Infrastructure.Services.PersistentProgress;
-using CodeBase.Infrastructure.Services.SaveLoad;
+using CodeBase.Services.PersistentProgress;
+using CodeBase.Services.SaveLoad;
 
 namespace CodeBase.Infrastructure.States
 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using CodeBase.Data.Loot;
 
 namespace CodeBase.Data
 {

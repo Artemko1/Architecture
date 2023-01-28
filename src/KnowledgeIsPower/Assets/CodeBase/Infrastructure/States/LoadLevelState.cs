@@ -1,10 +1,10 @@
-﻿using CodeBase.Hero;
-using CodeBase.Infrastructure.Factory;
-using CodeBase.Infrastructure.Services.PersistentProgress;
-using CodeBase.Infrastructure.Services.StaticDataProvider;
-using CodeBase.Infrastructure.StaticData;
+﻿using CodeBase.Infrastructure.Factory;
 using CodeBase.Logic;
 using CodeBase.Logic.Camera;
+using CodeBase.Logic.Hero;
+using CodeBase.Services.PersistentProgress;
+using CodeBase.Services.StaticDataProvider;
+using CodeBase.StaticData;
 using CodeBase.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;

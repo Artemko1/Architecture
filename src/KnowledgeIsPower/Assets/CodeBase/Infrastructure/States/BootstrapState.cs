@@ -1,11 +1,11 @@
 ﻿using CodeBase.Infrastructure.Factory;
-using CodeBase.Infrastructure.Services;
-using CodeBase.Infrastructure.Services.AssetProvider;
-using CodeBase.Infrastructure.Services.Input;
-using CodeBase.Infrastructure.Services.PersistentProgress;
-using CodeBase.Infrastructure.Services.Randomizer;
-using CodeBase.Infrastructure.Services.SaveLoad;
-using CodeBase.Infrastructure.Services.StaticDataProvider;
+using CodeBase.Services;
+using CodeBase.Services.AssetProvider;
+using CodeBase.Services.Input;
+using CodeBase.Services.PersistentProgress;
+using CodeBase.Services.Randomizer;
+using CodeBase.Services.SaveLoad;
+using CodeBase.Services.StaticDataProvider;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
