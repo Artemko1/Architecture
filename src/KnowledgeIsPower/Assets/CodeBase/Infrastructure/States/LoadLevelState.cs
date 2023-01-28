@@ -1,33 +1,36 @@
-﻿using CodeBase.Enemy;
-using CodeBase.Hero;
+﻿using CodeBase.Hero;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.Services.PersistentProgress;
+using CodeBase.Infrastructure.Services.StaticDataProvider;
+using CodeBase.Infrastructure.StaticData;
 using CodeBase.Logic;
 using CodeBase.Logic.Camera;
 using CodeBase.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace CodeBase.Infrastructure.States
 {
     public class LoadLevelState : IPayloadedState<string>
     {
         private const string InitialPointTag = "InitialPoint";
-        private const string EnemySpawnerTag = "EnemySpawner";
         private readonly LoadingCurtain _curtain;
         private readonly IGameFactory _gameFactory;
         private readonly IPersistentProgressService _progressService;
         private readonly SceneLoader _sceneLoader;
 
         private readonly GameStateMachine _stateMachine;
+        private readonly IStaticDataProviderService _staticData;
 
         public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory,
-            IPersistentProgressService progressService)
+            IPersistentProgressService progressService, IStaticDataProviderService staticData)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _curtain = curtain;
             _gameFactory = gameFactory;
             _progressService = progressService;
+            _staticData = staticData;
         }
 
         public void Enter(string sceneName)
@@ -61,12 +64,11 @@ namespace CodeBase.Infrastructure.States
 
         private void InitSpawners()
         {
-            GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag(EnemySpawnerTag);
-            foreach (GameObject go in objectsWithTag)
+            string sceneName = SceneManager.GetActiveScene().name;
+            LevelStaticData levelData = _staticData.ForLevel(sceneName);
+            foreach (EnemySpawnerData spawnerData in levelData.EnemySpawners)
             {
-                var spawner = go.GetComponent<EnemySpawner>();
-                _gameFactory.RegisterReader(spawner);
-                _gameFactory.RegisterWriter(spawner);
+                _gameFactory.CreateSpawner(spawnerData.Position, spawnerData.Id, spawnerData.MonsterTypeId);
             }
         }
 

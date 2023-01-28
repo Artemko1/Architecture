@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Enemy.Loot;
+using CodeBase.Enemy.Spawner;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Infrastructure.StaticData.Monsters;
@@ -14,12 +15,11 @@ namespace CodeBase.Infrastructure.Factory
 
         GameObject CreateHero(Vector3 initialPoint);
         GameObject CreateHud();
-        void Cleanup();
 
-
-        void RegisterWriter(ISavedProgressWriter progressUpdater);
-        void RegisterReader(ISavedProgressReader progressReader);
         GameObject CreateMonster(MonsterTypeId monsterTypeId, Transform parent);
         LootPiece CreateLoot();
+        SpawnPoint CreateSpawner(Vector3 at, string spawnerId, MonsterTypeId monsterTypeId);
+
+        void Cleanup();
     }
 }

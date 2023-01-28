@@ -6,7 +6,7 @@ namespace CodeBase.Data
     public class WorldData
     {
         public PositionOnLevel PositionOnLevel;
-        public LootData LootData;
+        public LootData LootData = new LootData();
 
         public WorldData(string initialLevel)
         {

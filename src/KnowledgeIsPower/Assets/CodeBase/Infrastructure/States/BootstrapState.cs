@@ -5,7 +5,7 @@ using CodeBase.Infrastructure.Services.Input;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Infrastructure.Services.Randomizer;
 using CodeBase.Infrastructure.Services.SaveLoad;
-using CodeBase.Infrastructure.Services.StaticData;
+using CodeBase.Infrastructure.Services.StaticDataProvider;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
@@ -38,7 +38,7 @@ namespace CodeBase.Infrastructure.States
         {
             RegisterInputService();
 
-            IStaticDataService staticDataService = RegisterStaticData();
+            IStaticDataProviderService staticDataService = RegisterStaticData();
 
             IAssetProviderService assetProviderService = new AssetProviderService();
             _services.RegisterSingle(assetProviderService);
@@ -64,10 +64,10 @@ namespace CodeBase.Infrastructure.States
             _services.RegisterSingle(inputService);
         }
 
-        private IStaticDataService RegisterStaticData()
+        private IStaticDataProviderService RegisterStaticData()
         {
-            IStaticDataService staticData = new StaticDataService();
-            staticData.LoadMonsters();
+            IStaticDataProviderService staticData = new StaticDataProviderService();
+            staticData.Load();
             _services.RegisterSingle(staticData);
             return staticData;
         }

@@ -4,6 +4,7 @@ using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Infrastructure.Services.SaveLoad;
+using CodeBase.Infrastructure.Services.StaticDataProvider;
 using CodeBase.Logic;
 
 namespace CodeBase.Infrastructure.States
@@ -27,7 +28,8 @@ namespace CodeBase.Infrastructure.States
                         sceneLoader,
                         curtain,
                         services.Single<IGameFactory>(),
-                        services.Single<IPersistentProgressService>())
+                        services.Single<IPersistentProgressService>(),
+                        services.Single<IStaticDataProviderService>())
                 },
                 {
                     typeof(LoadProgressState),

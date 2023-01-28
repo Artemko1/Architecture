@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Enemy;
 using CodeBase.Enemy.Loot;
+using CodeBase.Enemy.Spawner;
 using CodeBase.Infrastructure.Services.AssetProvider;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Infrastructure.Services.Randomizer;
-using CodeBase.Infrastructure.Services.StaticData;
+using CodeBase.Infrastructure.Services.StaticDataProvider;
 using CodeBase.Infrastructure.StaticData.Monsters;
 using CodeBase.Logic;
 using CodeBase.UI;
@@ -18,10 +19,10 @@ namespace CodeBase.Infrastructure.Factory
         private readonly IAssetProviderService _assetProvider;
         private readonly IPersistentProgressService _progressService;
         private readonly IRandomService _randomService;
-        private readonly IStaticDataService _staticData;
+        private readonly IStaticDataProviderService _staticData;
         private GameObject _heroGameObject;
 
-        public GameFactory(IAssetProviderService assetProviderService, IStaticDataService staticData, IRandomService randomService,
+        public GameFactory(IAssetProviderService assetProviderService, IStaticDataProviderService staticData, IRandomService randomService,
             IPersistentProgressService progressService)
         {
             _assetProvider = assetProviderService;
@@ -90,16 +91,27 @@ namespace CodeBase.Infrastructure.Factory
             return lootPiece;
         }
 
+        public SpawnPoint CreateSpawner(Vector3 at, string spawnerId, MonsterTypeId monsterTypeId)
+        {
+            var spawner = InstantiateRegistered(AssetPath.EnemySpawner, at)
+                .GetComponent<SpawnPoint>();
+
+            spawner.Construct(this);
+            spawner.ID = spawnerId;
+            spawner.MonsterTypeId = monsterTypeId;
+            return spawner;
+        }
+
         public void Cleanup()
         {
             ProgressReaders.Clear();
             ProgressWriters.Clear();
         }
 
-        public void RegisterWriter(ISavedProgressWriter progressUpdater) =>
+        private void RegisterWriter(ISavedProgressWriter progressUpdater) =>
             ProgressWriters.Add(progressUpdater);
 
-        public void RegisterReader(ISavedProgressReader progressReader) =>
+        private void RegisterReader(ISavedProgressReader progressReader) =>
             ProgressReaders.Add(progressReader);
 
 
