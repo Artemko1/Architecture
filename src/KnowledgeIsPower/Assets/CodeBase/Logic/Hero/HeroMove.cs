@@ -2,23 +2,31 @@
 using CodeBase.Services;
 using CodeBase.Services.Input;
 using CodeBase.Services.PersistentProgress;
+using CodeBase.Services.SaveLoad;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace CodeBase.Logic.Hero
 {
-    public class HeroMove : MonoBehaviour, ISavedProgressWriter, ISavedProgressReader
+    public class HeroMove : MonoBehaviour, ISavedProgressReader
     {
         [SerializeField] private float _movementSpeed = 4.0f;
 
         private CharacterController _characterController;
         private IInputService _inputService;
+        private ISaveLoadService _saveLoadService;
 
         private void Awake()
         {
             _inputService = AllServices.Container.Single<IInputService>();
             _characterController = GetComponent<CharacterController>();
+
+            _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
+            _saveLoadService.OnSave += WriteToProgress;
         }
+
+        private void Start() =>
+            _saveLoadService.OnSave += WriteToProgress;
 
         private void Update()
         {
@@ -38,6 +46,9 @@ namespace CodeBase.Logic.Hero
 
             _characterController.Move(_movementSpeed * movementVector * Time.deltaTime);
         }
+
+        private void OnDestroy() =>
+            _saveLoadService.OnSave -= WriteToProgress;
 
         public void ReadFromProgress(PlayerProgress progress)
         {

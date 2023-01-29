@@ -1,4 +1,5 @@
-﻿using CodeBase.Data;
+﻿using System;
+using CodeBase.Data;
 
 namespace CodeBase.Services.SaveLoad
 {
@@ -6,5 +7,6 @@ namespace CodeBase.Services.SaveLoad
     {
         void SaveProgress();
         PlayerProgress LoadProgress();
+        event Action<PlayerProgress> OnSave;
     }
 }

@@ -13,7 +13,7 @@ namespace CodeBase.UI
         {
             var health = GetComponent<IHealth>();
 
-            if (health != null && _health == null)
+            if (_health == null && health != null)
             {
                 Construct(health);
             }
@@ -32,6 +32,8 @@ namespace CodeBase.UI
             _health = health;
 
             _health.HealthChanged += UpdateHpBar;
+
+            UpdateHpBar();
         }
 
         private void UpdateHpBar() =>

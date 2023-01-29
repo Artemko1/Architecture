@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using CodeBase.Logic;
+﻿using CodeBase.Logic;
 using CodeBase.Logic.Enemy;
 using CodeBase.Logic.Enemy.Loot;
 using CodeBase.Logic.Enemy.Spawner;
@@ -20,6 +19,7 @@ namespace CodeBase.Infrastructure.Factory
         private readonly IPersistentProgressService _progressService;
         private readonly IRandomService _randomService;
         private readonly IStaticDataProviderService _staticData;
+
         private GameObject _heroGameObject;
 
         public GameFactory(IAssetProviderService assetProviderService, IStaticDataProviderService staticData, IRandomService randomService,
@@ -30,8 +30,6 @@ namespace CodeBase.Infrastructure.Factory
             _randomService = randomService;
             _progressService = progressService;
         }
-
-        public List<ISavedProgressWriter> ProgressWriters { get; } = new List<ISavedProgressWriter>();
 
         public GameObject CreateHero(Vector3 initialPoint)
         {
@@ -108,20 +106,15 @@ namespace CodeBase.Infrastructure.Factory
             return spawner;
         }
 
-        public void Cleanup() =>
-            ProgressWriters.Clear();
-
         private GameObject InstantiateRegistered(string prefabPath)
         {
             GameObject gameObject = _assetProvider.Instantiate(prefabPath);
-            RegisterProgressWriters(gameObject);
             return gameObject;
         }
 
         private GameObject InstantiateRegistered(string prefabPath, Vector3 at)
         {
             GameObject gameObject = _assetProvider.Instantiate(prefabPath, at);
-            RegisterProgressWriters(gameObject);
             return gameObject;
         }
 
@@ -132,16 +125,5 @@ namespace CodeBase.Infrastructure.Factory
                 progressReader.ReadFromProgress(_progressService.Progress);
             }
         }
-
-        private void RegisterProgressWriters(GameObject gameObject)
-        {
-            foreach (ISavedProgressWriter progressUpdater in gameObject.GetComponentsInChildren<ISavedProgressWriter>())
-            {
-                RegisterWriter(progressUpdater);
-            }
-        }
-
-        private void RegisterWriter(ISavedProgressWriter progressUpdater) =>
-            ProgressWriters.Add(progressUpdater);
     }
 }

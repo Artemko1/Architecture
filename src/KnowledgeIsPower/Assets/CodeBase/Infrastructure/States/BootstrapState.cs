@@ -52,7 +52,7 @@ namespace CodeBase.Infrastructure.States
             IGameFactory factory = new GameFactory(assetProviderService, staticDataService, randomService, persistentProgressService);
             _services.RegisterSingle(factory);
 
-            ISaveLoadService saveLoadService = new SaveLoadService(persistentProgressService, factory);
+            ISaveLoadService saveLoadService = new SaveLoadService(persistentProgressService);
             _services.RegisterSingle(saveLoadService);
         }
 

@@ -1,5 +1,5 @@
-﻿using CodeBase.Data;
-using CodeBase.Infrastructure.Factory;
+﻿using System;
+using CodeBase.Data;
 using CodeBase.Services.PersistentProgress;
 using UnityEngine;
 
@@ -8,21 +8,18 @@ namespace CodeBase.Services.SaveLoad
     public class SaveLoadService : ISaveLoadService
     {
         private const string ProgressKey = "Progress";
-        private readonly IGameFactory _gameFactory;
         private readonly IPersistentProgressService _progressService;
 
-        public SaveLoadService(IPersistentProgressService progressService, IGameFactory gameFactory)
+        public SaveLoadService(IPersistentProgressService progressService)
         {
             _progressService = progressService;
-            _gameFactory = gameFactory;
         }
+
+        public event Action<PlayerProgress> OnSave;
 
         public void SaveProgress()
         {
-            foreach (ISavedProgressWriter progressWriter in _gameFactory.ProgressWriters)
-            {
-                progressWriter.WriteToProgress(_progressService.Progress);
-            }
+            OnSave?.Invoke(_progressService.Progress);
 
             string progressJson = _progressService.Progress.ToJson();
             PlayerPrefs.SetString(ProgressKey, progressJson);
