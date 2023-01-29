@@ -31,12 +31,12 @@ namespace CodeBase.Infrastructure.Factory
             _progressService = progressService;
         }
 
-        public List<ISavedProgressReader> ProgressReaders { get; } = new List<ISavedProgressReader>();
         public List<ISavedProgressWriter> ProgressWriters { get; } = new List<ISavedProgressWriter>();
 
         public GameObject CreateHero(Vector3 initialPoint)
         {
             _heroGameObject = InstantiateRegistered(AssetPath.HeroPath, initialPoint);
+            ActivateProgressReaders(_heroGameObject);
             return _heroGameObject;
         }
 
@@ -45,6 +45,8 @@ namespace CodeBase.Infrastructure.Factory
             GameObject hud = InstantiateRegistered(AssetPath.HudPath);
             hud.GetComponentInChildren<LootCounter>()
                 .Construct(_progressService.Progress.WorldData);
+
+            ActivateProgressReaders(hud);
             return hud;
         }
 
@@ -88,6 +90,8 @@ namespace CodeBase.Infrastructure.Factory
 
             lootPiece.Construct(_progressService.Progress.WorldData);
 
+            ActivateProgressReaders(lootPiece.gameObject);
+
             return lootPiece;
         }
 
@@ -99,50 +103,45 @@ namespace CodeBase.Infrastructure.Factory
             spawner.Construct(this);
             spawner.ID = spawnerId;
             spawner.MonsterTypeId = monsterTypeId;
+
+            ActivateProgressReaders(spawner.gameObject);
             return spawner;
         }
 
-        public void Cleanup()
-        {
-            ProgressReaders.Clear();
+        public void Cleanup() =>
             ProgressWriters.Clear();
-        }
-
-        private void RegisterWriter(ISavedProgressWriter progressUpdater) =>
-            ProgressWriters.Add(progressUpdater);
-
-        private void RegisterReader(ISavedProgressReader progressReader) =>
-            ProgressReaders.Add(progressReader);
-
 
         private GameObject InstantiateRegistered(string prefabPath)
         {
             GameObject gameObject = _assetProvider.Instantiate(prefabPath);
-            RegisterProgressWatchers(gameObject);
+            RegisterProgressWriters(gameObject);
             return gameObject;
         }
 
         private GameObject InstantiateRegistered(string prefabPath, Vector3 at)
         {
             GameObject gameObject = _assetProvider.Instantiate(prefabPath, at);
-            RegisterProgressWatchers(gameObject);
+            RegisterProgressWriters(gameObject);
             return gameObject;
         }
 
-        private void RegisterProgressWatchers(GameObject gameObject)
+        private void ActivateProgressReaders(GameObject gameObject)
         {
-            ISavedProgressReader[] progressReaders = gameObject.GetComponentsInChildren<ISavedProgressReader>();
-            foreach (ISavedProgressReader progressReader in progressReaders)
+            foreach (ISavedProgressReader progressReader in gameObject.GetComponentsInChildren<ISavedProgressReader>())
             {
-                RegisterReader(progressReader);
+                progressReader.ReadFromProgress(_progressService.Progress);
             }
+        }
 
-            ISavedProgressWriter[] progressUpdaters = gameObject.GetComponentsInChildren<ISavedProgressWriter>();
-
-            foreach (ISavedProgressWriter progressUpdater in progressUpdaters)
+        private void RegisterProgressWriters(GameObject gameObject)
+        {
+            foreach (ISavedProgressWriter progressUpdater in gameObject.GetComponentsInChildren<ISavedProgressWriter>())
             {
                 RegisterWriter(progressUpdater);
             }
         }
+
+        private void RegisterWriter(ISavedProgressWriter progressUpdater) =>
+            ProgressWriters.Add(progressUpdater);
     }
 }

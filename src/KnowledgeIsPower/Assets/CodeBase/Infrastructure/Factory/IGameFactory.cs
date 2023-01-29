@@ -10,7 +10,6 @@ namespace CodeBase.Infrastructure.Factory
 {
     public interface IGameFactory : IService
     {
-        List<ISavedProgressReader> ProgressReaders { get; }
         List<ISavedProgressWriter> ProgressWriters { get; }
 
         GameObject CreateHero(Vector3 initialPoint);

@@ -28,7 +28,6 @@ namespace CodeBase.Infrastructure.States
                         sceneLoader,
                         curtain,
                         services.Single<IGameFactory>(),
-                        services.Single<IPersistentProgressService>(),
                         services.Single<IStaticDataProviderService>())
                 },
                 {

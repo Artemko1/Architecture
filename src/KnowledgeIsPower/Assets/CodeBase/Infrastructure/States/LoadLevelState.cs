@@ -2,7 +2,6 @@
 using CodeBase.Logic;
 using CodeBase.Logic.Camera;
 using CodeBase.Logic.Hero;
-using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.StaticDataProvider;
 using CodeBase.StaticData;
 using CodeBase.UI;
@@ -16,20 +15,18 @@ namespace CodeBase.Infrastructure.States
         private const string InitialPointTag = "InitialPoint";
         private readonly LoadingCurtain _curtain;
         private readonly IGameFactory _gameFactory;
-        private readonly IPersistentProgressService _progressService;
         private readonly SceneLoader _sceneLoader;
 
         private readonly GameStateMachine _stateMachine;
         private readonly IStaticDataProviderService _staticData;
 
         public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory,
-            IPersistentProgressService progressService, IStaticDataProviderService staticData)
+            IStaticDataProviderService staticData)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _curtain = curtain;
             _gameFactory = gameFactory;
-            _progressService = progressService;
             _staticData = staticData;
         }
 
@@ -47,17 +44,15 @@ namespace CodeBase.Infrastructure.States
         {
             InitGameWorld();
 
-            InformProgressReaders();
-
             _stateMachine.Enter<GameLoopState>();
         }
 
         private void InitGameWorld()
         {
-            InitSpawners();
-
             GameObject hero = InitHero();
             CameraFollow(hero);
+
+            InitSpawners();
 
             InitHud(hero);
         }
@@ -86,13 +81,5 @@ namespace CodeBase.Infrastructure.States
             Camera.main
                 .GetComponent<CameraFollow>()
                 .Follow(hero);
-
-        private void InformProgressReaders()
-        {
-            foreach (ISavedProgressReader progressReader in _gameFactory.ProgressReaders)
-            {
-                progressReader.ReadFromProgress(_progressService.Progress);
-            }
-        }
     }
 }
