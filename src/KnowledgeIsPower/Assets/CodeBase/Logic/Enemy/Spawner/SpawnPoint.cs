@@ -35,18 +35,18 @@ namespace CodeBase.Logic.Enemy.Spawner
             }
         }
 
-        public void WriteToProgress(PlayerProgress progress)
+        public void Construct(IGameFactory gameFactory)
+        {
+            _factory = gameFactory;
+            _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
+        }
+
+        private void WriteToProgress(PlayerProgress progress)
         {
             if (_slain)
             {
                 progress.KillData.ClearedSpawnersIds.Add(ID);
             }
-        }
-
-        public void Construct(IGameFactory gameFactory)
-        {
-            _factory = gameFactory;
-            _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
         }
 
         private void Spawn()

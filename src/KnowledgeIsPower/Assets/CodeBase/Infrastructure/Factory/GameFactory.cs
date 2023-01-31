@@ -20,8 +20,6 @@ namespace CodeBase.Infrastructure.Factory
         private readonly IRandomService _randomService;
         private readonly IStaticDataProviderService _staticData;
 
-        private GameObject _heroGameObject;
-
         public GameFactory(IAssetProviderService assetProviderService, IStaticDataProviderService staticData, IRandomService randomService,
             IPersistentProgressService progressService)
         {
@@ -33,9 +31,9 @@ namespace CodeBase.Infrastructure.Factory
 
         public GameObject CreateHero(Vector3 initialPoint)
         {
-            _heroGameObject = InstantiateRegistered(AssetPath.HeroPath, initialPoint);
-            ActivateProgressReaders(_heroGameObject);
-            return _heroGameObject;
+            GameObject heroGameObject = InstantiateRegistered(AssetPath.HeroPath, initialPoint);
+            ActivateProgressReaders(heroGameObject);
+            return heroGameObject;
         }
 
         public GameObject CreateHud()
@@ -60,19 +58,14 @@ namespace CodeBase.Infrastructure.Factory
                 monsterGo.GetComponent<ActorUI>().Construct(health);
             }
 
-
-            monsterGo.GetComponent<AgentMoveToHero>().Construct(_heroGameObject.transform);
             monsterGo.GetComponent<NavMeshAgent>().speed = monsterData.MoveSpeed;
 
             {
                 var attack = monsterGo.GetComponent<Attack>();
-                attack.Construct(_heroGameObject.transform);
                 attack.Damage = monsterData.Damage;
                 attack.Cleavage = monsterData.AttackCleavage;
                 attack.EffectiveDistance = monsterData.AttackEffectiveDistance;
             }
-
-            monsterGo.GetComponent<RotateToHero>()?.Construct(_heroGameObject.transform);
 
             var lootSpawner = monsterGo.GetComponentInChildren<LootSpawner>();
             lootSpawner.Construct(this, _randomService);

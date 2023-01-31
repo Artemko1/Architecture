@@ -4,29 +4,32 @@ using UnityEngine;
 namespace CodeBase.Logic.Enemy
 {
     [RequireComponent(typeof(EnemyAnimator))]
-    public class Attack : MonoBehaviour
+    public class Attack : HasTargetBehaviour
     {
         public float Cleavage = 0.8f;
         public float EffectiveDistance = 0.75f;
         public float Damage = 5;
 
         [SerializeField] private float _attackCooldown = 2.5f;
+        [SerializeField] private TriggerObserver _rangeObserver;
 
         private readonly Collider[] _hits = new Collider[1];
 
         private float _attackCooldownRemaining;
-        private bool _attackIsActive;
 
         private EnemyAnimator _enemyAnimator;
 
-        private Transform _heroTransform;
         private bool _isAttacking;
+        private bool _isInRange;
         private int _layerMask;
 
         private void Awake()
         {
             _enemyAnimator = GetComponent<EnemyAnimator>();
             _layerMask = 1 << LayerMask.NameToLayer("Player");
+
+            _rangeObserver.TriggerEnter += _ => _isInRange = true;
+            _rangeObserver.TriggerExit += _ => _isInRange = false;
         }
 
         private void Update()
@@ -38,15 +41,6 @@ namespace CodeBase.Logic.Enemy
                 StartAttack();
             }
         }
-
-        public void Construct(Transform heroTransform) =>
-            _heroTransform = heroTransform;
-
-        public void EnableAttack() =>
-            _attackIsActive = true;
-
-        public void DisableAttack() =>
-            _attackIsActive = false;
 
         private void OnAttack() // called from animation events
         {
@@ -88,14 +82,14 @@ namespace CodeBase.Logic.Enemy
         }
 
         private bool CanAttack() =>
-            !_isAttacking && CooldownIsUp() && _attackIsActive;
+            !_isAttacking && CooldownIsUp() && _isInRange && HasTarget;
 
         private bool CooldownIsUp() =>
             _attackCooldownRemaining <= 0;
 
         private void StartAttack()
         {
-            transform.LookAt(_heroTransform);
+            transform.LookAt(Target);
             _enemyAnimator.PlayAttack();
             _isAttacking = true;
         }

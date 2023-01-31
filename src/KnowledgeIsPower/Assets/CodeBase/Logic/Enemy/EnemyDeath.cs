@@ -37,7 +37,10 @@ namespace CodeBase.Logic.Enemy
 
             _enemyAnimator.PlayDeath();
             SpawnDeathFx();
-            GetComponent<Follow>().enabled = false;
+            GetComponent<HasTargetBehaviour>()
+                .ResetTarget();
+            GetComponent<AggroTargetAssigner>()
+                .enabled = false;
 
             Destroy(gameObject, 4f);
 

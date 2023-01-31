@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: -4649616546684560695}
   - component: {fileID: 2962617765625918661}
   - component: {fileID: 3377145833948728247}
-  - component: {fileID: 5601891902910323490}
   - component: {fileID: 7299013773521890215}
   - component: {fileID: 4812375546809364506}
   - component: {fileID: 8568555817963645067}
@@ -125,6 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc7aede07bc45b58c1b02115f3d00f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Target: {fileID: 0}
 --- !u!114 &2962617765625918661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,19 +154,7 @@ MonoBehaviour:
   EffectiveDistance: 0.75
   Damage: 5
   _attackCooldown: 3
---- !u!114 &5601891902910323490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c05e2233e1df44c08b37712f966bdeeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _triggerObserver: {fileID: 4208631067281441215}
+  _rangeObserver: {fileID: 4208631067281441215}
 --- !u!114 &7299013773521890215
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,23 +2,17 @@
 
 namespace CodeBase.Logic.Enemy
 {
-    public class RotateToHero : Follow
+    public class RotateToHero : HasTargetBehaviour
     {
         [SerializeField] private float _speed = 1;
 
-        private Transform _heroTransform;
-
         private void Update()
         {
-            if (_heroTransform != null)
+            if (Target != null)
             {
                 RotateTowardsHero();
             }
         }
-
-        public void Construct(Transform heroTransform) =>
-            _heroTransform = heroTransform;
-
 
         private void RotateTowardsHero()
         {
@@ -30,7 +24,7 @@ namespace CodeBase.Logic.Enemy
         private Vector3 GetPositionToLookAt()
         {
             Vector3 thisPosition = transform.position;
-            Vector3 positionDelta = _heroTransform.position - thisPosition;
+            Vector3 positionDelta = Target.position - thisPosition;
             return new Vector3(positionDelta.x, thisPosition.y, positionDelta.z);
         }
 

@@ -4,27 +4,26 @@ using UnityEngine.AI;
 namespace CodeBase.Logic.Enemy
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class AgentMoveToHero : Follow
+    public class AgentMoveToTarget : HasTargetBehaviour
     {
         private NavMeshAgent _agent;
-        private Transform _heroTransform;
 
         private void Awake() =>
             _agent = GetComponent<NavMeshAgent>();
 
         private void Update()
         {
-            if (_heroTransform != null)
+            if (Target != null)
             {
-                _agent.destination = _heroTransform.position;
+                _agent.destination = Target.position;
             }
         }
 
-        private void OnDisable() =>
+        public override void ResetTarget()
+        {
+            base.ResetTarget();
             StopAgentMove();
-
-        public void Construct(Transform heroTransform) =>
-            _heroTransform = heroTransform;
+        }
 
         private void StopAgentMove()
         {
