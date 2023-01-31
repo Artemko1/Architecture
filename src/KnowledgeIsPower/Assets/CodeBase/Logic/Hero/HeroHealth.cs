@@ -11,8 +11,9 @@ namespace CodeBase.Logic.Hero
     public class HeroHealth : MonoBehaviour, ISavedProgressReader, IHealth
     {
         private HeroAnimator _heroAnimator;
+        private Stats _heroStats;
         private ISaveLoadService _saveLoadService;
-        private State _state;
+        private PlayerState _state;
 
         private void Awake()
         {
@@ -45,8 +46,8 @@ namespace CodeBase.Logic.Hero
 
         public float Max
         {
-            get => _state.MaxHP;
-            set => _state.MaxHP = value;
+            get => _heroStats.MaxHP;
+            set => throw new NotImplementedException();
         }
 
         public void TakeDamage(float damage)
@@ -59,14 +60,14 @@ namespace CodeBase.Logic.Hero
 
         public void ReadFromProgress(PlayerProgress progress)
         {
-            _state = progress.HeroState;
+            _state = progress.PlayerState;
             HealthChanged?.Invoke();
         }
 
-        private void WriteToProgress(PlayerProgress progress)
-        {
-            progress.HeroState.CurrentHP = Current;
-            progress.HeroState.MaxHP = Max;
-        }
+        public void Construct(Stats heroStats) =>
+            _heroStats = heroStats;
+
+        private void WriteToProgress(PlayerProgress progress) =>
+            progress.PlayerState.CurrentHP = Current;
     }
 }

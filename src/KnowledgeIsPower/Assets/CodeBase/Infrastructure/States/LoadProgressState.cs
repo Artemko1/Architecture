@@ -1,6 +1,8 @@
 ﻿using CodeBase.Data;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
+using CodeBase.Services.StaticDataProvider;
+using CodeBase.StaticData;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -9,19 +11,21 @@ namespace CodeBase.Infrastructure.States
         private readonly GameStateMachine _gameStateMachine;
         private readonly IPersistentProgressService _progressService;
         private readonly ISaveLoadService _saveLoadService;
+        private readonly IStaticDataProviderService _staticDataProviderService;
 
         public LoadProgressState(GameStateMachine gameStateMachine, IPersistentProgressService progressService,
-            ISaveLoadService saveLoadService)
+            ISaveLoadService saveLoadService, IStaticDataProviderService staticDataProviderService)
         {
             _gameStateMachine = gameStateMachine;
             _progressService = progressService;
             _saveLoadService = saveLoadService;
+            _staticDataProviderService = staticDataProviderService;
         }
 
         public void Enter()
         {
             LoadProgressOrInitNew();
-            _gameStateMachine.Enter<LoadLevelState, string>(_progressService.Progress.WorldData.PositionOnLevel.Level);
+            _gameStateMachine.Enter<LoadLevelState, string>(_progressService.Progress.PlayerState.PositionOnLevel.LevelName);
         }
 
         public void Exit()
@@ -33,15 +37,17 @@ namespace CodeBase.Infrastructure.States
 
         private PlayerProgress NewProgress()
         {
-            var playerProgress = new PlayerProgress("Main");
+            PlayerProgressStaticData progressStaticData = _staticDataProviderService.ForNewGame();
 
-            playerProgress.HeroState.MaxHP = 50;
-            playerProgress.HeroState.ResetHP();
+            var positionOnLevel =
+                new PositionOnLevel(progressStaticData.PositionOnLevel.LevelName, progressStaticData.PositionOnLevel.Position);
 
-            playerProgress.HeroStats.Damage = 1f;
-            playerProgress.HeroStats.DamageRadius = 0.75f;
+            HeroStaticData heroStaticData = _staticDataProviderService.ForHero();
 
-            return playerProgress;
+            var playerState = new PlayerState(positionOnLevel, heroStaticData.Stats.MaxHP);
+            var progress = new PlayerProgress(playerState);
+
+            return progress;
         }
     }
 }

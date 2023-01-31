@@ -1,5 +1,4 @@
-﻿using CodeBase.Data;
-using CodeBase.Data.Loot;
+﻿using CodeBase.Data.Loot;
 using TMPro;
 using UnityEngine;
 
@@ -13,14 +12,14 @@ namespace CodeBase.Logic.Enemy.Loot
         [SerializeField] private GameObject _pickupPopup;
 
         private LootItem _loot;
+        private LootData _lootData;
         private bool _picked;
-        private WorldData _worldData;
 
         private void OnTriggerEnter(Collider other) =>
             Pickup();
 
-        public void Construct(WorldData worldData) =>
-            _worldData = worldData;
+        public void Construct(LootData lootData) =>
+            _lootData = lootData;
 
         public void Initialize(LootItem loot) =>
             _loot = loot;
@@ -31,7 +30,7 @@ namespace CodeBase.Logic.Enemy.Loot
 
             _picked = true;
 
-            _worldData.LootData.Collect(_loot);
+            _lootData.Collect(_loot);
 
             HideSkull();
             PlayPickupFx();

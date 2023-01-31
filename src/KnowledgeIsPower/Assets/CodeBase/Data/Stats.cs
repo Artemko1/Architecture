@@ -7,5 +7,6 @@ namespace CodeBase.Data
     {
         public float Damage;
         public float DamageRadius;
+        public float MaxHP;
     }
 }

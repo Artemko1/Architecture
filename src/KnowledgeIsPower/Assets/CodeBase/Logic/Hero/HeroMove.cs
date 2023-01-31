@@ -51,19 +51,17 @@ namespace CodeBase.Logic.Hero
 
         public void ReadFromProgress(PlayerProgress progress)
         {
-            if (GetCurrentLevel() != progress.WorldData.PositionOnLevel.Level) return;
+            if (GetCurrentLevel() != progress.PlayerState.PositionOnLevel.LevelName) return;
 
-            Vector3Data savedPosition = progress.WorldData.PositionOnLevel.Position;
-            if (savedPosition != null)
-            {
-                Warp(savedPosition);
-            }
+            Vector3Data savedPosition = progress.PlayerState.PositionOnLevel.Position;
+
+            Warp(savedPosition);
         }
 
         private void WriteToProgress(PlayerProgress progress)
         {
             Debug.Log($"Saved position {transform.position}");
-            progress.WorldData.PositionOnLevel = new PositionOnLevel(GetCurrentLevel(), transform.position.AsVector3Data());
+            progress.PlayerState.PositionOnLevel = new PositionOnLevel(GetCurrentLevel(), transform.position.AsVector3Data());
         }
 
         private void Warp(Vector3Data to)

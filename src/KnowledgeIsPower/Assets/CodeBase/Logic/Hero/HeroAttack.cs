@@ -2,13 +2,12 @@
 using CodeBase.Logic.Enemy;
 using CodeBase.Services;
 using CodeBase.Services.Input;
-using CodeBase.Services.PersistentProgress;
 using UnityEngine;
 
 namespace CodeBase.Logic.Hero
 {
     [RequireComponent(typeof(HeroAnimator)), RequireComponent(typeof(CharacterController))]
-    public class HeroAttack : MonoBehaviour, ISavedProgressReader
+    public class HeroAttack : MonoBehaviour
     {
         private static int _layerMask;
 
@@ -37,8 +36,8 @@ namespace CodeBase.Logic.Hero
             }
         }
 
-        public void ReadFromProgress(PlayerProgress progress) =>
-            _heroStats = progress.HeroStats;
+        public void Construct(Stats heroStats) =>
+            _heroStats = heroStats;
 
         public void OnAttack() // called from animation events
         {

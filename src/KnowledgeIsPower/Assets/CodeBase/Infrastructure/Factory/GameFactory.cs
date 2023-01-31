@@ -2,10 +2,12 @@
 using CodeBase.Logic.Enemy.Loot;
 using CodeBase.Logic.Enemy.Spawner;
 using CodeBase.Logic.Enemy.Targets;
+using CodeBase.Logic.Hero;
 using CodeBase.Services.AssetProvider;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.Randomizer;
 using CodeBase.Services.StaticDataProvider;
+using CodeBase.StaticData;
 using CodeBase.StaticData.Monsters;
 using CodeBase.UI;
 using UnityEngine;
@@ -29,9 +31,18 @@ namespace CodeBase.Infrastructure.Factory
             _progressService = progressService;
         }
 
-        public GameObject CreateHero(Vector3 initialPoint)
+        public GameObject CreateHero()
         {
-            GameObject heroGameObject = InstantiateRegistered(AssetPath.HeroPath, initialPoint);
+            GameObject heroGameObject = InstantiateRegistered(AssetPath.HeroPath);
+            HeroStaticData heroStaticData = _staticData.ForHero();
+
+            heroGameObject
+                .GetComponent<HeroHealth>()
+                .Construct(heroStaticData.Stats);
+            heroGameObject
+                .GetComponent<HeroAttack>()
+                .Construct(heroStaticData.Stats);
+
             ActivateProgressReaders(heroGameObject);
             return heroGameObject;
         }
@@ -40,7 +51,7 @@ namespace CodeBase.Infrastructure.Factory
         {
             GameObject hud = InstantiateRegistered(AssetPath.HudPath);
             hud.GetComponentInChildren<LootCounter>()
-                .Construct(_progressService.Progress.WorldData);
+                .Construct(_progressService.Progress.PlayerState.LootData);
 
             ActivateProgressReaders(hud);
             return hud;
@@ -79,7 +90,7 @@ namespace CodeBase.Infrastructure.Factory
             var lootPiece = InstantiateRegistered(AssetPath.Loot)
                 .GetComponent<LootPiece>();
 
-            lootPiece.Construct(_progressService.Progress.WorldData);
+            lootPiece.Construct(_progressService.Progress.PlayerState.LootData);
 
             ActivateProgressReaders(lootPiece.gameObject);
 

@@ -8,5 +8,7 @@ namespace CodeBase.Services.StaticDataProvider
         void Load();
         MonsterStaticData ForMonster(MonsterTypeId typeId);
         LevelStaticData ForLevel(string sceneName);
+        PlayerProgressStaticData ForNewGame();
+        HeroStaticData ForHero();
     }
 }

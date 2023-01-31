@@ -8,7 +8,7 @@ namespace CodeBase.Infrastructure.Factory
 {
     public interface IGameFactory : IService
     {
-        GameObject CreateHero(Vector3 initialPoint);
+        GameObject CreateHero();
         GameObject CreateHud();
 
         GameObject CreateMonster(MonsterTypeId monsterTypeId, Transform parent);

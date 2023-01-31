@@ -1,4 +1,4 @@
-using CodeBase.Data;
+using CodeBase.Data.Loot;
 using TMPro;
 using UnityEngine;
 
@@ -7,18 +7,18 @@ namespace CodeBase.UI
     public class LootCounter : MonoBehaviour
     {
         [SerializeField] private TMP_Text _counter;
-        private WorldData _worldData;
+        private LootData _lootData;
 
         private void Start() =>
             UpdateCounter();
 
-        public void Construct(WorldData worldData)
+        public void Construct(LootData lootData)
         {
-            _worldData = worldData;
-            _worldData.LootData.Changed += UpdateCounter;
+            _lootData = lootData;
+            _lootData.Changed += UpdateCounter;
         }
 
         private void UpdateCounter() =>
-            _counter.text = _worldData.LootData.Collected.ToString();
+            _counter.text = _lootData.Collected.ToString();
     }
 }

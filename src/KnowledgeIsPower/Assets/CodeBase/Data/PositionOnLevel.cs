@@ -5,18 +5,18 @@ namespace CodeBase.Data
     [Serializable]
     public class PositionOnLevel
     {
-        public string Level;
+        public string LevelName;
         public Vector3Data Position;
 
         public PositionOnLevel(string level, Vector3Data position)
         {
-            Level = level;
+            LevelName = level;
             Position = position;
         }
 
         public PositionOnLevel(string initialLevel)
         {
-            Level = initialLevel;
+            LevelName = initialLevel;
         }
     }
 }

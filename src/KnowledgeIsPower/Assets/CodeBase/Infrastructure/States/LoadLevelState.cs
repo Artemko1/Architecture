@@ -12,7 +12,6 @@ namespace CodeBase.Infrastructure.States
 {
     public class LoadLevelState : IPayloadedState<string>
     {
-        private const string InitialPointTag = "InitialPoint";
         private readonly LoadingCurtain _curtain;
         private readonly IGameFactory _gameFactory;
         private readonly SceneLoader _sceneLoader;
@@ -48,13 +47,21 @@ namespace CodeBase.Infrastructure.States
 
         private void InitGameWorld()
         {
-            GameObject hero = InitHero();
+            GameObject hero = CreateHero();
             CameraFollow(hero);
 
             InitSpawners();
 
             InitHud(hero);
         }
+
+        private GameObject CreateHero() =>
+            _gameFactory.CreateHero();
+
+        private void CameraFollow(GameObject hero) =>
+            Camera.main
+                .GetComponent<CameraFollow>()
+                .Follow(hero);
 
         private void InitSpawners()
         {
@@ -66,20 +73,11 @@ namespace CodeBase.Infrastructure.States
             }
         }
 
-        private GameObject InitHero() =>
-            _gameFactory.CreateHero(GameObject.FindWithTag(InitialPointTag)
-                .transform.position);
-
         private void InitHud(GameObject hero)
         {
             GameObject hud = _gameFactory.CreateHud();
             hud.GetComponentInChildren<ActorUI>()
                 .Construct(hero.GetComponent<HeroHealth>());
         }
-
-        private void CameraFollow(GameObject hero) =>
-            Camera.main
-                .GetComponent<CameraFollow>()
-                .Follow(hero);
     }
 }

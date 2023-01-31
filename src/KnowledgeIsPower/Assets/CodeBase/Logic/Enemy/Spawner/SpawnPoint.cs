@@ -25,7 +25,7 @@ namespace CodeBase.Logic.Enemy.Spawner
 
         public void ReadFromProgress(PlayerProgress progress)
         {
-            if (progress.KillData.ClearedSpawnersIds.Contains(ID))
+            if (progress.WorldState.KillData.ClearedSpawnersIds.Contains(ID))
             {
                 _slain = true;
             }
@@ -45,7 +45,7 @@ namespace CodeBase.Logic.Enemy.Spawner
         {
             if (_slain)
             {
-                progress.KillData.ClearedSpawnersIds.Add(ID);
+                progress.WorldState.KillData.ClearedSpawnersIds.Add(ID);
             }
         }
 
