@@ -22,7 +22,6 @@ namespace CodeBase.Logic.Hero
             _characterController = GetComponent<CharacterController>();
 
             _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
-            _saveLoadService.OnSave += WriteToProgress;
         }
 
         private void Start() =>
@@ -61,7 +60,7 @@ namespace CodeBase.Logic.Hero
             }
         }
 
-        public void WriteToProgress(PlayerProgress progress)
+        private void WriteToProgress(PlayerProgress progress)
         {
             Debug.Log($"Saved position {transform.position}");
             progress.WorldData.PositionOnLevel = new PositionOnLevel(GetCurrentLevel(), transform.position.AsVector3Data());

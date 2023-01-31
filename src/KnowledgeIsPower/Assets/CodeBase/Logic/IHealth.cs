@@ -8,5 +8,6 @@ namespace CodeBase.Logic
         float Max { get; set; }
         event Action HealthChanged;
         void TakeDamage(float amount);
+        event Action Died;
     }
 }

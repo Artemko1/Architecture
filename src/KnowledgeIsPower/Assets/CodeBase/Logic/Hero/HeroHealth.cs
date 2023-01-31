@@ -27,6 +27,7 @@ namespace CodeBase.Logic.Hero
             _saveLoadService.OnSave -= WriteToProgress;
 
         public event Action HealthChanged;
+        public event Action Died;
 
         public float Current
         {

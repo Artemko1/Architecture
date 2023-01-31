@@ -15,7 +15,7 @@ namespace CodeBase.Logic.Enemy.Loot
         private IRandomService _random;
 
         private void Start() =>
-            EnemyDeath.Happend += SpawnLoot;
+            EnemyDeath.Happened += SpawnLoot;
 
         public void Construct(IGameFactory gameFactory, IRandomService random)
         {

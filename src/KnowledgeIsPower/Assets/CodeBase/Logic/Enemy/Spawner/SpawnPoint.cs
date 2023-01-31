@@ -52,7 +52,7 @@ namespace CodeBase.Logic.Enemy.Spawner
         private void Spawn()
         {
             GameObject monster = _factory.CreateMonster(MonsterTypeId, transform);
-            monster.GetComponent<EnemyDeath>().Happend += Slay;
+            monster.GetComponent<EnemyDeath>().Happened += Slay;
         }
 
         private void Slay() =>

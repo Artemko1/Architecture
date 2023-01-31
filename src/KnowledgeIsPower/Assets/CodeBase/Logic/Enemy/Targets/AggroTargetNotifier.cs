@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace CodeBase.Logic.Enemy
+namespace CodeBase.Logic.Enemy.Targets
 {
-    [RequireComponent(typeof(HasTargetBehaviour))]
-    public class AggroTargetAssigner : MonoBehaviour
+    public class AggroTargetNotifier : TargetNotifier
     {
         private const float Delay = 3f;
 
@@ -13,24 +12,19 @@ namespace CodeBase.Logic.Enemy
         private Coroutine _aggroProlongCoroutine;
         private bool _hasTarget;
 
-        private HasTargetBehaviour[] _targetsComponents;
-
-        private void Awake()
-        {
-            _targetsComponents = GetComponents<HasTargetBehaviour>();
-            ResetTargets();
-        }
-
         private void OnEnable()
         {
             _triggerObserver.TriggerEnter += StartAggro;
             _triggerObserver.TriggerExit += StopAggro;
+            _triggerObserver.Recalculate();
         }
 
         private void OnDisable()
         {
             _triggerObserver.TriggerEnter -= StartAggro;
             _triggerObserver.TriggerExit -= StopAggro;
+
+            StopAggroInstant();
         }
 
         private void StartAggro(Collider other)
@@ -39,7 +33,7 @@ namespace CodeBase.Logic.Enemy
 
             _hasTarget = true;
             StopAggroProlongCoroutine();
-            SetTargets(other.transform);
+            OnNewTarget(other.transform);
         }
 
         private void StopAggro(Collider other)
@@ -61,23 +55,14 @@ namespace CodeBase.Logic.Enemy
         private IEnumerator ResetTargetsAfterDelay()
         {
             yield return new WaitForSeconds(Delay);
-            ResetTargets();
+            OnLostTarget();
         }
 
-        private void SetTargets(Transform otherTransform)
+        private void StopAggroInstant()
         {
-            foreach (HasTargetBehaviour hasTarget in _targetsComponents)
-            {
-                hasTarget.SetTarget(otherTransform);
-            }
-        }
-
-        private void ResetTargets()
-        {
-            foreach (HasTargetBehaviour hasTarget in _targetsComponents)
-            {
-                hasTarget.ResetTarget();
-            }
+            _hasTarget = false;
+            StopAggroProlongCoroutine();
+            OnLostTarget();
         }
     }
 }

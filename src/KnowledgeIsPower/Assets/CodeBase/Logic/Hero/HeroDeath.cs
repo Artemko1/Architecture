@@ -1,16 +1,20 @@
-﻿using UnityEngine;
+﻿using System;
+using CodeBase.Logic.Enemy;
+using UnityEngine;
 
 namespace CodeBase.Logic.Hero
 {
-    [RequireComponent(typeof(HeroHealth))]
-    public class HeroDeath : MonoBehaviour
+    [RequireComponent(typeof(IHealth))]
+    public class HeroDeath : MonoBehaviour, IDeath
     {
         [SerializeField] private GameObject _deathFx;
-        private IHealth _health;
 
+        private IHealth _health;
         private HeroAnimator _heroAnimator;
+
         private HeroAttack _heroAttack;
         private HeroMove _heroMove;
+
         private bool _isDead;
 
         private void Awake()
@@ -26,6 +30,8 @@ namespace CodeBase.Logic.Hero
 
         private void OnDestroy() =>
             _health.HealthChanged -= HealthChanged;
+
+        public event Action Happened;
 
         private void HealthChanged()
         {
@@ -43,6 +49,7 @@ namespace CodeBase.Logic.Hero
             _heroAttack.enabled = false;
             _heroAnimator.PlayDeath();
             Instantiate(_deathFx, transform.position, Quaternion.identity);
+            Happened?.Invoke();
         }
     }
 }

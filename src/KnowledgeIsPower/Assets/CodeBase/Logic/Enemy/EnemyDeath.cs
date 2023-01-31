@@ -1,12 +1,20 @@
 ﻿using System;
+using CodeBase.Logic.Enemy.Targets;
 using UnityEngine;
 
 namespace CodeBase.Logic.Enemy
 {
-    public class EnemyDeath : MonoBehaviour
+    public interface IDeath
+    {
+        event Action Happened;
+    }
+
+    [RequireComponent(typeof(IHealth))]
+    public class EnemyDeath : MonoBehaviour, IDeath
     {
         [SerializeField] private GameObject _deathFx;
         private EnemyAnimator _enemyAnimator;
+
         private IHealth _health;
 
         private void Awake()
@@ -21,7 +29,7 @@ namespace CodeBase.Logic.Enemy
         private void OnDestroy() =>
             _health.HealthChanged -= OnHealthChanged;
 
-        public event Action Happend;
+        public event Action Happened;
 
         private void OnHealthChanged()
         {
@@ -37,14 +45,12 @@ namespace CodeBase.Logic.Enemy
 
             _enemyAnimator.PlayDeath();
             SpawnDeathFx();
-            GetComponent<HasTargetBehaviour>()
-                .ResetTarget();
-            GetComponent<AggroTargetAssigner>()
+            GetComponent<TargetNotifier>()
                 .enabled = false;
 
             Destroy(gameObject, 4f);
 
-            Happend?.Invoke();
+            Happened?.Invoke();
         }
 
         private void SpawnDeathFx() =>

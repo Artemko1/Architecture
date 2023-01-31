@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 
-namespace CodeBase.Logic.Enemy
+namespace CodeBase.Logic.Enemy.Targets
 {
-    public class RotateToHero : HasTargetBehaviour
+    public class RotateToTarget : HasTargetBehaviour
     {
         [SerializeField] private float _speed = 1;
 
         private void Update()
         {
-            if (Target != null)
+            if (HasTarget())
             {
                 RotateTowardsHero();
             }

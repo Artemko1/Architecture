@@ -1,7 +1,7 @@
 ﻿using CodeBase.Logic;
-using CodeBase.Logic.Enemy;
 using CodeBase.Logic.Enemy.Loot;
 using CodeBase.Logic.Enemy.Spawner;
+using CodeBase.Logic.Enemy.Targets;
 using CodeBase.Services.AssetProvider;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.Randomizer;
@@ -61,7 +61,7 @@ namespace CodeBase.Infrastructure.Factory
             monsterGo.GetComponent<NavMeshAgent>().speed = monsterData.MoveSpeed;
 
             {
-                var attack = monsterGo.GetComponent<Attack>();
+                var attack = monsterGo.GetComponent<AttackTarget>();
                 attack.Damage = monsterData.Damage;
                 attack.Cleavage = monsterData.AttackCleavage;
                 attack.EffectiveDistance = monsterData.AttackEffectiveDistance;

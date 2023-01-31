@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-namespace CodeBase.Logic.Enemy
+namespace CodeBase.Logic.Enemy.Targets
 {
     [RequireComponent(typeof(EnemyAnimator))]
-    public class Attack : HasTargetBehaviour
+    public class AttackTarget : HasTargetBehaviour
     {
         public float Cleavage = 0.8f;
         public float EffectiveDistance = 0.75f;
@@ -23,8 +23,9 @@ namespace CodeBase.Logic.Enemy
         private bool _isInRange;
         private int _layerMask;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _enemyAnimator = GetComponent<EnemyAnimator>();
             _layerMask = 1 << LayerMask.NameToLayer("Player");
 
@@ -82,7 +83,7 @@ namespace CodeBase.Logic.Enemy
         }
 
         private bool CanAttack() =>
-            !_isAttacking && CooldownIsUp() && _isInRange && HasTarget;
+            !_isAttacking && CooldownIsUp() && _isInRange && HasTarget();
 
         private bool CooldownIsUp() =>
             _attackCooldownRemaining <= 0;

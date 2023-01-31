@@ -1,27 +1,30 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-namespace CodeBase.Logic.Enemy
+namespace CodeBase.Logic.Enemy.Targets
 {
     [RequireComponent(typeof(NavMeshAgent))]
     public class AgentMoveToTarget : HasTargetBehaviour
     {
         private NavMeshAgent _agent;
 
-        private void Awake() =>
+        protected override void Awake()
+        {
+            base.Awake();
             _agent = GetComponent<NavMeshAgent>();
+        }
 
         private void Update()
         {
-            if (Target != null)
+            if (HasTarget())
             {
                 _agent.destination = Target.position;
             }
         }
 
-        public override void ResetTarget()
+        protected override void OnLostTarget()
         {
-            base.ResetTarget();
+            base.OnLostTarget();
             StopAgentMove();
         }
 
