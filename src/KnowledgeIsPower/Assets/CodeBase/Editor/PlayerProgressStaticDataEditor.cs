@@ -1,5 +1,5 @@
 ﻿using CodeBase.Data;
-using CodeBase.StaticData;
+using CodeBase.StaticData.Hero;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;

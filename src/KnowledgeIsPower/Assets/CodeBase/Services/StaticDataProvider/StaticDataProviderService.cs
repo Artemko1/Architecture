@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CodeBase.StaticData;
+using CodeBase.StaticData.Hero;
 using CodeBase.StaticData.Monsters;
 using UnityEngine;
 

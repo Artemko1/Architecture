@@ -4,6 +4,7 @@ using CodeBase.Logic.Camera;
 using CodeBase.Logic.Hero;
 using CodeBase.Services.StaticDataProvider;
 using CodeBase.StaticData;
+using CodeBase.StaticData.Monsters;
 using CodeBase.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;

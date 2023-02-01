@@ -6,8 +6,9 @@ using CodeBase.Logic.Hero;
 using CodeBase.Services.AssetProvider;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.Randomizer;
+using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticDataProvider;
-using CodeBase.StaticData;
+using CodeBase.StaticData.Hero;
 using CodeBase.StaticData.Monsters;
 using CodeBase.UI;
 using UnityEngine;
@@ -20,15 +21,17 @@ namespace CodeBase.Infrastructure.Factory
         private readonly IAssetProviderService _assetProvider;
         private readonly IPersistentProgressService _progressService;
         private readonly IRandomService _randomService;
+        private readonly ISaveLoadService _saveLoadService;
         private readonly IStaticDataProviderService _staticData;
 
         public GameFactory(IAssetProviderService assetProviderService, IStaticDataProviderService staticData, IRandomService randomService,
-            IPersistentProgressService progressService)
+            IPersistentProgressService progressService, ISaveLoadService saveLoadService)
         {
             _assetProvider = assetProviderService;
             _staticData = staticData;
             _randomService = randomService;
             _progressService = progressService;
+            _saveLoadService = saveLoadService;
         }
 
         public GameObject CreateHero()
@@ -38,7 +41,7 @@ namespace CodeBase.Infrastructure.Factory
 
             heroGameObject
                 .GetComponent<HeroHealth>()
-                .Construct(heroStaticData.Stats);
+                .Construct(heroStaticData.Stats.HealthData);
             heroGameObject
                 .GetComponent<HeroAttack>()
                 .Construct(heroStaticData.Stats);
@@ -64,8 +67,8 @@ namespace CodeBase.Infrastructure.Factory
 
             {
                 var health = monsterGo.GetComponent<IHealth>();
-                health.Max = monsterData.Hp;
-                health.Current = monsterData.Hp;
+                health.Construct(monsterData.HealthData);
+
                 monsterGo.GetComponent<ActorUI>().Construct(health);
             }
 
@@ -102,7 +105,7 @@ namespace CodeBase.Infrastructure.Factory
             var spawner = InstantiateRegistered(AssetPath.EnemySpawner, at)
                 .GetComponent<SpawnPoint>();
 
-            spawner.Construct(this);
+            spawner.Construct(this, _saveLoadService);
             spawner.ID = spawnerId;
             spawner.MonsterTypeId = monsterTypeId;
 

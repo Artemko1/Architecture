@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace CodeBase.Data
+namespace CodeBase.StaticData.Hero
 {
     [Serializable]
-    public class Stats
+    public class HeroStats
     {
         public float Damage;
         public float DamageRadius;
-        public float MaxHP;
+        public HealthData HealthData;
     }
 }

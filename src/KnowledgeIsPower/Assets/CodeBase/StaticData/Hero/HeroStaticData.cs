@@ -1,12 +1,11 @@
-﻿using CodeBase.Data;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace CodeBase.StaticData
+namespace CodeBase.StaticData.Hero
 {
     [CreateAssetMenu(fileName = "HeroStaticData", menuName = "StaticData/Hero", order = 0)]
     public class HeroStaticData : ScriptableObject
     {
-        [SerializeField] private Stats _stats;
-        public Stats Stats => _stats;
+        [SerializeField] private HeroStats _stats;
+        public HeroStats Stats => _stats;
     }
 }

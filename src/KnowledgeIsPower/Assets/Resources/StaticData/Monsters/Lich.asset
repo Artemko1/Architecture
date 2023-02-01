@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Lich
   m_EditorClassIdentifier: 
   MonsterTypeId: 0
-  Hp: 4
+  HealthData:
+    <MaxHp>k__BackingField: 4
+  HealthData2:
+    <MaxHp>k__BackingField: 100
   Damage: 5
   AttackEffectiveDistance: 0.75
   AttackCleavage: 0.75

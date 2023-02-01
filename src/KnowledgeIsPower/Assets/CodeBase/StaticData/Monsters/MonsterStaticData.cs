@@ -7,7 +7,8 @@ namespace CodeBase.StaticData.Monsters
     {
         public MonsterTypeId MonsterTypeId;
 
-        [Range(1, 100)] public int Hp = 100;
+        public HealthData HealthData = new HealthData();
+
         [Range(1, 100)] public float Damage = 5;
 
         [Range(0.5f, 1f)] public float AttackEffectiveDistance = 0.75f;

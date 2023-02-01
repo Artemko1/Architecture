@@ -49,7 +49,7 @@ namespace CodeBase.Logic.Enemy
         public void PlayMove(float speed) => _animator.SetFloat(Speed, speed);
         public void StopMoving() => _animator.SetFloat(Speed, 0);
 
-        private AnimatorState StateFor(int stateHash)
+        private static AnimatorState StateFor(int stateHash)
         {
             AnimatorState state;
             if (stateHash == IdleStateHash)

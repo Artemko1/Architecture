@@ -49,11 +49,12 @@ namespace CodeBase.Infrastructure.States
             IRandomService randomService = new RandomService();
             _services.RegisterSingle(randomService);
 
-            IGameFactory factory = new GameFactory(assetProviderService, staticDataService, randomService, persistentProgressService);
-            _services.RegisterSingle(factory);
-
             ISaveLoadService saveLoadService = new SaveLoadService(persistentProgressService);
             _services.RegisterSingle(saveLoadService);
+
+            IGameFactory factory = new GameFactory(assetProviderService, staticDataService, randomService, persistentProgressService,
+                saveLoadService);
+            _services.RegisterSingle(factory);
         }
 
         private void RegisterInputService()

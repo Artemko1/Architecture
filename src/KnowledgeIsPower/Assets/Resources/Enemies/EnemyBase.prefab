@@ -516,7 +516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f77cff88a90444679f368062874f1554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyDeath: {fileID: 4812375546809364506}
+  _enemyHealth: {fileID: 7299013773521890215}
 --- !u!1 &6686475751549000599
 GameObject:
   m_ObjectHideFlags: 0

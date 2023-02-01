@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CodeBase.StaticData.Monsters;
 using UnityEngine;
 
 namespace CodeBase.StaticData

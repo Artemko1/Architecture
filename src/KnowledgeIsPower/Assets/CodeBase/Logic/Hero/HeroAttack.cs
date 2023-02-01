@@ -1,7 +1,7 @@
-﻿using CodeBase.Data;
-using CodeBase.Logic.Enemy;
+﻿using CodeBase.Logic.Enemy;
 using CodeBase.Services;
 using CodeBase.Services.Input;
+using CodeBase.StaticData.Hero;
 using UnityEngine;
 
 namespace CodeBase.Logic.Hero
@@ -15,7 +15,7 @@ namespace CodeBase.Logic.Hero
 
         private CharacterController _characterController;
         private HeroAnimator _heroAnimator;
-        private Stats _heroStats;
+        private HeroStats _heroStats;
         private IInputService _inputService;
 
         private void Awake()
@@ -36,7 +36,7 @@ namespace CodeBase.Logic.Hero
             }
         }
 
-        public void Construct(Stats heroStats) =>
+        public void Construct(HeroStats heroStats) =>
             _heroStats = heroStats;
 
         public void OnAttack() // called from animation events

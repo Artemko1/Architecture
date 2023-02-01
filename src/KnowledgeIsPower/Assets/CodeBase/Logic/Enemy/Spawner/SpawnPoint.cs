@@ -1,6 +1,5 @@
 ﻿using CodeBase.Data;
 using CodeBase.Infrastructure.Factory;
-using CodeBase.Services;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
 using CodeBase.StaticData.Monsters;
@@ -12,6 +11,7 @@ namespace CodeBase.Logic.Enemy.Spawner
     {
         private IGameFactory _factory;
         private ISaveLoadService _saveLoadService;
+
         private bool _slain;
 
         public MonsterTypeId MonsterTypeId { get; set; }
@@ -35,10 +35,10 @@ namespace CodeBase.Logic.Enemy.Spawner
             }
         }
 
-        public void Construct(IGameFactory gameFactory)
+        public void Construct(IGameFactory gameFactory, ISaveLoadService saveLoadService)
         {
             _factory = gameFactory;
-            _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
+            _saveLoadService = saveLoadService;
         }
 
         private void WriteToProgress(PlayerProgress progress)
@@ -52,7 +52,7 @@ namespace CodeBase.Logic.Enemy.Spawner
         private void Spawn()
         {
             GameObject monster = _factory.CreateMonster(MonsterTypeId, transform);
-            monster.GetComponent<EnemyDeath>().Happened += Slay;
+            monster.GetComponent<IHealth>().Died += Slay;
         }
 
         private void Slay() =>

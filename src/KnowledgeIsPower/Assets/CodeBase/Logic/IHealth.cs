@@ -1,13 +1,15 @@
 ﻿using System;
+using CodeBase.StaticData;
 
 namespace CodeBase.Logic
 {
     public interface IHealth
     {
-        float Current { get; set; }
-        float Max { get; set; }
+        float Current { get; }
+        float Max { get; }
         event Action HealthChanged;
-        void TakeDamage(float amount);
         event Action Died;
+        void TakeDamage(float amount);
+        void Construct(HealthData healthData);
     }
 }

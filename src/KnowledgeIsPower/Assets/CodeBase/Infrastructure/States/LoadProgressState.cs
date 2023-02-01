@@ -2,7 +2,7 @@
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticDataProvider;
-using CodeBase.StaticData;
+using CodeBase.StaticData.Hero;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -44,7 +44,7 @@ namespace CodeBase.Infrastructure.States
 
             HeroStaticData heroStaticData = _staticDataProviderService.ForHero();
 
-            var playerState = new PlayerState(positionOnLevel, heroStaticData.Stats.MaxHP);
+            var playerState = new PlayerState(positionOnLevel, heroStaticData.Stats.HealthData.MaxHp);
             var progress = new PlayerProgress(playerState);
 
             return progress;

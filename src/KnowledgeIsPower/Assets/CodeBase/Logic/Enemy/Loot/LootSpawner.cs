@@ -7,7 +7,8 @@ namespace CodeBase.Logic.Enemy.Loot
 {
     public class LootSpawner : MonoBehaviour
     {
-        public EnemyDeath EnemyDeath;
+        [SerializeField] private EnemyHealth _enemyHealth;
+
         private IGameFactory _gameFactory;
 
         private int _lootMax;
@@ -15,12 +16,18 @@ namespace CodeBase.Logic.Enemy.Loot
         private IRandomService _random;
 
         private void Start() =>
-            EnemyDeath.Happened += SpawnLoot;
+            _enemyHealth.Died += SpawnLoot;
 
         public void Construct(IGameFactory gameFactory, IRandomService random)
         {
             _gameFactory = gameFactory;
             _random = random;
+        }
+
+        public void SetLoot(int min, int max)
+        {
+            _lootMin = min;
+            _lootMax = max;
         }
 
         private void SpawnLoot()
@@ -33,11 +40,5 @@ namespace CodeBase.Logic.Enemy.Loot
 
         private LootItem GenerateLoot() =>
             new LootItem(_random.Next(_lootMin, _lootMax));
-
-        public void SetLoot(int min, int max)
-        {
-            _lootMin = min;
-            _lootMax = max;
-        }
     }
 }

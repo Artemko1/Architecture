@@ -2,6 +2,7 @@
 using CodeBase.Logic;
 using CodeBase.Logic.Enemy.Spawner;
 using CodeBase.StaticData;
+using CodeBase.StaticData.Monsters;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;

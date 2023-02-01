@@ -15,4 +15,5 @@ MonoBehaviour:
   _stats:
     Damage: 1
     DamageRadius: 0.75
-    MaxHP: 50
+    HealthData:
+      <MaxHp>k__BackingField: 50

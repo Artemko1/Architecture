@@ -1,4 +1,5 @@
 ﻿using CodeBase.StaticData;
+using CodeBase.StaticData.Hero;
 using CodeBase.StaticData.Monsters;
 
 namespace CodeBase.Services.StaticDataProvider

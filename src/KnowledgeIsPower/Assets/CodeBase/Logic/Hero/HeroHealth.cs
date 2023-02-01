@@ -3,6 +3,7 @@ using CodeBase.Data;
 using CodeBase.Services;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
+using CodeBase.StaticData;
 using UnityEngine;
 
 namespace CodeBase.Logic.Hero
@@ -10,10 +11,12 @@ namespace CodeBase.Logic.Hero
     [RequireComponent(typeof(HeroAnimator))]
     public class HeroHealth : MonoBehaviour, ISavedProgressReader, IHealth
     {
+        [SerializeField] private float _current = 5;
+
+        private HealthData _healthData;
+
         private HeroAnimator _heroAnimator;
-        private Stats _heroStats;
         private ISaveLoadService _saveLoadService;
-        private PlayerState _state;
 
         private void Awake()
         {
@@ -30,44 +33,41 @@ namespace CodeBase.Logic.Hero
         public event Action HealthChanged;
         public event Action Died;
 
-        public float Current
+        public void Construct(HealthData healthData) =>
+            _healthData = healthData;
+
+        public float Current => _current;
+        public float Max => _healthData.MaxHp;
+
+        public void TakeDamage(float amount)
         {
-            get => _state.CurrentHP;
-            set
+            if (_current <= 0 || amount <= 0) return;
+
+            _current = ClampCurrentHp(_current - amount);
+
+            HealthChanged?.Invoke();
+
+            if (_current <= 0)
             {
-                float clampedHP = Mathf.Clamp(value, 0, Max);
-                if (clampedHP == _state.CurrentHP) return;
-
-                _state.CurrentHP = clampedHP;
-                HealthChanged?.Invoke();
+                _heroAnimator.PlayDeath();
+                Died?.Invoke();
             }
-        }
-
-
-        public float Max
-        {
-            get => _heroStats.MaxHP;
-            set => throw new NotImplementedException();
-        }
-
-        public void TakeDamage(float damage)
-        {
-            if (Current <= 0) return;
-            Current -= damage;
-
-            _heroAnimator.PlayHit();
+            else
+            {
+                _heroAnimator.PlayHit();
+            }
         }
 
         public void ReadFromProgress(PlayerProgress progress)
         {
-            _state = progress.PlayerState;
+            _current = ClampCurrentHp(progress.PlayerState.CurrentHP);
             HealthChanged?.Invoke();
         }
 
-        public void Construct(Stats heroStats) =>
-            _heroStats = heroStats;
-
         private void WriteToProgress(PlayerProgress progress) =>
             progress.PlayerState.CurrentHP = Current;
+
+        private float ClampCurrentHp(float newCurrent) =>
+            Mathf.Clamp(newCurrent, 0, Max);
     }
 }
