@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc7aede07bc45b58c1b02115f3d00f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 0}
+  <Target>k__BackingField: {fileID: 0}
 --- !u!114 &2962617765625918661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a64d408b832a48048a90797160b21751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Target>k__BackingField: {fileID: 0}
   Cleavage: 0.8
   EffectiveDistance: 0.75
   Damage: 5
@@ -167,8 +168,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c05105d9ab26440baf5958db948b67fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  current: 5
-  max: 5
+  _current: 5
+  _max: 5
 --- !u!114 &4812375546809364506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -643,7 +644,7 @@ GameObject:
   - component: {fileID: 6563368802132271985}
   - component: {fileID: 5257320823838068639}
   - component: {fileID: 4208631067281441215}
-  m_Layer: 18
+  m_Layer: 14
   m_Name: AttackZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

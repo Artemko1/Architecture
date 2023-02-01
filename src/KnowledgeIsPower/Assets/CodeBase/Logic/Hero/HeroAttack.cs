@@ -25,7 +25,7 @@ namespace CodeBase.Logic.Hero
 
             _inputService = AllServices.Container.Single<IInputService>();
 
-            _layerMask = 1 << LayerMask.NameToLayer("Hittable");
+            _layerMask = 1 << LayerMask.NameToLayer(Constants.Layers.Hittable);
         }
 
         private void Update()

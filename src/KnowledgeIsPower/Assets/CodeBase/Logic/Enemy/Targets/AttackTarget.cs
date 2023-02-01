@@ -27,7 +27,7 @@ namespace CodeBase.Logic.Enemy.Targets
         {
             base.Awake();
             _enemyAnimator = GetComponent<EnemyAnimator>();
-            _layerMask = 1 << LayerMask.NameToLayer("Player");
+            _layerMask = 1 << LayerMask.NameToLayer(Constants.Layers.Player);
 
             _rangeObserver.TriggerEnter += _ => _isInRange = true;
             _rangeObserver.TriggerExit += _ => _isInRange = false;

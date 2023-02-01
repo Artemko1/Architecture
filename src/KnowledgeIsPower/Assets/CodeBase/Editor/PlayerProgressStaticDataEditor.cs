@@ -9,8 +9,6 @@ namespace CodeBase.Editor
     [CustomEditor(typeof(PlayerProgressStaticData))]
     public class PlayerProgressStaticDataEditor : UnityEditor.Editor
     {
-        private const string InitialPointTag = "InitialPoint"; // todo вынести в общие константы
-
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
@@ -27,7 +25,7 @@ namespace CodeBase.Editor
 
             playerProgressStaticData.PositionOnLevel.LevelName = SceneManager.GetActiveScene().name;
 
-            Vector3 initialPosition = GameObject.FindWithTag(InitialPointTag).transform.position;
+            Vector3 initialPosition = GameObject.FindWithTag(Constants.Tags.InitialPoint).transform.position;
             playerProgressStaticData.PositionOnLevel.Position = initialPosition.AsVector3Data();
 
             EditorUtility.SetDirty(playerProgressStaticData);
