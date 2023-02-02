@@ -1,5 +1,5 @@
 ﻿using System;
-using CodeBase.StaticData;
+using CodeBase.StaticData.ForComponents;
 using UnityEngine;
 
 namespace CodeBase.Logic.Enemy

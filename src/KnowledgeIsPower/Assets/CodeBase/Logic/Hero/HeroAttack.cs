@@ -43,17 +43,17 @@ namespace CodeBase.Logic.Hero
         {
             int hitCount = Hit();
 
-            PhysicsDebug.DrawDebug(StartPoint(), _heroStats.DamageRadius, 3f);
+            PhysicsDebug.DrawDebug(StartPoint(), _heroStats.AttackData.Radius, 3f);
 
             for (var i = 0; i < hitCount; i++)
             {
                 Collider hit = _hits[i];
-                hit.transform.parent.GetComponent<IHealth>().TakeDamage(_heroStats.Damage);
+                hit.transform.parent.GetComponent<IHealth>().TakeDamage(_heroStats.AttackData.Damage);
             }
         }
 
         private int Hit() =>
-            Physics.OverlapSphereNonAlloc(StartPoint(), _heroStats.DamageRadius, _hits, _layerMask);
+            Physics.OverlapSphereNonAlloc(StartPoint(), _heroStats.AttackData.Radius, _hits, _layerMask);
 
         private Vector3 StartPoint()
         {

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using CodeBase.StaticData.ForComponents;
+using UnityEngine;
 
 namespace CodeBase.StaticData.Monsters
 {
@@ -8,13 +9,9 @@ namespace CodeBase.StaticData.Monsters
         public MonsterTypeId MonsterTypeId;
 
         public HealthData HealthData = new HealthData();
+        public AttackData AttackData = new AttackData();
 
-        [Range(1, 100)] public float Damage = 5;
-
-        [Range(0.5f, 1f)] public float AttackEffectiveDistance = 0.75f;
-        [Range(0.5f, 1f)] public float AttackCleavage = 0.75f;
-
-        [Range(1f, 10f)] public float MoveSpeed = 4f;
+        [Range(1f, 10f)] public float MoveSpeed = 4f; // todo make MoveData class
 
         public int MinLoot;
         public int MaxLoot;

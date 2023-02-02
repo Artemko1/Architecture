@@ -15,11 +15,10 @@ MonoBehaviour:
   MonsterTypeId: 0
   HealthData:
     <MaxHp>k__BackingField: 4
-  HealthData2:
-    <MaxHp>k__BackingField: 100
-  Damage: 5
-  AttackEffectiveDistance: 0.75
-  AttackCleavage: 0.75
+  AttackData:
+    <Damage>k__BackingField: 5
+    <Radius>k__BackingField: 0.75
+    <Distance>k__BackingField: 0.75
   MoveSpeed: 4
   MinLoot: 1
   MaxLoot: 7

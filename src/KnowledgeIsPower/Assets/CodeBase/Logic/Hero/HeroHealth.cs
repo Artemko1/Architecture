@@ -3,7 +3,7 @@ using CodeBase.Data;
 using CodeBase.Services;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
-using CodeBase.StaticData;
+using CodeBase.StaticData.ForComponents;
 using UnityEngine;
 
 namespace CodeBase.Logic.Hero

@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: DefaultHeroStaticData
   m_EditorClassIdentifier: 
   _stats:
-    Damage: 1
-    DamageRadius: 0.75
+    AttackData:
+      <Damage>k__BackingField: 5
+      <Radius>k__BackingField: 0.75
+      <Distance>k__BackingField: 0.75
     HealthData:
       <MaxHp>k__BackingField: 50

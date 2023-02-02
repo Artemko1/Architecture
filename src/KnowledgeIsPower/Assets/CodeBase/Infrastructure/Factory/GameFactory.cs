@@ -76,9 +76,10 @@ namespace CodeBase.Infrastructure.Factory
 
             {
                 var attack = monsterGo.GetComponent<AttackTarget>();
-                attack.Damage = monsterData.Damage;
-                attack.Cleavage = monsterData.AttackCleavage;
-                attack.EffectiveDistance = monsterData.AttackEffectiveDistance;
+                // attack.Construct(monsterData.AttackData);
+                attack.Damage = monsterData.AttackData.Damage;
+                attack.Cleavage = monsterData.AttackData.Radius;
+                attack.EffectiveDistance = monsterData.AttackData.Distance;
             }
 
             var lootSpawner = monsterGo.GetComponentInChildren<LootSpawner>();

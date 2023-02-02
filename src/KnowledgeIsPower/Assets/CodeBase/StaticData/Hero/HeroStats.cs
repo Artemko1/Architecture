@@ -1,12 +1,12 @@
 ﻿using System;
+using CodeBase.StaticData.ForComponents;
 
 namespace CodeBase.StaticData.Hero
 {
     [Serializable]
-    public class HeroStats
+    public class HeroStats // todo probably should inline class
     {
-        public float Damage;
-        public float DamageRadius;
+        public AttackData AttackData;
         public HealthData HealthData;
     }
 }
