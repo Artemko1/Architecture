@@ -7,33 +7,37 @@ using UnityEngine;
 // Check is performed every 0.5 seconds to not query the particle system's state every frame.
 // (only deactivates the object if the OnlyDeactivate flag is set, automatically used with CFX Spawn System)
 
-[RequireComponent(typeof(ParticleSystem))]
-public class CFX_AutoDestructShuriken : MonoBehaviour
+namespace Plugins.JMO_Assets.Cartoon_FX__legacy_.Scripts
 {
-    // If true, deactivate the object instead of destroying it
-    public bool OnlyDeactivate;
-
-    private void OnEnable()
+    [RequireComponent(typeof(ParticleSystem))]
+    public class CFX_AutoDestructShuriken : MonoBehaviour
     {
-        StartCoroutine(CheckIfAlive());
-    }
+        // If true, deactivate the object instead of destroying it
+        public bool OnlyDeactivate;
 
-    private IEnumerator CheckIfAlive()
-    {
-        var ps = GetComponent<ParticleSystem>();
+        private void OnEnable() => StartCoroutine(CheckIfAlive());
 
-        while (ps != null)
+        private IEnumerator CheckIfAlive()
         {
-            yield return new WaitForSeconds(0.5f);
+            var ps = GetComponent<ParticleSystem>();
 
-            if (ps.IsAlive(true)) continue;
+            while (ps != null)
+            {
+                yield return new WaitForSeconds(0.5f);
 
-            if (OnlyDeactivate)
-                gameObject.SetActive(false);
-            else
-                Destroy(gameObject);
+                if (ps.IsAlive(true)) continue;
 
-            break;
+                if (OnlyDeactivate)
+                {
+                    gameObject.SetActive(false);
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
+
+                break;
+            }
         }
     }
 }

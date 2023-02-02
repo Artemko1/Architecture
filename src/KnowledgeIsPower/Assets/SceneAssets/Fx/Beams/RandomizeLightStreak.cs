@@ -1,28 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomizeLightStreak : MonoBehaviour
+namespace SceneAssets.Fx.Beams
 {
-    public Vector2 streakWidthRange = new Vector2(2, 2);
-
-    void Awake()
+    public class RandomizeLightStreak : MonoBehaviour
     {
-        LineRenderer lr = GetComponent<LineRenderer>();
-        Light l = GetComponent<Light>();
-        float r = Random.Range(streakWidthRange.x, streakWidthRange.y);
+        public Vector2 streakWidthRange = new Vector2(2, 2);
 
-        if (lr != null)
+        private void Awake()
         {
-            lr.startWidth = r;
-            lr.endWidth = r;
-        }
+            var lr = GetComponent<LineRenderer>();
+            var l = GetComponent<Light>();
+            float r = Random.Range(streakWidthRange.x, streakWidthRange.y);
 
-        if (l != null && l.type == LightType.Spot)
-        {
-            l.spotAngle = r * 3;
+            if (lr != null)
+            {
+                lr.startWidth = r;
+                lr.endWidth = r;
+            }
+
+            if (l != null && l.type == LightType.Spot)
+            {
+                l.spotAngle = r * 3;
+            }
         }
     }
-
-
 }
