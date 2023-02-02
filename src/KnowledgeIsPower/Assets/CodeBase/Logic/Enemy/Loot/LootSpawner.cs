@@ -2,6 +2,7 @@
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Services.Randomizer;
 using UnityEngine;
+using LootData = CodeBase.StaticData.ForComponents.LootData;
 
 namespace CodeBase.Logic.Enemy.Loot
 {
@@ -10,24 +11,19 @@ namespace CodeBase.Logic.Enemy.Loot
         [SerializeField] private EnemyHealth _enemyHealth;
 
         private IGameFactory _gameFactory;
+        private LootData _lootData;
 
-        private int _lootMax;
-        private int _lootMin;
         private IRandomService _random;
 
         private void Start() =>
             _enemyHealth.Died += SpawnLoot;
 
-        public void Construct(IGameFactory gameFactory, IRandomService random)
+        public void Construct(IGameFactory gameFactory, IRandomService random, LootData monsterDataLootData)
         {
             _gameFactory = gameFactory;
             _random = random;
-        }
 
-        public void SetLoot(int min, int max)
-        {
-            _lootMin = min;
-            _lootMax = max;
+            _lootData = monsterDataLootData;
         }
 
         private void SpawnLoot()
@@ -39,6 +35,6 @@ namespace CodeBase.Logic.Enemy.Loot
         }
 
         private LootItem GenerateLoot() =>
-            new LootItem(_random.Next(_lootMin, _lootMax));
+            new LootItem(_random.Next(_lootData.MinLoot, _lootData.MaxLoot));
     }
 }

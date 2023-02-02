@@ -44,7 +44,7 @@ namespace CodeBase.Infrastructure.States
 
             HeroStaticData heroStaticData = _staticDataProviderService.ForHero();
 
-            var playerState = new PlayerState(positionOnLevel, heroStaticData.Stats.HealthData.MaxHp);
+            var playerState = new PlayerState(positionOnLevel, heroStaticData.HealthData.MaxHp);
             var progress = new PlayerProgress(playerState);
 
             return progress;

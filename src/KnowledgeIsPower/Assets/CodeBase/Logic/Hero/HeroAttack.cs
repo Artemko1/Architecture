@@ -1,7 +1,7 @@
 ﻿using CodeBase.Logic.Enemy;
 using CodeBase.Services;
 using CodeBase.Services.Input;
-using CodeBase.StaticData.Hero;
+using CodeBase.StaticData.ForComponents;
 using UnityEngine;
 
 namespace CodeBase.Logic.Hero
@@ -12,10 +12,10 @@ namespace CodeBase.Logic.Hero
         private static int _layerMask;
 
         private readonly Collider[] _hits = new Collider[3];
+        private AttackData _attackData;
 
         private CharacterController _characterController;
         private HeroAnimator _heroAnimator;
-        private HeroStats _heroStats;
         private IInputService _inputService;
 
         private void Awake()
@@ -36,24 +36,24 @@ namespace CodeBase.Logic.Hero
             }
         }
 
-        public void Construct(HeroStats heroStats) =>
-            _heroStats = heroStats;
+        public void Construct(AttackData attackData) =>
+            _attackData = attackData;
 
         public void OnAttack() // called from animation events
         {
             int hitCount = Hit();
 
-            PhysicsDebug.DrawDebug(StartPoint(), _heroStats.AttackData.Radius, 3f);
+            PhysicsDebug.DrawDebug(StartPoint(), _attackData.Radius, 3f);
 
             for (var i = 0; i < hitCount; i++)
             {
                 Collider hit = _hits[i];
-                hit.transform.parent.GetComponent<IHealth>().TakeDamage(_heroStats.AttackData.Damage);
+                hit.transform.parent.GetComponent<IHealth>().TakeDamage(_attackData.Damage);
             }
         }
 
         private int Hit() =>
-            Physics.OverlapSphereNonAlloc(StartPoint(), _heroStats.AttackData.Radius, _hits, _layerMask);
+            Physics.OverlapSphereNonAlloc(StartPoint(), _attackData.Radius, _hits, _layerMask);
 
         private Vector3 StartPoint()
         {

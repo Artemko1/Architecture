@@ -41,10 +41,10 @@ namespace CodeBase.Infrastructure.Factory
 
             heroGameObject
                 .GetComponent<HeroHealth>()
-                .Construct(heroStaticData.Stats.HealthData);
+                .Construct(heroStaticData.HealthData);
             heroGameObject
                 .GetComponent<HeroAttack>()
-                .Construct(heroStaticData.Stats);
+                .Construct(heroStaticData.AttackData);
 
             ActivateProgressReaders(heroGameObject);
             return heroGameObject;
@@ -76,15 +76,11 @@ namespace CodeBase.Infrastructure.Factory
 
             {
                 var attack = monsterGo.GetComponent<AttackTarget>();
-                // attack.Construct(monsterData.AttackData);
-                attack.Damage = monsterData.AttackData.Damage;
-                attack.Cleavage = monsterData.AttackData.Radius;
-                attack.EffectiveDistance = monsterData.AttackData.Distance;
+                attack.Construct(monsterData.AttackData);
             }
 
             var lootSpawner = monsterGo.GetComponentInChildren<LootSpawner>();
-            lootSpawner.Construct(this, _randomService);
-            lootSpawner.SetLoot(monsterData.MinLoot, monsterData.MaxLoot);
+            lootSpawner.Construct(this, _randomService, monsterData.LootData);
 
             return monsterGo;
         }

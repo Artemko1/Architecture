@@ -11,10 +11,9 @@ namespace CodeBase.StaticData.Monsters
         public HealthData HealthData = new HealthData();
         public AttackData AttackData = new AttackData();
 
-        [Range(1f, 10f)] public float MoveSpeed = 4f; // todo make MoveData class
+        [Range(1f, 10f)] public float MoveSpeed = 4f;
 
-        public int MinLoot;
-        public int MaxLoot;
+        public LootData LootData = new LootData();
 
         public GameObject Prefab;
     }

@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4100e8b9ceec4a81bdec28aa43b5c72a, type: 3}
   m_Name: DefaultHeroStaticData
   m_EditorClassIdentifier: 
-  _stats:
-    AttackData:
-      <Damage>k__BackingField: 5
-      <Radius>k__BackingField: 0.75
-      <Distance>k__BackingField: 0.75
-    HealthData:
-      <MaxHp>k__BackingField: 50
+  AttackData:
+    <Damage>k__BackingField: 1
+    <Radius>k__BackingField: 1
+    <Distance>k__BackingField: 1
+  HealthData:
+    <MaxHp>k__BackingField: 50
