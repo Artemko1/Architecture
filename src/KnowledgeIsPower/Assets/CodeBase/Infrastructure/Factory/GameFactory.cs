@@ -10,7 +10,7 @@ using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticDataProvider;
 using CodeBase.StaticData.Hero;
 using CodeBase.StaticData.Monsters;
-using CodeBase.UI;
+using CodeBase.UI.Elements;
 using UnityEngine;
 using UnityEngine.AI;
 

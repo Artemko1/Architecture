@@ -5,7 +5,7 @@ using CodeBase.Logic.Hero;
 using CodeBase.Services.StaticDataProvider;
 using CodeBase.StaticData;
 using CodeBase.StaticData.Monsters;
-using CodeBase.UI;
+using CodeBase.UI.Elements;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

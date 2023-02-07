@@ -1,6 +1,8 @@
 ﻿using CodeBase.StaticData;
 using CodeBase.StaticData.Hero;
 using CodeBase.StaticData.Monsters;
+using CodeBase.StaticData.Windows;
+using CodeBase.UI.Services.Windows;
 
 namespace CodeBase.Services.StaticDataProvider
 {
@@ -11,5 +13,6 @@ namespace CodeBase.Services.StaticDataProvider
         LevelStaticData ForLevel(string sceneName);
         PlayerProgressStaticData ForNewGame();
         HeroStaticData ForHero();
+        WindowConfig ForWindow(WindowId shop);
     }
 }

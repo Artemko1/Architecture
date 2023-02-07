@@ -6,6 +6,8 @@ using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.Randomizer;
 using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticDataProvider;
+using CodeBase.UI.Services.Factory;
+using CodeBase.UI.Services.Windows;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
@@ -55,6 +57,12 @@ namespace CodeBase.Infrastructure.States
             IGameFactory factory = new GameFactory(assetProviderService, staticDataService, randomService, persistentProgressService,
                 saveLoadService);
             _services.RegisterSingle(factory);
+
+            IUIFactory uiFactory = new UIFactory(assetProviderService, staticDataService);
+            _services.RegisterSingle(uiFactory);
+
+            IWindowService windowService = new WindowService(uiFactory);
+            _services.RegisterSingle(windowService);
         }
 
         private void RegisterInputService()
