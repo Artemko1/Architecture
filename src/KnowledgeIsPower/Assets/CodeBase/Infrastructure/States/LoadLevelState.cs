@@ -6,6 +6,7 @@ using CodeBase.Services.StaticDataProvider;
 using CodeBase.StaticData;
 using CodeBase.StaticData.Monsters;
 using CodeBase.UI.Elements;
+using CodeBase.UI.Services.Factory;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,15 +20,17 @@ namespace CodeBase.Infrastructure.States
 
         private readonly GameStateMachine _stateMachine;
         private readonly IStaticDataProviderService _staticData;
+        private readonly IUIFactory _uiFactory;
 
         public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory,
-            IStaticDataProviderService staticData)
+            IStaticDataProviderService staticData, IUIFactory uiFactory)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _curtain = curtain;
             _gameFactory = gameFactory;
             _staticData = staticData;
+            _uiFactory = uiFactory;
         }
 
         public void Enter(string sceneName)
@@ -41,10 +44,14 @@ namespace CodeBase.Infrastructure.States
 
         private void OnLoaded()
         {
+            InitUIRoot();
             InitGameWorld();
 
             _stateMachine.Enter<GameLoopState>();
         }
+
+        private void InitUIRoot() =>
+            _uiFactory.CreateUIRoot();
 
         private void InitGameWorld()
         {

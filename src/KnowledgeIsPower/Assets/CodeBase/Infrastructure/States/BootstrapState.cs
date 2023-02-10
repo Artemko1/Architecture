@@ -54,15 +54,15 @@ namespace CodeBase.Infrastructure.States
             ISaveLoadService saveLoadService = new SaveLoadService(persistentProgressService);
             _services.RegisterSingle(saveLoadService);
 
-            IGameFactory factory = new GameFactory(assetProviderService, staticDataService, randomService, persistentProgressService,
-                saveLoadService);
-            _services.RegisterSingle(factory);
-
-            IUIFactory uiFactory = new UIFactory(assetProviderService, staticDataService);
+            IUIFactory uiFactory = new UIFactory(assetProviderService, staticDataService, persistentProgressService);
             _services.RegisterSingle(uiFactory);
 
             IWindowService windowService = new WindowService(uiFactory);
             _services.RegisterSingle(windowService);
+
+            IGameFactory factory = new GameFactory(assetProviderService, staticDataService, randomService, persistentProgressService,
+                saveLoadService, windowService);
+            _services.RegisterSingle(factory);
         }
 
         private void RegisterInputService()

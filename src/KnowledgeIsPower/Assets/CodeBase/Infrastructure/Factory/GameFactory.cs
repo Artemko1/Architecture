@@ -11,6 +11,7 @@ using CodeBase.Services.StaticDataProvider;
 using CodeBase.StaticData.Hero;
 using CodeBase.StaticData.Monsters;
 using CodeBase.UI.Elements;
+using CodeBase.UI.Services.Windows;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -23,15 +24,17 @@ namespace CodeBase.Infrastructure.Factory
         private readonly IRandomService _randomService;
         private readonly ISaveLoadService _saveLoadService;
         private readonly IStaticDataProviderService _staticData;
+        private readonly IWindowService _windowService;
 
         public GameFactory(IAssetProviderService assetProviderService, IStaticDataProviderService staticData, IRandomService randomService,
-            IPersistentProgressService progressService, ISaveLoadService saveLoadService)
+            IPersistentProgressService progressService, ISaveLoadService saveLoadService, IWindowService windowService)
         {
             _assetProvider = assetProviderService;
             _staticData = staticData;
             _randomService = randomService;
             _progressService = progressService;
             _saveLoadService = saveLoadService;
+            _windowService = windowService;
         }
 
         public GameObject CreateHero()
@@ -55,6 +58,11 @@ namespace CodeBase.Infrastructure.Factory
             GameObject hud = InstantiateRegistered(AssetPath.HudPath);
             hud.GetComponentInChildren<LootCounter>()
                 .Construct(_progressService.Progress.PlayerState.LootData);
+
+            foreach (OpenWindowButton windowButton in hud.GetComponentsInChildren<OpenWindowButton>())
+            {
+                windowButton.Construct(_windowService);
+            }
 
             ActivateProgressReaders(hud);
             return hud;

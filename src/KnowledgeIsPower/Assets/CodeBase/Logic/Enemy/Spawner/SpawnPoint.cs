@@ -20,7 +20,15 @@ namespace CodeBase.Logic.Enemy.Spawner
         private void Start() =>
             _saveLoadService.OnSave += WriteToProgress;
 
-        private void OnDestroy() =>
+        private void OnEnable()
+        {
+            if (_saveLoadService != null)
+            {
+                _saveLoadService.OnSave += WriteToProgress;
+            }
+        }
+
+        private void OnDisable() =>
             _saveLoadService.OnSave -= WriteToProgress;
 
         public void ReadFromProgress(PlayerProgress progress)

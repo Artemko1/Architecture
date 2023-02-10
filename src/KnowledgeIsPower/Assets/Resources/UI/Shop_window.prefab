@@ -718,6 +718,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CloseButton: {fileID: 8403155323814570292}
+  _currencyText: {fileID: 1929982370551749383}
 --- !u!1 &8403155323242074652
 GameObject:
   m_ObjectHideFlags: 0
