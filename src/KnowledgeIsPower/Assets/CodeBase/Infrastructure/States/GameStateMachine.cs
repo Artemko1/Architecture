@@ -36,8 +36,7 @@ namespace CodeBase.Infrastructure.States
                     typeof(LoadProgressState),
                     new LoadProgressState(this,
                         services.Single<IPersistentProgressService>(),
-                        services.Single<ISaveLoadService>(),
-                        services.Single<IStaticDataProviderService>())
+                        services.Single<ISaveLoadService>())
                 },
                 {
                     typeof(GameLoopState),

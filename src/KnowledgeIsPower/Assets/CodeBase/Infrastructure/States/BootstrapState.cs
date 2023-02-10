@@ -15,6 +15,7 @@ namespace CodeBase.Infrastructure.States
     public class BootstrapState : IState
     {
         private const string Initial = "Initial";
+
         private readonly SceneLoader _sceneLoader;
         private readonly AllServices _services;
 
@@ -30,7 +31,7 @@ namespace CodeBase.Infrastructure.States
         }
 
         public void Enter() =>
-            _sceneLoader.Load(Initial, EnterLoadLevel);
+            _sceneLoader.Load(Initial, EnterLoadProgress);
 
         public void Exit()
         {
@@ -48,10 +49,7 @@ namespace CodeBase.Infrastructure.States
             IPersistentProgressService persistentProgressService = new PersistentProgressService();
             _services.RegisterSingle(persistentProgressService);
 
-            IRandomService randomService = new RandomService();
-            _services.RegisterSingle(randomService);
-
-            ISaveLoadService saveLoadService = new SaveLoadService(persistentProgressService);
+            ISaveLoadService saveLoadService = new SaveLoadService(persistentProgressService, staticDataService);
             _services.RegisterSingle(saveLoadService);
 
             IUIFactory uiFactory = new UIFactory(assetProviderService, staticDataService, persistentProgressService);
@@ -59,6 +57,9 @@ namespace CodeBase.Infrastructure.States
 
             IWindowService windowService = new WindowService(uiFactory);
             _services.RegisterSingle(windowService);
+
+            IRandomService randomService = new RandomService();
+            _services.RegisterSingle(randomService);
 
             IGameFactory factory = new GameFactory(assetProviderService, staticDataService, randomService, persistentProgressService,
                 saveLoadService, windowService);
@@ -81,7 +82,7 @@ namespace CodeBase.Infrastructure.States
             return staticData;
         }
 
-        private void EnterLoadLevel() =>
+        private void EnterLoadProgress() =>
             _stateMachine.Enter<LoadProgressState>();
     }
 }
