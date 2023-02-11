@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7fed03432b4416b9915922715b9a668, type: 3}
+  m_Name: Dragon
+  m_EditorClassIdentifier: 
+  MonsterTypeId: 3
+  HealthData:
+    <MaxHp>k__BackingField: 16
+  AttackData:
+    <Damage>k__BackingField: 12
+    <Radius>k__BackingField: 1
+    <Distance>k__BackingField: 1
+  MoveSpeed: 3
+  LootData:
+    <MinLoot>k__BackingField: 8
+    <MaxLoot>k__BackingField: 10
+  Prefab: {fileID: 1338327773718399625, guid: 2b6fe3d432419e148af55c6339f6f308, type: 3}

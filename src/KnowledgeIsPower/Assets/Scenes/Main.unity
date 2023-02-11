@@ -99,7 +99,8 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 7a711b4223c630c4ebd59b181fcd6052,
     type: 2}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 2d71d0bd42bc2674c96e5de987faa46b,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -677,6 +678,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7083752189495243862, guid: c77cd49727ea4e640acd820c5cb84f65,
+        type: 3}
+      propertyPath: MonsterTypeId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9108044843722818475, guid: c77cd49727ea4e640acd820c5cb84f65,
         type: 3}
       propertyPath: Id
@@ -1118,6 +1124,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7083752189495243862, guid: c77cd49727ea4e640acd820c5cb84f65,
+        type: 3}
+      propertyPath: MonsterTypeId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9108044843722818475, guid: c77cd49727ea4e640acd820c5cb84f65,
         type: 3}
       propertyPath: Id
@@ -1198,6 +1209,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7083752189495243862, guid: c77cd49727ea4e640acd820c5cb84f65,
+        type: 3}
+      propertyPath: MonsterTypeId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9108044843722818475, guid: c77cd49727ea4e640acd820c5cb84f65,
         type: 3}
       propertyPath: Id
@@ -1277,6 +1293,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7083752189495243862, guid: c77cd49727ea4e640acd820c5cb84f65,
+        type: 3}
+      propertyPath: MonsterTypeId
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9108044843722818475, guid: c77cd49727ea4e640acd820c5cb84f65,
         type: 3}
@@ -1585,7 +1606,7 @@ PrefabInstance:
     - target: {fileID: 7083752189495243862, guid: c77cd49727ea4e640acd820c5cb84f65,
         type: 3}
       propertyPath: MonsterTypeId
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9108044843722818475, guid: c77cd49727ea4e640acd820c5cb84f65,
         type: 3}
@@ -4406,6 +4427,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7083752189495243862, guid: c77cd49727ea4e640acd820c5cb84f65,
+        type: 3}
+      propertyPath: MonsterTypeId
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9108044843722818475, guid: c77cd49727ea4e640acd820c5cb84f65,
         type: 3}

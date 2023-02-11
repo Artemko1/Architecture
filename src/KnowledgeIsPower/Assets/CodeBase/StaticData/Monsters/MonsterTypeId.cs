@@ -2,7 +2,8 @@
 {
     public enum MonsterTypeId
     {
-        Lich = 0,
-        Golem = 10,
+        Lich = 1,
+        Golem = 2,
+        Dragon = 3,
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7fed03432b4416b9915922715b9a668, type: 3}
   m_Name: Lich
   m_EditorClassIdentifier: 
-  MonsterTypeId: 0
+  MonsterTypeId: 1
   HealthData:
     <MaxHp>k__BackingField: 4
   AttackData:
