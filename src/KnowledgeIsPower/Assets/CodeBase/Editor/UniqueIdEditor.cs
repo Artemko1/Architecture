@@ -12,11 +12,11 @@ namespace CodeBase.Editor
     {
         private void OnEnable()
         {
-            var uniqueId = target as UniqueId;
+            var uniqueId = (UniqueId)target;
 
             if (IsPrefabAsset(uniqueId!.gameObject)) return;
 
-            if (string.IsNullOrWhiteSpace(uniqueId!.Id))
+            if (string.IsNullOrWhiteSpace(uniqueId.Id))
             {
                 Generate(uniqueId);
             }

@@ -53,7 +53,7 @@ namespace CodeBase.Logic.Hero
         {
             if (GetCurrentLevel() != progress.PlayerState.PositionOnLevel.LevelName) return;
 
-            Vector3Data savedPosition = progress.PlayerState.PositionOnLevel.Position;
+            Vector3 savedPosition = progress.PlayerState.PositionOnLevel.Position.AsUnityVector3();
 
             Warp(savedPosition);
         }
@@ -64,10 +64,10 @@ namespace CodeBase.Logic.Hero
             progress.PlayerState.PositionOnLevel = new PositionOnLevel(GetCurrentLevel(), transform.position.AsVector3Data());
         }
 
-        private void Warp(Vector3Data to)
+        private void Warp(Vector3 to)
         {
             _characterController.enabled = false;
-            transform.position = to.AsUnityVector3().AddY(_characterController.height * 2f);
+            transform.position = to.AddY(_characterController.height * 2f);
             _characterController.enabled = true;
         }
 

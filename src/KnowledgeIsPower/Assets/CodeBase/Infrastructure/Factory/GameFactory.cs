@@ -37,9 +37,9 @@ namespace CodeBase.Infrastructure.Factory
             _windowService = windowService;
         }
 
-        public GameObject CreateHero()
+        public GameObject CreateHero(Vector3 initialHeroPosition)
         {
-            GameObject heroGameObject = InstantiateRegistered(AssetPath.HeroPath);
+            GameObject heroGameObject = Instantiate(AssetPath.HeroPath, initialHeroPosition);
             HeroStaticData heroStaticData = _staticData.ForHero();
 
             heroGameObject
@@ -55,7 +55,7 @@ namespace CodeBase.Infrastructure.Factory
 
         public GameObject CreateHud()
         {
-            GameObject hud = InstantiateRegistered(AssetPath.HudPath);
+            GameObject hud = Instantiate(AssetPath.HudPath);
             hud.GetComponentInChildren<LootCounter>()
                 .Construct(_progressService.Progress.PlayerState.LootData);
 
@@ -93,9 +93,9 @@ namespace CodeBase.Infrastructure.Factory
             return monsterGo;
         }
 
-        public LootPiece CreateLoot()
+        public LootPiece CreateLoot(Vector3 at)
         {
-            var lootPiece = InstantiateRegistered(AssetPath.Loot)
+            var lootPiece = Instantiate(AssetPath.Loot, at)
                 .GetComponent<LootPiece>();
 
             lootPiece.Construct(_progressService.Progress.PlayerState.LootData);
@@ -107,28 +107,20 @@ namespace CodeBase.Infrastructure.Factory
 
         public SpawnPoint CreateSpawner(Vector3 at, string spawnerId, MonsterTypeId monsterTypeId)
         {
-            var spawner = InstantiateRegistered(AssetPath.EnemySpawner, at)
+            var spawner = Instantiate(AssetPath.EnemySpawner, at)
                 .GetComponent<SpawnPoint>();
 
-            spawner.Construct(this, _saveLoadService);
-            spawner.ID = spawnerId;
-            spawner.MonsterTypeId = monsterTypeId;
+            spawner.Construct(this, _saveLoadService, spawnerId, monsterTypeId);
 
             ActivateProgressReaders(spawner.gameObject);
             return spawner;
         }
 
-        private GameObject InstantiateRegistered(string prefabPath)
-        {
-            GameObject gameObject = _assetProvider.Instantiate(prefabPath);
-            return gameObject;
-        }
+        private GameObject Instantiate(string prefabPath) =>
+            _assetProvider.Instantiate(prefabPath);
 
-        private GameObject InstantiateRegistered(string prefabPath, Vector3 at)
-        {
-            GameObject gameObject = _assetProvider.Instantiate(prefabPath, at);
-            return gameObject;
-        }
+        private GameObject Instantiate(string prefabPath, Vector3 at) =>
+            _assetProvider.Instantiate(prefabPath, at);
 
         private void ActivateProgressReaders(GameObject gameObject)
         {

@@ -8,11 +8,11 @@ namespace CodeBase.Infrastructure.Factory
 {
     public interface IGameFactory : IService
     {
-        GameObject CreateHero();
+        GameObject CreateHero(Vector3 initialHeroPosition);
         GameObject CreateHud();
 
         GameObject CreateMonster(MonsterTypeId monsterTypeId, Transform parent);
-        LootPiece CreateLoot();
+        LootPiece CreateLoot(Vector3 at);
         SpawnPoint CreateSpawner(Vector3 at, string spawnerId, MonsterTypeId monsterTypeId);
     }
 }

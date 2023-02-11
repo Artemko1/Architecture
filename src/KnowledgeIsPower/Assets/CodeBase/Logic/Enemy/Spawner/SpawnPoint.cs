@@ -10,12 +10,12 @@ namespace CodeBase.Logic.Enemy.Spawner
     public class SpawnPoint : MonoBehaviour, ISavedProgressReader
     {
         private IGameFactory _factory;
+        private string _id;
+
+        private MonsterTypeId _monsterTypeId;
         private ISaveLoadService _saveLoadService;
 
         private bool _slain;
-
-        public MonsterTypeId MonsterTypeId { get; set; }
-        public string ID { get; set; }
 
         private void Start() =>
             _saveLoadService.OnSave += WriteToProgress;
@@ -33,7 +33,7 @@ namespace CodeBase.Logic.Enemy.Spawner
 
         public void ReadFromProgress(PlayerProgress progress)
         {
-            if (progress.WorldState.KillData.ClearedSpawnersIds.Contains(ID))
+            if (progress.WorldState.KillData.ClearedSpawnersIds.Contains(_id))
             {
                 _slain = true;
             }
@@ -43,23 +43,25 @@ namespace CodeBase.Logic.Enemy.Spawner
             }
         }
 
-        public void Construct(IGameFactory gameFactory, ISaveLoadService saveLoadService)
+        public void Construct(IGameFactory gameFactory, ISaveLoadService saveLoadService, string id, MonsterTypeId monsterTypeId)
         {
             _factory = gameFactory;
             _saveLoadService = saveLoadService;
+            _id = id;
+            _monsterTypeId = monsterTypeId;
         }
 
         private void WriteToProgress(PlayerProgress progress)
         {
             if (_slain)
             {
-                progress.WorldState.KillData.ClearedSpawnersIds.Add(ID);
+                progress.WorldState.KillData.ClearedSpawnersIds.Add(_id);
             }
         }
 
         private void Spawn()
         {
-            GameObject monster = _factory.CreateMonster(MonsterTypeId, transform);
+            GameObject monster = _factory.CreateMonster(_monsterTypeId, transform);
             monster.GetComponent<IHealth>().Died += Slay;
         }
 

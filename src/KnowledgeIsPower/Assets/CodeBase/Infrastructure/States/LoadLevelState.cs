@@ -55,30 +55,37 @@ namespace CodeBase.Infrastructure.States
 
         private void InitGameWorld()
         {
-            GameObject hero = CreateHero();
+            LevelStaticData levelData = LevelData();
+
+            GameObject hero = CreateHero(levelData);
             CameraFollow(hero);
 
-            InitSpawners();
+            InitSpawners(levelData);
 
             InitHud(hero);
         }
 
-        private GameObject CreateHero() =>
-            _gameFactory.CreateHero();
+        private GameObject CreateHero(LevelStaticData levelStaticData) =>
+            _gameFactory.CreateHero(levelStaticData.InitialHeroPosition);
 
         private void CameraFollow(GameObject hero) =>
             Camera.main
                 .GetComponent<CameraFollow>()
                 .Follow(hero);
 
-        private void InitSpawners()
+        private void InitSpawners(LevelStaticData levelData)
         {
-            string sceneName = SceneManager.GetActiveScene().name;
-            LevelStaticData levelData = _staticData.ForLevel(sceneName);
             foreach (EnemySpawnerData spawnerData in levelData.EnemySpawners)
             {
                 _gameFactory.CreateSpawner(spawnerData.Position, spawnerData.Id, spawnerData.MonsterTypeId);
             }
+        }
+
+        private LevelStaticData LevelData()
+        {
+            string sceneName = SceneManager.GetActiveScene().name;
+            LevelStaticData levelData = _staticData.ForLevel(sceneName);
+            return levelData;
         }
 
         private void InitHud(GameObject hero)

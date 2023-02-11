@@ -43,6 +43,8 @@ namespace CodeBase.Infrastructure.States
 
             IStaticDataProviderService staticDataService = RegisterStaticData();
 
+            _services.RegisterSingle<IGameStateMachine>(_stateMachine);
+
             IAssetProviderService assetProviderService = new AssetProviderService();
             _services.RegisterSingle(assetProviderService);
 

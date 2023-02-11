@@ -28,8 +28,7 @@ namespace CodeBase.Logic.Enemy.Loot
 
         private void SpawnLoot()
         {
-            LootPiece lootPiece = _gameFactory.CreateLoot();
-            lootPiece.transform.position = transform.position;
+            LootPiece lootPiece = _gameFactory.CreateLoot(transform.position);
 
             lootPiece.Initialize(GenerateLoot());
         }

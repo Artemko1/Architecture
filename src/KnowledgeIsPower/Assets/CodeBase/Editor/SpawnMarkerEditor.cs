@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CodeBase.Editor
 {
-    [CustomEditor(typeof(SpawnMarker))]
+    [CustomEditor(typeof(SpawnMarker)), CanEditMultipleObjects]
     public class SpawnMarkerEditor : UnityEditor.Editor
     {
         [DrawGizmo(GizmoType.Active | GizmoType.Pickable | GizmoType.NonSelected)]
