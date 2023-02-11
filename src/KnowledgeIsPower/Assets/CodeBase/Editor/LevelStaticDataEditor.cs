@@ -16,7 +16,7 @@ namespace CodeBase.Editor
         {
             base.OnInspectorGUI();
 
-            if (GUILayout.Button("Collect"))
+            if (GUILayout.Button("Collect from current scene"))
             {
                 Collect();
             }
@@ -32,7 +32,12 @@ namespace CodeBase.Editor
                         new EnemySpawnerData(marker.GetComponent<UniqueId>().Id, marker.MonsterTypeId, marker.transform.position))
                     .ToList();
 
-            levelData.LevelKey = SceneManager.GetActiveScene().name;
+            string activeSceneName = SceneManager.GetActiveScene().name;
+            levelData.LevelKey = activeSceneName;
+
+            Vector3 initialPosition = GameObject.FindWithTag(Constants.Tags.InitialPoint).transform.position;
+            levelData.InitialHeroPosition = initialPosition;
+
             EditorUtility.SetDirty(levelData);
         }
     }

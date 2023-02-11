@@ -11,7 +11,7 @@ namespace CodeBase.Services.StaticDataProvider
         void Load();
         MonsterStaticData ForMonster(MonsterTypeId typeId);
         LevelStaticData ForLevel(string sceneName);
-        PlayerProgressStaticData ForNewGame();
+        LevelStaticData ForDefaultLevel();
         HeroStaticData ForHero();
         WindowConfig ForWindow(WindowId shop);
     }

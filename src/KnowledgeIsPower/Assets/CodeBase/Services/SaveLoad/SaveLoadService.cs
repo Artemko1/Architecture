@@ -2,7 +2,7 @@
 using CodeBase.Data;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.StaticDataProvider;
-using CodeBase.StaticData.Hero;
+using CodeBase.StaticData;
 using UnityEngine;
 
 namespace CodeBase.Services.SaveLoad
@@ -37,10 +37,10 @@ namespace CodeBase.Services.SaveLoad
 
         private PlayerProgress NewProgress()
         {
-            PlayerProgressStaticData progressStaticData = _staticData.ForNewGame();
+            LevelStaticData defaultLevel = _staticData.ForDefaultLevel();
 
             var positionOnLevel =
-                new PositionOnLevel(progressStaticData.PositionOnLevel.LevelName, progressStaticData.PositionOnLevel.Position);
+                new PositionOnLevel(defaultLevel.LevelKey, defaultLevel.InitialHeroPosition.AsVector3Data());
 
             var playerState = new PlayerState(positionOnLevel, float.MaxValue);
             var progress = new PlayerProgress(playerState);

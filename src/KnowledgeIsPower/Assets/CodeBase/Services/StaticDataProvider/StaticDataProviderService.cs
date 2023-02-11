@@ -11,10 +11,11 @@ namespace CodeBase.Services.StaticDataProvider
 {
     public class StaticDataProviderService : IStaticDataProviderService
     {
+        private const string DefaultLevelName = "Main";
+
         private HeroStaticData _heroStaticData;
         private Dictionary<string, LevelStaticData> _levels;
         private Dictionary<MonsterTypeId, MonsterStaticData> _monsters;
-        private PlayerProgressStaticData _playerProgress;
         private Dictionary<WindowId, WindowConfig> _windows;
 
         public void Load()
@@ -27,11 +28,8 @@ namespace CodeBase.Services.StaticDataProvider
                 .LoadAll<LevelStaticData>("StaticData/Levels")
                 .ToDictionary(data => data.LevelKey, data => data);
 
-            _playerProgress = Resources
-                .Load<PlayerProgressStaticData>("StaticData/DefaultProgress");
-
             _heroStaticData = Resources
-                .Load<HeroStaticData>("StaticData/DefaultHeroStaticData");
+                .Load<HeroStaticData>("StaticData/Hero/DefaultHeroStaticData");
 
             _windows = Resources
                 .Load<WindowStaticData>("StaticData/UI/WindowStaticData")
@@ -45,8 +43,8 @@ namespace CodeBase.Services.StaticDataProvider
         public LevelStaticData ForLevel(string sceneKey) =>
             _levels[sceneKey];
 
-        public PlayerProgressStaticData ForNewGame() =>
-            _playerProgress;
+        public LevelStaticData ForDefaultLevel() =>
+            _levels[DefaultLevelName];
 
         public HeroStaticData ForHero() =>
             _heroStaticData;

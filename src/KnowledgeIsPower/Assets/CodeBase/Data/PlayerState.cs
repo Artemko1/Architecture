@@ -31,10 +31,5 @@ namespace CodeBase.Data
             LevelName = level;
             Position = position;
         }
-
-        public PositionOnLevel(string initialLevel)
-        {
-            LevelName = initialLevel;
-        }
     }
 }
