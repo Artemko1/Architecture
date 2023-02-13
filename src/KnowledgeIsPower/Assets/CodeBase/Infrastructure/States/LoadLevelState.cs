@@ -1,7 +1,9 @@
-﻿using CodeBase.Infrastructure.Factory;
+﻿using System.Threading.Tasks;
+using CodeBase.Infrastructure.Factory;
 using CodeBase.Logic;
 using CodeBase.Logic.Camera;
 using CodeBase.Logic.Hero;
+using CodeBase.Services.AssetProvider;
 using CodeBase.Services.StaticDataProvider;
 using CodeBase.StaticData;
 using CodeBase.StaticData.Monsters;
@@ -14,6 +16,7 @@ namespace CodeBase.Infrastructure.States
 {
     public class LoadLevelState : IPayloadedState<string>
     {
+        private readonly IAssetProviderService _assetProvider;
         private readonly LoadingCurtain _curtain;
         private readonly IGameFactory _gameFactory;
         private readonly SceneLoader _sceneLoader;
@@ -23,7 +26,7 @@ namespace CodeBase.Infrastructure.States
         private readonly IUIFactory _uiFactory;
 
         public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory,
-            IStaticDataProviderService staticData, IUIFactory uiFactory)
+            IStaticDataProviderService staticData, IUIFactory uiFactory, IAssetProviderService assetProvider)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
@@ -31,21 +34,25 @@ namespace CodeBase.Infrastructure.States
             _gameFactory = gameFactory;
             _staticData = staticData;
             _uiFactory = uiFactory;
+            _assetProvider = assetProvider;
         }
 
-        public void Enter(string sceneName)
+        public async void Enter(string sceneName)
         {
             _curtain.Show();
+            _assetProvider.Cleanup();
+            await _assetProvider.Initialize();
+            await _gameFactory.Warmup();
             _sceneLoader.Load(sceneName, OnLoaded);
         }
 
         public void Exit() =>
             _curtain.Hide();
 
-        private void OnLoaded()
+        private async void OnLoaded()
         {
             InitUIRoot();
-            InitGameWorld();
+            await InitGameWorld();
 
             _stateMachine.Enter<GameLoopState>();
         }
@@ -53,14 +60,14 @@ namespace CodeBase.Infrastructure.States
         private void InitUIRoot() =>
             _uiFactory.CreateUIRoot();
 
-        private void InitGameWorld()
+        private async Task InitGameWorld()
         {
             LevelStaticData levelData = LevelData();
 
             GameObject hero = CreateHero(levelData);
             CameraFollow(hero);
 
-            InitSpawners(levelData);
+            await CreateSpawners(levelData);
 
             InitHud(hero);
         }
@@ -73,11 +80,11 @@ namespace CodeBase.Infrastructure.States
                 .GetComponent<CameraFollow>()
                 .Follow(hero);
 
-        private void InitSpawners(LevelStaticData levelData)
+        private async Task CreateSpawners(LevelStaticData levelData)
         {
             foreach (EnemySpawnerData spawnerData in levelData.EnemySpawners)
             {
-                _gameFactory.CreateSpawner(spawnerData.Position, spawnerData.Id, spawnerData.MonsterTypeId);
+                await _gameFactory.CreateSpawner(spawnerData.Position, spawnerData.Id, spawnerData.MonsterTypeId);
             }
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Logic;
 using CodeBase.Services;
+using CodeBase.Services.AssetProvider;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticDataProvider;
@@ -30,7 +31,8 @@ namespace CodeBase.Infrastructure.States
                         curtain,
                         services.Single<IGameFactory>(),
                         services.Single<IStaticDataProviderService>(),
-                        services.Single<IUIFactory>())
+                        services.Single<IUIFactory>(),
+                        services.Single<IAssetProviderService>())
                 },
                 {
                     typeof(LoadProgressState),

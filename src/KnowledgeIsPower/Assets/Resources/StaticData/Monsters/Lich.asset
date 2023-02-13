@@ -12,15 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7fed03432b4416b9915922715b9a668, type: 3}
   m_Name: Lich
   m_EditorClassIdentifier: 
-  MonsterTypeId: 1
-  HealthData:
+  <MonsterTypeId>k__BackingField: 1
+  <HealthData>k__BackingField:
     <MaxHp>k__BackingField: 4
-  AttackData:
+  <AttackData>k__BackingField:
     <Damage>k__BackingField: 5
     <Radius>k__BackingField: 0.75
     <Distance>k__BackingField: 0.75
-  MoveSpeed: 4
-  LootData:
+  <MoveSpeed>k__BackingField: 4
+  <LootData>k__BackingField:
     <MinLoot>k__BackingField: 1
     <MaxLoot>k__BackingField: 7
-  Prefab: {fileID: 9112408513973419237, guid: 1488b9d9048d6354ca7fbcb150952b28, type: 3}
+  <Prefab>k__BackingField: {fileID: 9112408513973419237, guid: 1488b9d9048d6354ca7fbcb150952b28,
+    type: 3}
+  <PrefabReference>k__BackingField:
+    m_AssetGUID: 1488b9d9048d6354ca7fbcb150952b28
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

@@ -1,20 +1,23 @@
 ﻿using CodeBase.StaticData.ForComponents;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CodeBase.StaticData.Monsters
 {
     [CreateAssetMenu(fileName = "MonsterData", menuName = "StaticData/Monster", order = 0)]
     public class MonsterStaticData : ScriptableObject
     {
-        public MonsterTypeId MonsterTypeId;
+        [field: SerializeField] public MonsterTypeId MonsterTypeId { get; private set; }
 
-        public HealthData HealthData = new HealthData();
-        public AttackData AttackData = new AttackData();
+        [field: SerializeField] public HealthData HealthData { get; private set; } = new HealthData();
 
-        [Range(1f, 10f)] public float MoveSpeed = 4f;
+        [field: SerializeField] public AttackData AttackData { get; private set; } = new AttackData();
 
-        public LootData LootData = new LootData();
+        [field: SerializeField, Range(1f, 10f)]
+        public float MoveSpeed { get; private set; } = 4f;
 
-        public GameObject Prefab;
+        [field: SerializeField] public LootData LootData { get; private set; } = new LootData();
+
+        [field: SerializeField] public AssetReferenceGameObject PrefabReference { get; private set; }
     }
 }

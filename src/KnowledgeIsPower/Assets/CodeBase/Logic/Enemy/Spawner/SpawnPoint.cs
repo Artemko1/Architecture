@@ -59,9 +59,9 @@ namespace CodeBase.Logic.Enemy.Spawner
             }
         }
 
-        private void Spawn()
+        private async void Spawn()
         {
-            GameObject monster = _factory.CreateMonster(_monsterTypeId, transform);
+            GameObject monster = await _factory.CreateMonster(_monsterTypeId, transform);
             monster.GetComponent<IHealth>().Died += Slay;
         }
 

@@ -1,5 +1,5 @@
-﻿using CodeBase.Logic.Enemy.Loot;
-using CodeBase.Logic.Enemy.Spawner;
+﻿using System.Threading.Tasks;
+using CodeBase.Logic.Enemy.Loot;
 using CodeBase.Services;
 using CodeBase.StaticData.Monsters;
 using UnityEngine;
@@ -11,8 +11,9 @@ namespace CodeBase.Infrastructure.Factory
         GameObject CreateHero(Vector3 initialHeroPosition);
         GameObject CreateHud();
 
-        GameObject CreateMonster(MonsterTypeId monsterTypeId, Transform parent);
-        LootPiece CreateLoot(Vector3 at);
-        SpawnPoint CreateSpawner(Vector3 at, string spawnerId, MonsterTypeId monsterTypeId);
+        Task<GameObject> CreateMonster(MonsterTypeId monsterTypeId, Transform parent);
+        Task<LootPiece> CreateLoot(Vector3 at);
+        Task CreateSpawner(Vector3 at, string spawnerId, MonsterTypeId monsterTypeId);
+        Task Warmup();
     }
 }

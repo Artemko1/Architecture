@@ -30,8 +30,11 @@ namespace CodeBase.Infrastructure.States
             RegisterServices();
         }
 
-        public void Enter() =>
+        public void Enter()
+        {
+            SetTargetFramerate();
             _sceneLoader.Load(Initial, EnterLoadProgress);
+        }
 
         public void Exit()
         {
@@ -45,8 +48,7 @@ namespace CodeBase.Infrastructure.States
 
             _services.RegisterSingle<IGameStateMachine>(_stateMachine);
 
-            IAssetProviderService assetProviderService = new AssetProviderService();
-            _services.RegisterSingle(assetProviderService);
+            IAssetProviderService assetProviderService = RegisterAssetProviderService();
 
             IPersistentProgressService persistentProgressService = new PersistentProgressService();
             _services.RegisterSingle(persistentProgressService);
@@ -68,6 +70,15 @@ namespace CodeBase.Infrastructure.States
             _services.RegisterSingle(factory);
         }
 
+        private IAssetProviderService RegisterAssetProviderService()
+        {
+            IAssetProviderService assetProviderService = new AssetProviderService();
+            assetProviderService.Initialize();
+            _services.RegisterSingle(assetProviderService);
+
+            return assetProviderService;
+        }
+
         private void RegisterInputService()
         {
             IInputService inputService = Application.isEditor
@@ -86,5 +97,8 @@ namespace CodeBase.Infrastructure.States
 
         private void EnterLoadProgress() =>
             _stateMachine.Enter<LoadProgressState>();
+
+        private static void SetTargetFramerate() =>
+            Application.targetFrameRate = 60;
     }
 }

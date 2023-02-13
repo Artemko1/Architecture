@@ -12,15 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7fed03432b4416b9915922715b9a668, type: 3}
   m_Name: Dragon
   m_EditorClassIdentifier: 
-  MonsterTypeId: 3
-  HealthData:
+  <MonsterTypeId>k__BackingField: 3
+  <HealthData>k__BackingField:
     <MaxHp>k__BackingField: 16
-  AttackData:
+  <AttackData>k__BackingField:
     <Damage>k__BackingField: 12
     <Radius>k__BackingField: 1
     <Distance>k__BackingField: 1
-  MoveSpeed: 3
-  LootData:
+  <MoveSpeed>k__BackingField: 3
+  <LootData>k__BackingField:
     <MinLoot>k__BackingField: 8
     <MaxLoot>k__BackingField: 10
-  Prefab: {fileID: 1338327773718399625, guid: 2b6fe3d432419e148af55c6339f6f308, type: 3}
+  <Prefab>k__BackingField: {fileID: 1338327773718399625, guid: 2b6fe3d432419e148af55c6339f6f308,
+    type: 3}
+  <PrefabReference>k__BackingField:
+    m_AssetGUID: 2b6fe3d432419e148af55c6339f6f308
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

@@ -26,9 +26,9 @@ namespace CodeBase.Logic.Enemy.Loot
             _lootData = monsterDataLootData;
         }
 
-        private void SpawnLoot()
+        private async void SpawnLoot()
         {
-            LootPiece lootPiece = _gameFactory.CreateLoot(transform.position);
+            LootPiece lootPiece = await _gameFactory.CreateLoot(transform.position);
 
             lootPiece.Initialize(GenerateLoot());
         }
