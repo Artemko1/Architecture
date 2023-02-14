@@ -26,6 +26,7 @@ namespace CodeBase.Services.AssetProvider
             return await RunWithCacheOnComplete(handle, assetReference.AssetGUID);
         }
 
+        // LoadAssetAsync should be preffered to Addressables.InstantiateAsync as instantiation will be done by Zenject later
         public async Task<T> Load<T>(string address) where T : Object
         {
             if (_completedCache.TryGetValue(address, out AsyncOperationHandle completedHandle))
@@ -34,32 +35,7 @@ namespace CodeBase.Services.AssetProvider
             }
 
             AsyncOperationHandle<T> handle = Addressables.LoadAssetAsync<T>(address);
-            return await RunWithCacheOnComplete(handle, address); // todo remove async and await
-        }
-
-        public GameObject Instantiate(string path)
-        {
-            var prefab = Resources.Load<GameObject>(path);
-            return Object.Instantiate(prefab);
-        }
-
-        public GameObject Instantiate(string path, Vector3 position)
-        {
-            var prefab = Resources.Load<GameObject>(path);
-            return Object.Instantiate(prefab, position, Quaternion.identity);
-        }
-
-        public async Task<GameObject> InstantiateAsync(string address)
-        {
-            var prefab = await Load<GameObject>(address); // todo assetProvider should only provide prefab, not an instance of a prefab
-            return Object.Instantiate(prefab);
-        }
-
-        public async Task<GameObject> InstantiateAsync(string address, Vector3 position)
-        {
-            // return await Addressables.InstantiateAsync(address, new InstantiationParameters()).Task;
-            var prefab = await Load<GameObject>(address);
-            return Object.Instantiate(prefab, position, Quaternion.identity);
+            return await RunWithCacheOnComplete(handle, address);
         }
 
         public void Cleanup()
@@ -75,13 +51,12 @@ namespace CodeBase.Services.AssetProvider
 
         private async Task<T> RunWithCacheOnComplete<T>(AsyncOperationHandle<T> handle, string key) where T : Object
         {
-            // todo await task, than return task result
-            handle.Completed += operationHandle =>
-                _completedCache.TryAdd(key, operationHandle);
-
             AddHandle(key, handle);
+            T taskResult = await handle.Task;
 
-            return await handle.Task;
+            // all keys may and should only be stored once as each key corresponds to one addressable asset
+            _completedCache.TryAdd(key, handle);
+            return taskResult;
         }
 
         private void AddHandle<T>(string key, AsyncOperationHandle<T> handle) where T : Object
@@ -89,7 +64,6 @@ namespace CodeBase.Services.AssetProvider
             if (!_allHandles.TryGetValue(key, out List<AsyncOperationHandle> handlesOfKey))
             {
                 handlesOfKey = new List<AsyncOperationHandle>();
-                // _allHandles[key] = handlesOfKey;
                 _allHandles.Add(key, handlesOfKey);
             }
 

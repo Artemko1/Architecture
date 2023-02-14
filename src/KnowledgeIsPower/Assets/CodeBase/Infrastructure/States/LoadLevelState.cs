@@ -51,28 +51,27 @@ namespace CodeBase.Infrastructure.States
 
         private async void OnLoaded()
         {
-            InitUIRoot();
+            await InitUIRoot();
             await InitGameWorld();
 
             _stateMachine.Enter<GameLoopState>();
         }
 
-        private void InitUIRoot() =>
+        private Task InitUIRoot() =>
             _uiFactory.CreateUIRoot();
 
         private async Task InitGameWorld()
         {
             LevelStaticData levelData = LevelData();
 
-            GameObject hero = CreateHero(levelData);
+            GameObject hero = await CreateHero(levelData);
             CameraFollow(hero);
 
             await CreateSpawners(levelData);
-
-            InitHud(hero);
+            await CreateHud(hero);
         }
 
-        private GameObject CreateHero(LevelStaticData levelStaticData) =>
+        private Task<GameObject> CreateHero(LevelStaticData levelStaticData) =>
             _gameFactory.CreateHero(levelStaticData.InitialHeroPosition);
 
         private void CameraFollow(GameObject hero) =>
@@ -95,9 +94,9 @@ namespace CodeBase.Infrastructure.States
             return levelData;
         }
 
-        private void InitHud(GameObject hero)
+        private async Task CreateHud(GameObject hero)
         {
-            GameObject hud = _gameFactory.CreateHud();
+            GameObject hud = await _gameFactory.CreateHud();
             hud.GetComponentInChildren<ActorUI>()
                 .Construct(hero.GetComponent<HeroHealth>());
         }

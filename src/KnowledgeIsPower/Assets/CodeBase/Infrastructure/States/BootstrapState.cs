@@ -48,7 +48,8 @@ namespace CodeBase.Infrastructure.States
 
             _services.RegisterSingle<IGameStateMachine>(_stateMachine);
 
-            IAssetProviderService assetProviderService = RegisterAssetProviderService();
+            IAssetProviderService assetProviderService = new AssetProviderService();
+            _services.RegisterSingle(assetProviderService);
 
             IPersistentProgressService persistentProgressService = new PersistentProgressService();
             _services.RegisterSingle(persistentProgressService);
@@ -68,15 +69,6 @@ namespace CodeBase.Infrastructure.States
             IGameFactory factory = new GameFactory(assetProviderService, staticDataService, randomService, persistentProgressService,
                 saveLoadService, windowService);
             _services.RegisterSingle(factory);
-        }
-
-        private IAssetProviderService RegisterAssetProviderService()
-        {
-            IAssetProviderService assetProviderService = new AssetProviderService();
-            assetProviderService.Initialize();
-            _services.RegisterSingle(assetProviderService);
-
-            return assetProviderService;
         }
 
         private void RegisterInputService()

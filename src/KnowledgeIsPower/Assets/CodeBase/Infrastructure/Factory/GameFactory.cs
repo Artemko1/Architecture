@@ -43,9 +43,10 @@ namespace CodeBase.Infrastructure.Factory
                 _assetProvider.Load<GameObject>(AssetAddress.Loot),
                 _assetProvider.Load<GameObject>(AssetAddress.EnemySpawner));
 
-        public GameObject CreateHero(Vector3 initialHeroPosition)
+        public async Task<GameObject> CreateHero(Vector3 initialHeroPosition)
         {
-            GameObject heroGameObject = Instantiate(AssetAddress.HeroPath, initialHeroPosition);
+            var prefab = await _assetProvider.Load<GameObject>(AssetAddress.HeroPath);
+            GameObject heroGameObject = Object.Instantiate(prefab, initialHeroPosition, Quaternion.identity);
             HeroStaticData heroStaticData = _staticData.ForHero();
 
             heroGameObject
@@ -59,9 +60,10 @@ namespace CodeBase.Infrastructure.Factory
             return heroGameObject;
         }
 
-        public GameObject CreateHud()
+        public async Task<GameObject> CreateHud()
         {
-            GameObject hud = Instantiate(AssetAddress.HudPath);
+            var prefab = await _assetProvider.Load<GameObject>(AssetAddress.HudPath);
+            GameObject hud = Object.Instantiate(prefab);
             hud.GetComponentInChildren<LootCounter>()
                 .Construct(_progressService.Progress.PlayerState.LootData);
 
@@ -79,7 +81,6 @@ namespace CodeBase.Infrastructure.Factory
             MonsterStaticData monsterData = _staticData.ForMonster(typeId);
 
             GameObject prefab = await _assetProvider.Load(monsterData.PrefabReference);
-
             GameObject monsterGo = Object.Instantiate(prefab, parent.position, Quaternion.identity, parent);
 
             {
@@ -104,7 +105,8 @@ namespace CodeBase.Infrastructure.Factory
 
         public async Task<LootPiece> CreateLoot(Vector3 at)
         {
-            var lootPiece = (await InstantiateAsync(AssetAddress.Loot, at))
+            var prefab = await _assetProvider.Load<GameObject>(AssetAddress.Loot);
+            var lootPiece = Object.Instantiate(prefab, at, Quaternion.identity)
                 .GetComponent<LootPiece>();
 
             lootPiece.Construct(_progressService.Progress.PlayerState.LootData);
@@ -116,22 +118,14 @@ namespace CodeBase.Infrastructure.Factory
 
         public async Task CreateSpawner(Vector3 at, string spawnerId, MonsterTypeId monsterTypeId)
         {
-            var spawner = (await InstantiateAsync(AssetAddress.EnemySpawner, at))
+            var prefab = await _assetProvider.Load<GameObject>(AssetAddress.EnemySpawner);
+            var spawner = Object.Instantiate(prefab, at, Quaternion.identity)
                 .GetComponent<SpawnPoint>();
 
             spawner.Construct(this, _saveLoadService, spawnerId, monsterTypeId);
 
             ActivateProgressReaders(spawner.gameObject);
         }
-
-        private GameObject Instantiate(string prefabPath) =>
-            _assetProvider.Instantiate(prefabPath);
-
-        private GameObject Instantiate(string prefabPath, Vector3 at) =>
-            _assetProvider.Instantiate(prefabPath, at);
-
-        private Task<GameObject> InstantiateAsync(string prefabPath, Vector3 at) =>
-            _assetProvider.InstantiateAsync(prefabPath, at);
 
         private void ActivateProgressReaders(GameObject gameObject)
         {

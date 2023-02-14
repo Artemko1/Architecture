@@ -1,4 +1,6 @@
-﻿using CodeBase.Services.AssetProvider;
+﻿using System.Threading.Tasks;
+using CodeBase.Infrastructure;
+using CodeBase.Services.AssetProvider;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.StaticDataProvider;
 using CodeBase.StaticData.Windows;
@@ -10,8 +12,6 @@ namespace CodeBase.UI.Services.Factory
 {
     public class UIFactory : IUIFactory
     {
-        private const string UIRootPath = "UI/UIRoot";
-
         private readonly IAssetProviderService _assets;
         private readonly IPersistentProgressService _progressService;
         private readonly IStaticDataProviderService _staticData;
@@ -32,7 +32,10 @@ namespace CodeBase.UI.Services.Factory
             window.Construct(_progressService);
         }
 
-        public void CreateUIRoot() =>
-            _uiRoot = _assets.Instantiate(UIRootPath).transform;
+        public async Task CreateUIRoot()
+        {
+            var prefab = await _assets.Load<GameObject>(AssetAddress.UIRoot);
+            _uiRoot = Object.Instantiate(prefab).transform;
+        }
     }
 }
