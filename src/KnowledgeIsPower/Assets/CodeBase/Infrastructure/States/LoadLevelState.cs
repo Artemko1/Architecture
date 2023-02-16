@@ -41,6 +41,7 @@ namespace CodeBase.Infrastructure.States
         {
             _curtain.Show();
             _assetProvider.Cleanup();
+            _gameFactory.Cleanup();
             await _assetProvider.Initialize();
             await _gameFactory.Warmup();
             _sceneLoader.Load(sceneName, OnLoaded);
@@ -67,7 +68,7 @@ namespace CodeBase.Infrastructure.States
             GameObject hero = await CreateHero(levelData);
             CameraFollow(hero);
 
-            await CreateSpawners(levelData);
+            CreateSpawners(levelData);
             await CreateHud(hero);
         }
 
@@ -79,11 +80,11 @@ namespace CodeBase.Infrastructure.States
                 .GetComponent<CameraFollow>()
                 .Follow(hero);
 
-        private async Task CreateSpawners(LevelStaticData levelData)
+        private void CreateSpawners(LevelStaticData levelData)
         {
             foreach (EnemySpawnerData spawnerData in levelData.EnemySpawners)
             {
-                await _gameFactory.CreateSpawner(spawnerData.Position, spawnerData.Id, spawnerData.MonsterTypeId);
+                _gameFactory.CreateSpawner(spawnerData.Position, spawnerData.Id, spawnerData.MonsterTypeId);
             }
         }
 

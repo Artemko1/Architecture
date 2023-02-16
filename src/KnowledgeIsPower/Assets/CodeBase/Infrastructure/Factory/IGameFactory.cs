@@ -8,12 +8,13 @@ namespace CodeBase.Infrastructure.Factory
 {
     public interface IGameFactory : IService
     {
+        Task Warmup();
         Task<GameObject> CreateHero(Vector3 initialHeroPosition);
         Task<GameObject> CreateHud();
 
         Task<GameObject> CreateMonster(MonsterTypeId monsterTypeId, Transform parent);
-        Task<LootPiece> CreateLoot(Vector3 at);
-        Task CreateSpawner(Vector3 at, string spawnerId, MonsterTypeId monsterTypeId);
-        Task Warmup();
+        LootPiece CreateLoot(Vector3 at);
+        void CreateSpawner(Vector3 at, string spawnerId, MonsterTypeId monsterTypeId);
+        void Cleanup();
     }
 }

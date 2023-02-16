@@ -9,62 +9,51 @@ namespace CodeBase.Services.AssetProvider
 {
     public class AssetProviderService : IAssetProviderService
     {
-        private readonly Dictionary<string, List<AsyncOperationHandle>> _allHandles = new Dictionary<string, List<AsyncOperationHandle>>();
-        private readonly Dictionary<string, AsyncOperationHandle> _completedCache = new Dictionary<string, AsyncOperationHandle>();
+        private readonly Dictionary<string, List<AsyncOperationHandle>> _allTrackedHandles =
+            new Dictionary<string, List<AsyncOperationHandle>>();
 
         public Task Initialize() =>
             Addressables.InitializeAsync().Task;
 
-        public async Task<T> Load<T>(AssetReferenceT<T> assetReference) where T : Object
+        public Task<T> LoadAsync<T>(AssetReferenceT<T> assetReference, bool autoTrackHandle = true) where T : Object
         {
-            if (_completedCache.TryGetValue(assetReference.AssetGUID, out AsyncOperationHandle completedHandle))
+            AsyncOperationHandle<T> handle = Addressables.LoadAssetAsync<T>(assetReference);
+            if (autoTrackHandle)
             {
-                return completedHandle.Result as T;
+                AddHandle(assetReference.AssetGUID, handle);
             }
 
-            AsyncOperationHandle<T> handle = Addressables.LoadAssetAsync<T>(assetReference);
-            return await RunWithCacheOnComplete(handle, assetReference.AssetGUID);
+            return handle.Task;
         }
 
         // LoadAssetAsync should be preffered to Addressables.InstantiateAsync as instantiation will be done by Zenject later
-        public async Task<T> Load<T>(string address) where T : Object
+        public Task<T> LoadAsync<T>(string address, bool autoTrackHandle = true) where T : Object
         {
-            if (_completedCache.TryGetValue(address, out AsyncOperationHandle completedHandle))
+            AsyncOperationHandle<T> handle = Addressables.LoadAssetAsync<T>(address);
+            if (autoTrackHandle)
             {
-                return completedHandle.Result as T;
+                AddHandle(address, handle);
             }
 
-            AsyncOperationHandle<T> handle = Addressables.LoadAssetAsync<T>(address);
-            return await RunWithCacheOnComplete(handle, address);
+            return handle.Task;
         }
 
         public void Cleanup()
         {
-            foreach (AsyncOperationHandle operationHandle in _allHandles.Values.SelectMany(handles => handles))
+            foreach (AsyncOperationHandle operationHandle in _allTrackedHandles.Values.SelectMany(handles => handles))
             {
                 Addressables.Release(operationHandle);
             }
 
-            _completedCache.Clear();
-            _allHandles.Clear();
-        }
-
-        private async Task<T> RunWithCacheOnComplete<T>(AsyncOperationHandle<T> handle, string key) where T : Object
-        {
-            AddHandle(key, handle);
-            T taskResult = await handle.Task;
-
-            // all keys may and should only be stored once as each key corresponds to one addressable asset
-            _completedCache.TryAdd(key, handle);
-            return taskResult;
+            _allTrackedHandles.Clear();
         }
 
         private void AddHandle<T>(string key, AsyncOperationHandle<T> handle) where T : Object
         {
-            if (!_allHandles.TryGetValue(key, out List<AsyncOperationHandle> handlesOfKey))
+            if (!_allTrackedHandles.TryGetValue(key, out List<AsyncOperationHandle> handlesOfKey))
             {
                 handlesOfKey = new List<AsyncOperationHandle>();
-                _allHandles.Add(key, handlesOfKey);
+                _allTrackedHandles.Add(key, handlesOfKey);
             }
 
             handlesOfKey.Add(handle);
