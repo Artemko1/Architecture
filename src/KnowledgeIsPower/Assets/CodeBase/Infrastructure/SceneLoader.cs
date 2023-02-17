@@ -19,8 +19,11 @@ namespace CodeBase.Infrastructure
 
         private IEnumerator LoadScene(string name, Action onLoaded = null)
         {
-            if (SceneManager.GetActiveScene().name == name)
+            string activeScene = SceneManager.GetActiveScene().name;
+            Debug.Log($"Loading from {activeScene} to {name}...");
+            if (activeScene == name)
             {
+                Debug.Log($"Scene {name} is already loaded");
                 onLoaded?.Invoke();
                 yield break;
             }

@@ -14,17 +14,13 @@ namespace CodeBase.Infrastructure.States
 {
     public class BootstrapState : IState
     {
-        private const string Initial = "Initial";
-
-        private readonly SceneLoader _sceneLoader;
         private readonly AllServices _services;
 
         private readonly GameStateMachine _stateMachine;
 
-        public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader, AllServices services)
+        public BootstrapState(GameStateMachine stateMachine, AllServices services)
         {
             _stateMachine = stateMachine;
-            _sceneLoader = sceneLoader;
             _services = services;
 
             RegisterServices();
@@ -33,7 +29,7 @@ namespace CodeBase.Infrastructure.States
         public void Enter()
         {
             SetTargetFramerate();
-            _sceneLoader.Load(Initial, EnterLoadProgress);
+            EnterLoadProgress();
         }
 
         public void Exit()

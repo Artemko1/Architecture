@@ -22,7 +22,7 @@ namespace CodeBase.Infrastructure.States
             {
                 {
                     typeof(BootstrapState),
-                    new BootstrapState(this, sceneLoader, services)
+                    new BootstrapState(this, services)
                 },
                 {
                     typeof(LoadLevelState),
