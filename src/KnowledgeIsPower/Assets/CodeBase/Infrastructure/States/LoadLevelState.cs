@@ -11,6 +11,7 @@ using CodeBase.UI.Elements;
 using CodeBase.UI.Services.Factory;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -18,14 +19,14 @@ namespace CodeBase.Infrastructure.States
     {
         private readonly IAssetProviderService _assetProvider;
         private readonly LoadingCurtain _curtain;
-        private readonly IGameFactory _gameFactory;
+        private readonly GameFactory _gameFactory;
         private readonly SceneLoader _sceneLoader;
 
         private readonly GameStateMachine _stateMachine;
         private readonly IStaticDataProviderService _staticData;
         private readonly IUIFactory _uiFactory;
 
-        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory,
+        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, GameFactory gameFactory,
             IStaticDataProviderService staticData, IUIFactory uiFactory, IAssetProviderService assetProvider)
         {
             _stateMachine = stateMachine;
@@ -100,6 +101,10 @@ namespace CodeBase.Infrastructure.States
             GameObject hud = await _gameFactory.CreateHud();
             hud.GetComponentInChildren<ActorUI>()
                 .Construct(hero.GetComponent<HeroHealth>());
+        }
+
+        public class Factory : PlaceholderFactory<LoadLevelState>
+        {
         }
     }
 }

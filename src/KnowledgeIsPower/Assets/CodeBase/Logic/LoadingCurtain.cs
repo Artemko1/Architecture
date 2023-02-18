@@ -7,9 +7,6 @@ namespace CodeBase.Logic
     {
         public CanvasGroup Curtain;
 
-        private void Awake() =>
-            DontDestroyOnLoad(this);
-
         public void Show()
         {
             gameObject.SetActive(true);

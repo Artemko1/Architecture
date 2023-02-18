@@ -45,7 +45,6 @@ namespace CodeBase.Editor
 
             if (SceneManager.GetActiveScene().buildIndex == 0)
             {
-                Debug.Log("Already at the first scene");
                 return;
             }
 

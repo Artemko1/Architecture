@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace CodeBase.Infrastructure
 {
@@ -9,6 +10,7 @@ namespace CodeBase.Infrastructure
     {
         private readonly ICoroutineRunner _coroutineRunner;
 
+        [Inject]
         public SceneLoader(ICoroutineRunner coroutineRunner)
         {
             _coroutineRunner = coroutineRunner;
@@ -20,7 +22,6 @@ namespace CodeBase.Infrastructure
         private IEnumerator LoadScene(string name, Action onLoaded = null)
         {
             string activeScene = SceneManager.GetActiveScene().name;
-            Debug.Log($"Loading from {activeScene} to {name}...");
             if (activeScene == name)
             {
                 Debug.Log($"Scene {name} is already loaded");

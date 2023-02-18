@@ -1,5 +1,6 @@
 ﻿using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
+using Zenject;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -32,5 +33,9 @@ namespace CodeBase.Infrastructure.States
 
         private void EnterLoadLevel() =>
             _gameStateMachine.Enter<LoadLevelState, string>(_progressService.Progress.PlayerState.PositionOnLevel.LevelName);
+
+        public class Factory : PlaceholderFactory<LoadProgressState>
+        {
+        }
     }
 }

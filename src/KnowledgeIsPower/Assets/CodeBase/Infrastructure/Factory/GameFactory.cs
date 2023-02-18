@@ -4,6 +4,7 @@ using CodeBase.Logic.Enemy.Loot;
 using CodeBase.Logic.Enemy.Spawner;
 using CodeBase.Logic.Enemy.Targets;
 using CodeBase.Logic.Hero;
+using CodeBase.Services;
 using CodeBase.Services.AssetProvider;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.Randomizer;
@@ -17,10 +18,11 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AI;
 using UnityEngine.Assertions;
+using Zenject;
 
 namespace CodeBase.Infrastructure.Factory
 {
-    public class GameFactory : IGameFactory
+    public class GameFactory : IService
     {
         private readonly IAssetProviderService _assetProvider;
         private readonly IPersistentProgressService _progressService;
@@ -33,6 +35,7 @@ namespace CodeBase.Infrastructure.Factory
         private GameObject _lootPrefab;
         private GameObject _spawnerPrefab;
 
+        [Inject]
         public GameFactory(IAssetProviderService assetProviderService, IStaticDataProviderService staticData, IRandomService randomService,
             IPersistentProgressService progressService, ISaveLoadService saveLoadService, IWindowService windowService)
         {

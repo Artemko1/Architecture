@@ -1,6 +1,6 @@
-﻿using CodeBase.Services;
-using CodeBase.Services.SaveLoad;
+﻿using CodeBase.Services.SaveLoad;
 using UnityEngine;
+using Zenject;
 
 namespace CodeBase.Logic
 {
@@ -9,8 +9,9 @@ namespace CodeBase.Logic
         [SerializeField] private BoxCollider boxCollider;
         private ISaveLoadService _saveLoadService;
 
-        private void Awake() =>
-            _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
+        [Inject]
+        private void Construct(ISaveLoadService saveLoadService) =>
+            _saveLoadService = saveLoadService;
 
         private void OnDrawGizmos()
         {

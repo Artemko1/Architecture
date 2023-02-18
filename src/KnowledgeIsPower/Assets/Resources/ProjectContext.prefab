@@ -50,7 +50,7 @@ MonoBehaviour:
   - {fileID: 4722919020628226709}
   _installerPrefabs: []
   _findSiblingMonoInstallers: 0
-  _parentNewObjectsUnderContext: 0
+  _parentNewObjectsUnderContext: 1
   _editorReflectionBakingCoverageMode: 0
   _buildsReflectionBakingCoverageMode: 0
   _settings:
@@ -77,4 +77,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _loadingCurtainPrefab: {fileID: 8713324141352661597, guid: 9999f750a9cb62f4e95f2b25c7f6aec2,
+    type: 3}
+  _gameBootstrapperPrefab: {fileID: 5009298275557487445, guid: 214dd820cf165354680de82b22a1704e,
+    type: 3}
+  _eventSystem: {fileID: 1666320545169872499, guid: 188e62d9fbf516a44b4317c8718377ab,
     type: 3}

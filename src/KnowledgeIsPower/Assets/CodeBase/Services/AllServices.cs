@@ -1,29 +1,25 @@
 ﻿using UnityEngine;
+using Zenject;
 
 namespace CodeBase.Services
 {
     public class AllServices
     {
-        private static AllServices _instance;
-        public static AllServices Container => _instance ??= new AllServices();
+        private readonly DiContainer _diContainer;
 
-        public void RegisterSingle<TService>(TService implementation) where TService : IService =>
-            Implementation<TService>.ServiceInstance = implementation;
+        [Inject]
+        public AllServices(DiContainer diContainer)
+        {
+            _diContainer = diContainer;
+            Container = this;
+        }
+
+        public static AllServices Container { get; private set; }
 
         public TService Single<TService>() where TService : IService
         {
-            TService serviceInstance = Implementation<TService>.ServiceInstance;
-            if (serviceInstance == null)
-            {
-                Debug.LogWarning($"Requested service of type {typeof(TService)} is not registered");
-            }
-
-            return serviceInstance;
-        }
-
-        private static class Implementation<TService> where TService : IService
-        {
-            public static TService ServiceInstance;
+            Debug.LogWarning($"Resolving {typeof(TService)} from container...");
+            return _diContainer.Resolve<TService>();
         }
     }
 }

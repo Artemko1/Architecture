@@ -9,13 +9,21 @@ namespace CodeBase.Logic.Enemy.Spawner
 {
     public class SpawnPoint : MonoBehaviour, ISavedProgressReader
     {
-        private IGameFactory _factory;
+        private GameFactory _factory;
         private string _id;
 
         private MonsterTypeId _monsterTypeId;
         private ISaveLoadService _saveLoadService;
 
         private bool _slain;
+
+        public void Construct(GameFactory gameFactory, ISaveLoadService saveLoadService, string id, MonsterTypeId monsterTypeId)
+        {
+            _factory = gameFactory;
+            _saveLoadService = saveLoadService;
+            _id = id;
+            _monsterTypeId = monsterTypeId;
+        }
 
         private void Start() =>
             _saveLoadService.OnSave += WriteToProgress;
@@ -41,14 +49,6 @@ namespace CodeBase.Logic.Enemy.Spawner
             {
                 Spawn();
             }
-        }
-
-        public void Construct(IGameFactory gameFactory, ISaveLoadService saveLoadService, string id, MonsterTypeId monsterTypeId)
-        {
-            _factory = gameFactory;
-            _saveLoadService = saveLoadService;
-            _id = id;
-            _monsterTypeId = monsterTypeId;
         }
 
         private void WriteToProgress(PlayerProgress progress)

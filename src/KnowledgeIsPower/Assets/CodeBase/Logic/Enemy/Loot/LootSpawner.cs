@@ -10,21 +10,21 @@ namespace CodeBase.Logic.Enemy.Loot
     {
         [SerializeField] private EnemyHealth _enemyHealth;
 
-        private IGameFactory _gameFactory;
+        private GameFactory _gameFactory;
         private LootData _lootData;
 
         private IRandomService _random;
 
-        private void Start() =>
-            _enemyHealth.Died += SpawnLoot;
-
-        public void Construct(IGameFactory gameFactory, IRandomService random, LootData monsterDataLootData)
+        public void Construct(GameFactory gameFactory, IRandomService random, LootData monsterDataLootData)
         {
             _gameFactory = gameFactory;
             _random = random;
 
             _lootData = monsterDataLootData;
         }
+
+        private void Start() =>
+            _enemyHealth.Died += SpawnLoot;
 
         private void SpawnLoot()
         {

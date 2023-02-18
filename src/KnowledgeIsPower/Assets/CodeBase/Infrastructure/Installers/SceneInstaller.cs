@@ -9,7 +9,6 @@ namespace CodeBase.Infrastructure.Installers
         public override void InstallBindings()
         {
             Debug.Log($"Start install bindings. Current scene is {SceneManager.GetActiveScene().name}");
-            Container.Bind<Game>().AsSingle();
         }
     }
 }

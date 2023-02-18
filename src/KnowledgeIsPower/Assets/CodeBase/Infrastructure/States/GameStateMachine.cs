@@ -1,50 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
-using CodeBase.Infrastructure.Factory;
-using CodeBase.Logic;
 using CodeBase.Services;
-using CodeBase.Services.AssetProvider;
-using CodeBase.Services.PersistentProgress;
-using CodeBase.Services.SaveLoad;
-using CodeBase.Services.StaticDataProvider;
-using CodeBase.UI.Services.Factory;
+using Zenject;
 
 namespace CodeBase.Infrastructure.States
 {
-    public class GameStateMachine : IGameStateMachine
+    public class GameStateMachine : IService
     {
-        private readonly Dictionary<Type, IExitableState> _states;
+        private readonly BootstrapState.Factory _bootstrapStateFactory;
+        private readonly GameLoopState.Factory _gameLoopStateFactory;
+        private readonly LoadLevelState.Factory _loadLevelStateFactory;
+        private readonly LoadProgressState.Factory _loadProgressStateFactory;
+
+        private readonly Dictionary<Type, IExitableState> _states = new Dictionary<Type, IExitableState>();
+
         private IExitableState _activeState;
 
-        public GameStateMachine(SceneLoader sceneLoader, LoadingCurtain curtain, AllServices services)
+        [Inject]
+        public GameStateMachine(BootstrapState.Factory bootstrapStateFactory,
+            LoadLevelState.Factory loadLevelStateFactory,
+            LoadProgressState.Factory loadProgressStateFactory,
+            GameLoopState.Factory gameLoopStateFactory)
         {
-            _states = new Dictionary<Type, IExitableState>
-            {
-                {
-                    typeof(BootstrapState),
-                    new BootstrapState(this, services)
-                },
-                {
-                    typeof(LoadLevelState),
-                    new LoadLevelState(this,
-                        sceneLoader,
-                        curtain,
-                        services.Single<IGameFactory>(),
-                        services.Single<IStaticDataProviderService>(),
-                        services.Single<IUIFactory>(),
-                        services.Single<IAssetProviderService>())
-                },
-                {
-                    typeof(LoadProgressState),
-                    new LoadProgressState(this,
-                        services.Single<IPersistentProgressService>(),
-                        services.Single<ISaveLoadService>())
-                },
-                {
-                    typeof(GameLoopState),
-                    new GameLoopState(this)
-                },
-            };
+            _bootstrapStateFactory = bootstrapStateFactory;
+            _loadLevelStateFactory = loadLevelStateFactory;
+            _loadProgressStateFactory = loadProgressStateFactory;
+            _gameLoopStateFactory = gameLoopStateFactory;
+        }
+
+        public void Startup()
+        {
+            _states.Add(typeof(BootstrapState), _bootstrapStateFactory.Create());
+            _states.Add(typeof(LoadLevelState), _loadLevelStateFactory.Create());
+            _states.Add(typeof(LoadProgressState), _loadProgressStateFactory.Create());
+            _states.Add(typeof(GameLoopState), _gameLoopStateFactory.Create());
+
+            Enter<BootstrapState>();
         }
 
         public void Enter<TState>() where TState : class, IState

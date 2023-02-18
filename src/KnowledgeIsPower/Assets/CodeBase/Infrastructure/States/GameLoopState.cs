@@ -1,16 +1,18 @@
-﻿namespace CodeBase.Infrastructure.States
+﻿using Zenject;
+
+namespace CodeBase.Infrastructure.States
 {
     public class GameLoopState : IState
     {
-        public GameLoopState(GameStateMachine stateMachine)
-        {
-        }
-
         public void Enter()
         {
         }
 
         public void Exit()
+        {
+        }
+
+        public class Factory : PlaceholderFactory<GameLoopState>
         {
         }
     }

@@ -1,34 +1,28 @@
-﻿using CodeBase.Infrastructure.Factory;
-using CodeBase.Services;
-using CodeBase.Services.AssetProvider;
-using CodeBase.Services.Input;
-using CodeBase.Services.PersistentProgress;
-using CodeBase.Services.Randomizer;
-using CodeBase.Services.SaveLoad;
+﻿using System.Threading.Tasks;
 using CodeBase.Services.StaticDataProvider;
-using CodeBase.UI.Services.Factory;
-using CodeBase.UI.Services.Windows;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using Zenject;
 
 namespace CodeBase.Infrastructure.States
 {
     public class BootstrapState : IState
     {
-        private readonly AllServices _services;
-
         private readonly GameStateMachine _stateMachine;
+        private readonly IStaticDataProviderService _staticDataProviderService;
 
-        public BootstrapState(GameStateMachine stateMachine, AllServices services)
+        public BootstrapState(GameStateMachine stateMachine, IStaticDataProviderService staticDataProviderService)
         {
             _stateMachine = stateMachine;
-            _services = services;
-
-            RegisterServices();
+            _staticDataProviderService = staticDataProviderService;
         }
 
-        public void Enter()
+        public async void Enter()
         {
             SetTargetFramerate();
+
+            await InitializeServices();
+
             EnterLoadProgress();
         }
 
@@ -36,57 +30,20 @@ namespace CodeBase.Infrastructure.States
         {
         }
 
-        private void RegisterServices()
+        private async Task InitializeServices()
         {
-            RegisterInputService();
-
-            IStaticDataProviderService staticDataService = RegisterStaticData();
-
-            _services.RegisterSingle<IGameStateMachine>(_stateMachine);
-
-            IAssetProviderService assetProviderService = new AssetProviderService();
-            _services.RegisterSingle(assetProviderService);
-
-            IPersistentProgressService persistentProgressService = new PersistentProgressService();
-            _services.RegisterSingle(persistentProgressService);
-
-            ISaveLoadService saveLoadService = new SaveLoadService(persistentProgressService, staticDataService);
-            _services.RegisterSingle(saveLoadService);
-
-            IUIFactory uiFactory = new UIFactory(assetProviderService, staticDataService, persistentProgressService);
-            _services.RegisterSingle(uiFactory);
-
-            IWindowService windowService = new WindowService(uiFactory);
-            _services.RegisterSingle(windowService);
-
-            IRandomService randomService = new RandomService();
-            _services.RegisterSingle(randomService);
-
-            IGameFactory factory = new GameFactory(assetProviderService, staticDataService, randomService, persistentProgressService,
-                saveLoadService, windowService);
-            _services.RegisterSingle(factory);
+            await Addressables.InitializeAsync().Task;
+            _staticDataProviderService.Load();
         }
 
-        private void RegisterInputService()
-        {
-            IInputService inputService = Application.isEditor
-                ? new StandaloneInputService()
-                : new MobileInputService();
-            _services.RegisterSingle(inputService);
-        }
-
-        private IStaticDataProviderService RegisterStaticData()
-        {
-            IStaticDataProviderService staticData = new StaticDataProviderService();
-            staticData.Load();
-            _services.RegisterSingle(staticData);
-            return staticData;
-        }
+        private static void SetTargetFramerate() =>
+            Application.targetFrameRate = 60;
 
         private void EnterLoadProgress() =>
             _stateMachine.Enter<LoadProgressState>();
 
-        private static void SetTargetFramerate() =>
-            Application.targetFrameRate = 60;
+        public class Factory : PlaceholderFactory<BootstrapState>
+        {
+        }
     }
 }

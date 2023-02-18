@@ -1,16 +1,17 @@
 ﻿using CodeBase.Infrastructure.States;
-using CodeBase.Services;
 using UnityEngine;
+using Zenject;
 
 namespace CodeBase.Logic
 {
     public class LevelTransferTrigger : MonoBehaviour
     {
         public string TransferTo;
-        private IGameStateMachine _stateMachine;
+        private GameStateMachine _stateMachine;
 
-        private void Awake() =>
-            _stateMachine = AllServices.Container.Single<IGameStateMachine>();
+        [Inject]
+        public void Construct(GameStateMachine gameStateMachine) =>
+            _stateMachine = gameStateMachine;
 
         private void OnTriggerEnter(Collider other)
         {

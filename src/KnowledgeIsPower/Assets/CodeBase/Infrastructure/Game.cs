@@ -1,16 +1,14 @@
 using CodeBase.Infrastructure.States;
-using CodeBase.Logic;
-using CodeBase.Services;
+using Zenject;
 
 namespace CodeBase.Infrastructure
 {
     public class Game
     {
-        public Game(ICoroutineRunner coroutineRunner, LoadingCurtain curtain)
+        [Inject]
+        public Game(GameStateMachine gameStateMachine)
         {
-            var sceneLoader = new SceneLoader(coroutineRunner);
-
-            StateMachine = new GameStateMachine(sceneLoader, curtain, AllServices.Container);
+            StateMachine = gameStateMachine;
         }
 
         public GameStateMachine StateMachine { get; }
