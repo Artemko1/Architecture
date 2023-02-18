@@ -2,5 +2,25 @@
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=HP/@EntryIndexedValue">HP</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=ID/@EntryIndexedValue">ID</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=IOS/@EntryIndexedValue">IOS</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E9F6F5445BB6624E937EEB30BBFD2C8C/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E9F6F5445BB6624E937EEB30BBFD2C8C/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E9F6F5445BB6624E937EEB30BBFD2C8C/Description/@EntryValue">Construct method for DI</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E9F6F5445BB6624E937EEB30BBFD2C8C/Field/=TYPE/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E9F6F5445BB6624E937EEB30BBFD2C8C/Field/=TYPE/Expression/@EntryValue">suggestVariableType()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E9F6F5445BB6624E937EEB30BBFD2C8C/Field/=TYPE/Order/@EntryValue">0</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E9F6F5445BB6624E937EEB30BBFD2C8C/Field/=VARIABLE/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E9F6F5445BB6624E937EEB30BBFD2C8C/Field/=VARIABLE/Expression/@EntryValue">suggestVariableName()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E9F6F5445BB6624E937EEB30BBFD2C8C/Field/=VARIABLE/Order/@EntryValue">1</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E9F6F5445BB6624E937EEB30BBFD2C8C/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E9F6F5445BB6624E937EEB30BBFD2C8C/Scope/=C3001E7C0DA78E4487072B7E050D86C5/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E9F6F5445BB6624E937EEB30BBFD2C8C/Scope/=C3001E7C0DA78E4487072B7E050D86C5/CustomProperties/=minimumLanguageVersion/@EntryIndexedValue">2.0</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E9F6F5445BB6624E937EEB30BBFD2C8C/Scope/=C3001E7C0DA78E4487072B7E050D86C5/Type/@EntryValue">InCSharpFile</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E9F6F5445BB6624E937EEB30BBFD2C8C/Shortcut/@EntryValue">Constr</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E9F6F5445BB6624E937EEB30BBFD2C8C/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E9F6F5445BB6624E937EEB30BBFD2C8C/Text/@EntryValue">[Inject]
+private void Construct($TYPE$ $VARIABLE$)
+{
+    $END$
+}</s:String>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Gizmo/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=spawner/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
