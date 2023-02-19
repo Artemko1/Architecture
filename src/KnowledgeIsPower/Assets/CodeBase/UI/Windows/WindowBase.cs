@@ -8,7 +8,9 @@ namespace CodeBase.UI.Windows
     public abstract class WindowBase : MonoBehaviour
     {
         public Button CloseButton;
-        private IPersistentProgressService _progressService;
+        private PersistentProgressService _progressService;
+
+        public void Construct(PersistentProgressService progressService) => _progressService = progressService;
 
         protected PlayerProgress Progress => _progressService.Progress;
 
@@ -22,8 +24,6 @@ namespace CodeBase.UI.Windows
 
         private void OnDestroy() =>
             Cleanup();
-
-        public void Construct(IPersistentProgressService progressService) => _progressService = progressService;
 
         protected virtual void Initialize()
         {

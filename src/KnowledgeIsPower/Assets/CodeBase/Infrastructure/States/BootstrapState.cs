@@ -33,7 +33,7 @@ namespace CodeBase.Infrastructure.States
         private async Task InitializeServices()
         {
             await Addressables.InitializeAsync().Task;
-            _staticDataProviderService.Load();
+            await _staticDataProviderService.Load();
         }
 
         private static void SetTargetFramerate() =>

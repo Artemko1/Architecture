@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CodeBase.StaticData;
 using CodeBase.StaticData.Hero;
 using CodeBase.StaticData.Monsters;
@@ -18,7 +19,7 @@ namespace CodeBase.Services.StaticDataProvider
         private Dictionary<MonsterTypeId, MonsterStaticData> _monsters;
         private Dictionary<WindowId, WindowConfig> _windows;
 
-        public void Load()
+        public Task Load()
         {
             _monsters = Resources
                 .LoadAll<MonsterStaticData>("StaticData/Monsters")
@@ -35,6 +36,7 @@ namespace CodeBase.Services.StaticDataProvider
                 .Load<WindowStaticData>("StaticData/UI/WindowStaticData")
                 .Configs
                 .ToDictionary(config => config.WindowId, config => config);
+            return Task.CompletedTask;
         }
 
         public MonsterStaticData ForMonster(MonsterTypeId typeId) =>

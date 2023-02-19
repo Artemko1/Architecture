@@ -17,17 +17,17 @@ namespace CodeBase.Infrastructure.States
 {
     public class LoadLevelState : IPayloadedState<string>
     {
-        private readonly IAssetProviderService _assetProvider;
+        private readonly AssetProviderService _assetProvider;
         private readonly LoadingCurtain _curtain;
         private readonly GameFactory _gameFactory;
         private readonly SceneLoader _sceneLoader;
 
         private readonly GameStateMachine _stateMachine;
         private readonly IStaticDataProviderService _staticData;
-        private readonly IUIFactory _uiFactory;
+        private readonly UIFactory _uiFactory;
 
         public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, GameFactory gameFactory,
-            IStaticDataProviderService staticData, IUIFactory uiFactory, IAssetProviderService assetProvider)
+            IStaticDataProviderService staticData, UIFactory uiFactory, AssetProviderService assetProvider)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;

@@ -24,20 +24,20 @@ namespace CodeBase.Infrastructure.Factory
 {
     public class GameFactory : IService
     {
-        private readonly IAssetProviderService _assetProvider;
-        private readonly IPersistentProgressService _progressService;
-        private readonly IRandomService _randomService;
+        private readonly AssetProviderService _assetProvider;
+        private readonly PersistentProgressService _progressService;
+        private readonly RandomService _randomService;
         private readonly ISaveLoadService _saveLoadService;
         private readonly IStaticDataProviderService _staticData;
-        private readonly IWindowService _windowService;
+        private readonly WindowService _windowService;
         private bool _isWarmedUp;
 
         private GameObject _lootPrefab;
         private GameObject _spawnerPrefab;
 
         [Inject]
-        public GameFactory(IAssetProviderService assetProviderService, IStaticDataProviderService staticData, IRandomService randomService,
-            IPersistentProgressService progressService, ISaveLoadService saveLoadService, IWindowService windowService)
+        public GameFactory(AssetProviderService assetProviderService, IStaticDataProviderService staticData, RandomService randomService,
+            PersistentProgressService progressService, ISaveLoadService saveLoadService, WindowService windowService)
         {
             _assetProvider = assetProviderService;
             _staticData = staticData;

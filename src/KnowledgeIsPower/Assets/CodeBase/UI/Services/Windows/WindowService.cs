@@ -1,12 +1,13 @@
-﻿using CodeBase.UI.Services.Factory;
+﻿using CodeBase.Services;
+using CodeBase.UI.Services.Factory;
 
 namespace CodeBase.UI.Services.Windows
 {
-    public class WindowService : IWindowService
+    public class WindowService : IService
     {
-        private readonly IUIFactory _uiFactory;
+        private readonly UIFactory _uiFactory;
 
-        public WindowService(IUIFactory uiFactory)
+        public WindowService(UIFactory uiFactory)
         {
             _uiFactory = uiFactory;
         }

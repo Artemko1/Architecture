@@ -13,9 +13,9 @@ namespace CodeBase.Logic.Enemy.Loot
         private GameFactory _gameFactory;
         private LootData _lootData;
 
-        private IRandomService _random;
+        private RandomService _random;
 
-        public void Construct(GameFactory gameFactory, IRandomService random, LootData monsterDataLootData)
+        public void Construct(GameFactory gameFactory, RandomService random, LootData monsterDataLootData)
         {
             _gameFactory = gameFactory;
             _random = random;

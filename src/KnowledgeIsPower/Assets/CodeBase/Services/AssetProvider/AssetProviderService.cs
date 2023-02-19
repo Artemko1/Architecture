@@ -7,7 +7,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace CodeBase.Services.AssetProvider
 {
-    public class AssetProviderService : IAssetProviderService
+    public class AssetProviderService : IService
     {
         private readonly Dictionary<string, List<AsyncOperationHandle>> _allTrackedHandles =
             new Dictionary<string, List<AsyncOperationHandle>>();

@@ -7,10 +7,10 @@ namespace CodeBase.Infrastructure.States
     public class LoadProgressState : IState
     {
         private readonly GameStateMachine _gameStateMachine;
-        private readonly IPersistentProgressService _progressService;
+        private readonly PersistentProgressService _progressService;
         private readonly ISaveLoadService _saveLoadService;
 
-        public LoadProgressState(GameStateMachine gameStateMachine, IPersistentProgressService progressService,
+        public LoadProgressState(GameStateMachine gameStateMachine, PersistentProgressService progressService,
             ISaveLoadService saveLoadService)
         {
             _gameStateMachine = gameStateMachine;

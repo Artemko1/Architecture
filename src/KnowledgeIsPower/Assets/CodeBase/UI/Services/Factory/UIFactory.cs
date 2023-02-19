@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using CodeBase.Infrastructure;
+using CodeBase.Services;
 using CodeBase.Services.AssetProvider;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.StaticDataProvider;
@@ -10,15 +11,15 @@ using UnityEngine;
 
 namespace CodeBase.UI.Services.Factory
 {
-    public class UIFactory : IUIFactory
+    public class UIFactory : IService
     {
-        private readonly IAssetProviderService _assets;
-        private readonly IPersistentProgressService _progressService;
+        private readonly AssetProviderService _assets;
+        private readonly PersistentProgressService _progressService;
         private readonly IStaticDataProviderService _staticData;
 
         private Transform _uiRoot;
 
-        public UIFactory(IAssetProviderService assets, IStaticDataProviderService staticData, IPersistentProgressService progressService)
+        public UIFactory(AssetProviderService assets, IStaticDataProviderService staticData, PersistentProgressService progressService)
         {
             _assets = assets;
             _staticData = staticData;

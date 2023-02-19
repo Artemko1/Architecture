@@ -51,7 +51,6 @@ namespace CodeBase.Infrastructure.Installers
             Container.Bind<Game>().AsSingle();
             Container.Bind<GameStateMachine>().AsSingle();
 
-
             Container.BindFactory<BootstrapState, BootstrapState.Factory>().AsSingle();
             Container.BindFactory<LoadLevelState, LoadLevelState.Factory>().AsSingle();
             Container.BindFactory<LoadProgressState, LoadProgressState.Factory>().AsSingle();
@@ -70,13 +69,13 @@ namespace CodeBase.Infrastructure.Installers
                 : new MobileInputService();
             Container.Bind<IInputService>().FromInstance(inputService).AsSingle();
 
-            Container.Bind<IAssetProviderService>().To<AssetProviderService>().AsSingle();
+            Container.Bind<AssetProviderService>().AsSingle();
             Container.Bind<IStaticDataProviderService>().To<StaticDataProviderService>().AsSingle();
-            Container.Bind<IPersistentProgressService>().To<PersistentProgressService>().AsSingle();
+            Container.Bind<PersistentProgressService>().AsSingle();
             Container.Bind<ISaveLoadService>().To<SaveLoadService>().AsSingle();
-            Container.Bind<IUIFactory>().To<UIFactory>().AsSingle();
-            Container.Bind<IWindowService>().To<WindowService>().AsSingle();
-            Container.Bind<IRandomService>().To<RandomService>().AsSingle();
+            Container.Bind<UIFactory>().AsSingle();
+            Container.Bind<WindowService>().AsSingle();
+            Container.Bind<RandomService>().AsSingle();
             Container.Bind<GameFactory>().AsSingle();
         }
     }

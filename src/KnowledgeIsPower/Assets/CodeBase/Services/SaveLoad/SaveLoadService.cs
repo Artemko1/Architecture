@@ -10,10 +10,10 @@ namespace CodeBase.Services.SaveLoad
     public class SaveLoadService : ISaveLoadService
     {
         private const string ProgressKey = "Progress";
-        private readonly IPersistentProgressService _progressService;
+        private readonly PersistentProgressService _progressService;
         private readonly IStaticDataProviderService _staticData;
 
-        public SaveLoadService(IPersistentProgressService progressService, IStaticDataProviderService staticData)
+        public SaveLoadService(PersistentProgressService progressService, IStaticDataProviderService staticData)
         {
             _progressService = progressService;
             _staticData = staticData;
