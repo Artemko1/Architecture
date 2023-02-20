@@ -11,6 +11,7 @@ namespace CodeBase.Infrastructure.States
         private readonly GameStateMachine _stateMachine;
         private readonly IStaticDataProviderService _staticDataProviderService;
 
+        [Inject]
         public BootstrapState(GameStateMachine stateMachine, IStaticDataProviderService staticDataProviderService)
         {
             _stateMachine = stateMachine;

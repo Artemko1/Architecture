@@ -1,12 +1,13 @@
-﻿using CodeBase.Services;
-using CodeBase.UI.Services.Factory;
+﻿using CodeBase.UI.Services.Factory;
+using Zenject;
 
 namespace CodeBase.UI.Services.Windows
 {
-    public class WindowService : IService
+    public class WindowService
     {
         private readonly UIFactory _uiFactory;
 
+        [Inject]
         public WindowService(UIFactory uiFactory)
         {
             _uiFactory = uiFactory;

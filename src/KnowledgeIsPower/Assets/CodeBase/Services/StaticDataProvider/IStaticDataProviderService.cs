@@ -7,7 +7,7 @@ using CodeBase.UI.Services.Windows;
 
 namespace CodeBase.Services.StaticDataProvider
 {
-    public interface IStaticDataProviderService : IService
+    public interface IStaticDataProviderService
     {
         Task Load();
         MonsterStaticData ForMonster(MonsterTypeId typeId);

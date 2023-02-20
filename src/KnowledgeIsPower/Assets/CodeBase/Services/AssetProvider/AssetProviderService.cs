@@ -7,13 +7,10 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace CodeBase.Services.AssetProvider
 {
-    public class AssetProviderService : IService
+    public class AssetProviderService
     {
         private readonly Dictionary<string, List<AsyncOperationHandle>> _allTrackedHandles =
             new Dictionary<string, List<AsyncOperationHandle>>();
-
-        public Task Initialize() =>
-            Addressables.InitializeAsync().Task;
 
         public Task<T> LoadAsync<T>(AssetReferenceT<T> assetReference, bool autoTrackHandle = true) where T : Object
         {

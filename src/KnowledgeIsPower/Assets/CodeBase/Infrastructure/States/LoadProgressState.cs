@@ -10,6 +10,7 @@ namespace CodeBase.Infrastructure.States
         private readonly PersistentProgressService _progressService;
         private readonly ISaveLoadService _saveLoadService;
 
+        [Inject]
         public LoadProgressState(GameStateMachine gameStateMachine, PersistentProgressService progressService,
             ISaveLoadService saveLoadService)
         {

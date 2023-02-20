@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using CodeBase.Services;
 using Zenject;
 
 namespace CodeBase.Infrastructure.States
 {
-    public class GameStateMachine : IService
+    public class GameStateMachine
     {
         private readonly BootstrapState.Factory _bootstrapStateFactory;
         private readonly GameLoopState.Factory _gameLoopStateFactory;

@@ -23,4 +23,5 @@ private void Construct($TYPE$ $VARIABLE$)
     $END$
 }</s:String>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Gizmo/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=instantiator/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=spawner/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

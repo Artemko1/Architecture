@@ -2,6 +2,7 @@
 using CodeBase.Services.PersistentProgress;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace CodeBase.UI.Windows
 {
@@ -10,9 +11,12 @@ namespace CodeBase.UI.Windows
         public Button CloseButton;
         private PersistentProgressService _progressService;
 
-        public void Construct(PersistentProgressService progressService) => _progressService = progressService;
+        [Inject]
+        public void Construct(PersistentProgressService progressService) =>
+            _progressService = progressService;
 
-        protected PlayerProgress Progress => _progressService.Progress;
+        protected PlayerProgress Progress =>
+            _progressService.Progress;
 
         protected virtual void Awake() => CloseButton.onClick.AddListener(() => Destroy(gameObject));
 

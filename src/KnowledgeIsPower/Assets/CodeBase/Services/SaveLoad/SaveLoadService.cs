@@ -4,6 +4,7 @@ using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.StaticDataProvider;
 using CodeBase.StaticData;
 using UnityEngine;
+using Zenject;
 
 namespace CodeBase.Services.SaveLoad
 {
@@ -13,6 +14,7 @@ namespace CodeBase.Services.SaveLoad
         private readonly PersistentProgressService _progressService;
         private readonly IStaticDataProviderService _staticData;
 
+        [Inject]
         public SaveLoadService(PersistentProgressService progressService, IStaticDataProviderService staticData)
         {
             _progressService = progressService;

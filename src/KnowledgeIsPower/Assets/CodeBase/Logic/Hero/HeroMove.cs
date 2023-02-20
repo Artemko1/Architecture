@@ -1,10 +1,10 @@
 ﻿using CodeBase.Data;
-using CodeBase.Services;
 using CodeBase.Services.Input;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace CodeBase.Logic.Hero
 {
@@ -16,13 +16,16 @@ namespace CodeBase.Logic.Hero
         private IInputService _inputService;
         private ISaveLoadService _saveLoadService;
 
-        private void Awake()
+        [Inject]
+        private void Construct(IInputService inputService, ISaveLoadService saveLoadService)
         {
-            _inputService = AllServices.Container.Single<IInputService>();
-            _characterController = GetComponent<CharacterController>();
-
-            _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
+            Debug.Log("HeroMove construct");
+            _inputService = inputService;
+            _saveLoadService = saveLoadService;
         }
+
+        private void Awake() =>
+            _characterController = GetComponent<CharacterController>();
 
         private void Start() =>
             _saveLoadService.OnSave += WriteToProgress;

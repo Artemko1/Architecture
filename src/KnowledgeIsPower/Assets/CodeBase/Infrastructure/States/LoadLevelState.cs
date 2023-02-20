@@ -26,6 +26,7 @@ namespace CodeBase.Infrastructure.States
         private readonly IStaticDataProviderService _staticData;
         private readonly UIFactory _uiFactory;
 
+        [Inject]
         public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, GameFactory gameFactory,
             IStaticDataProviderService staticData, UIFactory uiFactory, AssetProviderService assetProvider)
         {
@@ -40,10 +41,10 @@ namespace CodeBase.Infrastructure.States
 
         public async void Enter(string sceneName)
         {
+            Debug.Log("LoadLevelState Enter");
             _curtain.Show();
             _assetProvider.Cleanup();
             _gameFactory.Cleanup();
-            await _assetProvider.Initialize();
             await _gameFactory.Warmup();
             _sceneLoader.Load(sceneName, OnLoaded);
         }
@@ -51,6 +52,7 @@ namespace CodeBase.Infrastructure.States
         public void Exit() =>
             _curtain.Hide();
 
+        // todo Перенести в новый класс, вызывать зенжектом через Initializable. Создать новый инстанс бутстрапера сцены, не несладующегося, если так можно
         private async void OnLoaded()
         {
             await InitUIRoot();
@@ -73,8 +75,11 @@ namespace CodeBase.Infrastructure.States
             await CreateHud(hero);
         }
 
-        private Task<GameObject> CreateHero(LevelStaticData levelStaticData) =>
-            _gameFactory.CreateHero(levelStaticData.InitialHeroPosition);
+        private Task<GameObject> CreateHero(LevelStaticData levelStaticData)
+        {
+            var sceneContext = Object.FindAnyObjectByType<SceneContext>();
+            return _gameFactory.CreateHero(levelStaticData.InitialHeroPosition, sceneContext.transform);
+        }
 
         private void CameraFollow(GameObject hero) =>
             Camera.main

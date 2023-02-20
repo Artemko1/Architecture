@@ -1,10 +1,10 @@
 ﻿using System;
 using CodeBase.Data;
-using CodeBase.Services;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
 using CodeBase.StaticData.ForComponents;
 using UnityEngine;
+using Zenject;
 
 namespace CodeBase.Logic.Hero
 {
@@ -18,11 +18,12 @@ namespace CodeBase.Logic.Hero
         private HeroAnimator _heroAnimator;
         private ISaveLoadService _saveLoadService;
 
-        private void Awake()
-        {
+        [Inject]
+        private void Construct(ISaveLoadService saveLoadService) =>
+            _saveLoadService = saveLoadService;
+
+        private void Awake() =>
             _heroAnimator = GetComponent<HeroAnimator>();
-            _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
-        }
 
         private void Start() =>
             _saveLoadService.OnSave += WriteToProgress;
@@ -30,11 +31,12 @@ namespace CodeBase.Logic.Hero
         private void OnDestroy() =>
             _saveLoadService.OnSave -= WriteToProgress;
 
+        public void Construct(HealthData healthData) =>
+            _healthData = healthData;
+
         public event Action HealthChanged;
         public event Action Died;
 
-        public void Construct(HealthData healthData) =>
-            _healthData = healthData;
 
         public float Current => _current;
         public float Max => _healthData.MaxHp;

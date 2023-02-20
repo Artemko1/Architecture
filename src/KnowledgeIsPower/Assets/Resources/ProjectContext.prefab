@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4912940970440675768}
   - component: {fileID: 6627258029383888047}
   - component: {fileID: 4722919020628226709}
+  - component: {fileID: -3517766490725054257}
   m_Layer: 0
   m_Name: ProjectContext
   m_TagString: Untagged
@@ -48,6 +49,7 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 4722919020628226709}
+  - {fileID: -3517766490725054257}
   _installerPrefabs: []
   _findSiblingMonoInstallers: 0
   _parentNewObjectsUnderContext: 1
@@ -56,9 +58,9 @@ MonoBehaviour:
   _settings:
     _ensureDeterministicDestructionOrderOnApplicationQuit: 0
     _displayWarningWhenResolvingDuringInstall: 1
-    _validationRootResolveMethod: 0
+    _validationRootResolveMethod: 1
     _validationErrorResponse: 0
-    _constructorChoiceStrategy: 0
+    _constructorChoiceStrategy: 1
     _signalSettings:
       _defaultSyncMode: 0
       _missingHandlerDefaultResponse: 2
@@ -78,7 +80,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _loadingCurtainPrefab: {fileID: 8713324141352661597, guid: 9999f750a9cb62f4e95f2b25c7f6aec2,
     type: 3}
-  _gameBootstrapperPrefab: {fileID: 5009298275557487445, guid: 214dd820cf165354680de82b22a1704e,
-    type: 3}
   _eventSystem: {fileID: 1666320545169872499, guid: 188e62d9fbf516a44b4317c8718377ab,
     type: 3}
+--- !u!114 &-3517766490725054257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8991651959400888568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 909f8eb735e64e358deb1d82d0b3836c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

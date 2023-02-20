@@ -1,8 +1,8 @@
 ﻿using CodeBase.Logic.Enemy;
-using CodeBase.Services;
 using CodeBase.Services.Input;
 using CodeBase.StaticData.ForComponents;
 using UnityEngine;
+using Zenject;
 
 namespace CodeBase.Logic.Hero
 {
@@ -18,12 +18,17 @@ namespace CodeBase.Logic.Hero
         private HeroAnimator _heroAnimator;
         private IInputService _inputService;
 
+        [Inject]
+        private void Construct(IInputService inputService) =>
+            _inputService = inputService;
+
+        public void Construct(AttackData attackData) =>
+            _attackData = attackData;
+
         private void Awake()
         {
             _heroAnimator = GetComponent<HeroAnimator>();
             _characterController = GetComponent<CharacterController>();
-
-            _inputService = AllServices.Container.Single<IInputService>();
 
             _layerMask = 1 << LayerMask.NameToLayer(Constants.Layers.Hittable);
         }
@@ -35,9 +40,6 @@ namespace CodeBase.Logic.Hero
                 _heroAnimator.PlayAttack();
             }
         }
-
-        public void Construct(AttackData attackData) =>
-            _attackData = attackData;
 
         public void OnAttack() // called from animation events
         {

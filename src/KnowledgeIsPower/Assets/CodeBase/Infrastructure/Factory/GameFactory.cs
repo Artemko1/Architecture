@@ -4,7 +4,6 @@ using CodeBase.Logic.Enemy.Loot;
 using CodeBase.Logic.Enemy.Spawner;
 using CodeBase.Logic.Enemy.Targets;
 using CodeBase.Logic.Hero;
-using CodeBase.Services;
 using CodeBase.Services.AssetProvider;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.Randomizer;
@@ -22,9 +21,10 @@ using Zenject;
 
 namespace CodeBase.Infrastructure.Factory
 {
-    public class GameFactory : IService
+    public class GameFactory
     {
         private readonly AssetProviderService _assetProvider;
+        private readonly IInstantiator _instantiator;
         private readonly PersistentProgressService _progressService;
         private readonly RandomService _randomService;
         private readonly ISaveLoadService _saveLoadService;
@@ -37,7 +37,8 @@ namespace CodeBase.Infrastructure.Factory
 
         [Inject]
         public GameFactory(AssetProviderService assetProviderService, IStaticDataProviderService staticData, RandomService randomService,
-            PersistentProgressService progressService, ISaveLoadService saveLoadService, WindowService windowService)
+            PersistentProgressService progressService, ISaveLoadService saveLoadService, WindowService windowService,
+            IInstantiator instantiator)
         {
             _assetProvider = assetProviderService;
             _staticData = staticData;
@@ -45,6 +46,7 @@ namespace CodeBase.Infrastructure.Factory
             _progressService = progressService;
             _saveLoadService = saveLoadService;
             _windowService = windowService;
+            _instantiator = instantiator;
         }
 
         public async Task Warmup()
@@ -73,10 +75,10 @@ namespace CodeBase.Infrastructure.Factory
             _spawnerPrefab = null;
         }
 
-        public async Task<GameObject> CreateHero(Vector3 initialHeroPosition)
+        public async Task<GameObject> CreateHero(Vector3 initialHeroPosition, Transform parent)
         {
             var prefab = await _assetProvider.LoadAsync<GameObject>(AssetAddress.HeroPath);
-            GameObject heroGameObject = Object.Instantiate(prefab, initialHeroPosition, Quaternion.identity);
+            GameObject heroGameObject = _instantiator.InstantiatePrefab(prefab, initialHeroPosition, Quaternion.identity, parent);
             HeroStaticData heroStaticData = _staticData.ForHero();
 
             heroGameObject

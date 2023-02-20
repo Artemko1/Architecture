@@ -1,7 +1,5 @@
-﻿using CodeBase.Infrastructure.Factory;
-using CodeBase.Infrastructure.States;
+﻿using CodeBase.Infrastructure.States;
 using CodeBase.Logic;
-using CodeBase.Services;
 using CodeBase.Services.AssetProvider;
 using CodeBase.Services.Input;
 using CodeBase.Services.PersistentProgress;
@@ -62,8 +60,6 @@ namespace CodeBase.Infrastructure.Installers
 
         private void BindServices()
         {
-            Container.Bind<AllServices>().AsSingle().NonLazy();
-
             IInputService inputService = Application.isEditor
                 ? new StandaloneInputService()
                 : new MobileInputService();
@@ -76,7 +72,6 @@ namespace CodeBase.Infrastructure.Installers
             Container.Bind<UIFactory>().AsSingle();
             Container.Bind<WindowService>().AsSingle();
             Container.Bind<RandomService>().AsSingle();
-            Container.Bind<GameFactory>().AsSingle();
         }
     }
 }
