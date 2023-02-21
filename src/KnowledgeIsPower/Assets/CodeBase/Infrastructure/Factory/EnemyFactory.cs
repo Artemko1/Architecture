@@ -4,7 +4,6 @@ using CodeBase.Logic.Enemy.Loot;
 using CodeBase.Logic.Enemy.Spawner;
 using CodeBase.Logic.Enemy.Targets;
 using CodeBase.Services.AssetProvider;
-using CodeBase.Services.Randomizer;
 using CodeBase.Services.StaticDataProvider;
 using CodeBase.StaticData.Monsters;
 using CodeBase.UI.Elements;
@@ -19,9 +18,7 @@ namespace CodeBase.Infrastructure.Factory
     public class EnemyFactory
     {
         private readonly AssetProviderService _assetProvider;
-        private readonly GameFactory _gameFactory;
         private readonly IInstantiator _instantiator;
-        private readonly RandomService _randomService;
         private readonly IStaticDataProviderService _staticData;
 
         private bool _isWarmedUp;
@@ -29,14 +26,11 @@ namespace CodeBase.Infrastructure.Factory
         private GameObject _spawnerPrefab;
 
         [Inject]
-        public EnemyFactory(AssetProviderService assetProviderService, IStaticDataProviderService staticData, RandomService randomService,
-            IInstantiator instantiator, GameFactory gameFactory)
+        public EnemyFactory(AssetProviderService assetProviderService, IStaticDataProviderService staticData, IInstantiator instantiator)
         {
             _assetProvider = assetProviderService;
             _staticData = staticData;
-            _randomService = randomService;
             _instantiator = instantiator;
-            _gameFactory = gameFactory;
         }
 
         public async Task Warmup()
@@ -75,7 +69,7 @@ namespace CodeBase.Infrastructure.Factory
             attack.Construct(monsterData.AttackData);
 
             var lootSpawner = monsterGo.GetComponentInChildren<LootSpawner>();
-            lootSpawner.Construct(_gameFactory, _randomService, monsterData.LootData);
+            lootSpawner.Construct(monsterData.LootData);
 
             return monsterGo;
         }

@@ -9,29 +9,25 @@ namespace CodeBase.Infrastructure.States
     {
         private readonly AssetProviderService _assetProvider;
         private readonly LoadingCurtain _curtain;
-        private readonly GameFactory _gameFactory;
         private readonly HeroFactory _heroFactory;
         private readonly SceneLoader _sceneLoader;
 
         private readonly GameStateMachine _stateMachine;
 
         [Inject]
-        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, GameFactory gameFactory,
+        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain,
             AssetProviderService assetProvider)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _curtain = curtain;
-            _gameFactory = gameFactory;
             _assetProvider = assetProvider;
         }
 
-        public async void Enter(string sceneName)
+        public void Enter(string sceneName)
         {
             _curtain.Show();
             _assetProvider.Cleanup();
-            _gameFactory.Cleanup();
-            await _gameFactory.Warmup();
             _sceneLoader.Load(sceneName, OnLoaded);
         }
 

@@ -18,31 +18,38 @@ namespace CodeBase.Infrastructure
     public class SceneInitializer : IInitializable, IDisposable
     {
         private readonly EnemyFactory _enemyFactory;
-        private readonly GameFactory _gameFactory;
         private readonly HeroFactory _heroFactory;
+        private readonly HudFactory _hudFactory;
+        private readonly LootFactory _lootFactory;
         private readonly SceneLoader _sceneLoader;
         private readonly IStaticDataProviderService _staticData;
         private readonly UIFactory _uiFactory;
 
         // todo split this class to many
         [Inject]
-        public SceneInitializer(GameFactory gameFactory, UIFactory uiFactory, HeroFactory heroFactory, EnemyFactory enemyFactory,
+        public SceneInitializer(HudFactory hudFactory, UIFactory uiFactory, HeroFactory heroFactory, EnemyFactory enemyFactory,
+            LootFactory lootFactory,
             IStaticDataProviderService staticData, SceneLoader sceneLoader)
         {
-            _gameFactory = gameFactory;
+            _hudFactory = hudFactory;
             _uiFactory = uiFactory;
             _heroFactory = heroFactory;
             _enemyFactory = enemyFactory;
+            _lootFactory = lootFactory;
             _staticData = staticData;
             _sceneLoader = sceneLoader;
         }
 
-        public void Dispose() =>
-            _enemyFactory.Cleanup();
+        public void Dispose()
+        {
+            _enemyFactory.Cleanup(); // Todo не отсюда вызывать, а самими фабриками заимплементить интерфес(ы)
+            _lootFactory.Cleanup();
+        }
 
         public async void Initialize()
         {
             await _enemyFactory.Warmup();
+            await _lootFactory.Warmup();
 
             await InitUIRoot();
             await InitGameWorld();
@@ -91,7 +98,7 @@ namespace CodeBase.Infrastructure
 
         private async Task CreateHud(GameObject hero)
         {
-            GameObject hud = await _gameFactory.CreateHud();
+            GameObject hud = await _hudFactory.CreateHud();
             hud.GetComponentInChildren<ActorUI>()
                 .Construct(hero.GetComponent<HeroHealth>());
         }
