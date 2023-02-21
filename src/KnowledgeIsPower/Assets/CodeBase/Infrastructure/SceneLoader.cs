@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 using Zenject;
 
@@ -9,6 +10,7 @@ namespace CodeBase.Infrastructure
     public class SceneLoader
     {
         private readonly ICoroutineRunner _coroutineRunner;
+        private bool _sceneInitialized;
 
         [Inject]
         public SceneLoader(ICoroutineRunner coroutineRunner)
@@ -21,6 +23,8 @@ namespace CodeBase.Infrastructure
 
         private IEnumerator LoadScene(string name, Action onLoaded = null)
         {
+            Assert.IsFalse(_sceneInitialized);
+
             string activeScene = SceneManager.GetActiveScene().name;
             if (activeScene == name)
             {
@@ -32,8 +36,14 @@ namespace CodeBase.Infrastructure
             AsyncOperation waitNextScene = SceneManager.LoadSceneAsync(name);
 
             yield return new WaitUntil(() => waitNextScene.isDone);
+            yield return new WaitUntil(() => _sceneInitialized);
+
+            _sceneInitialized = false;
 
             onLoaded?.Invoke();
         }
+
+        public void OnSceneInitializationFinish() =>
+            _sceneInitialized = true;
     }
 }

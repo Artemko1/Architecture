@@ -1,17 +1,18 @@
-﻿using UnityEngine;
-using Zenject;
+﻿using Zenject;
 
 namespace CodeBase.Infrastructure
 {
-    public class GameBootstrapper : MonoBehaviour
+    public class GameBootstrapper : IInitializable
     {
-        private Game _game;
+        private readonly Game _game;
 
         [Inject]
-        public void Construct(Game game) =>
+        public GameBootstrapper(Game game)
+        {
             _game = game;
+        }
 
-        private void Awake() =>
+        public void Initialize() =>
             _game.StateMachine.Startup();
     }
 }
