@@ -1,19 +1,11 @@
 ﻿using System.Threading.Tasks;
-using CodeBase.Logic.Enemy;
 using CodeBase.Logic.Enemy.Loot;
-using CodeBase.Logic.Enemy.Spawner;
-using CodeBase.Logic.Enemy.Targets;
 using CodeBase.Services.AssetProvider;
 using CodeBase.Services.PersistentProgress;
-using CodeBase.Services.Randomizer;
-using CodeBase.Services.SaveLoad;
-using CodeBase.Services.StaticDataProvider;
-using CodeBase.StaticData.Monsters;
 using CodeBase.UI.Elements;
 using CodeBase.UI.Services.Windows;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.AI;
 using UnityEngine.Assertions;
 using Zenject;
 
@@ -24,29 +16,21 @@ namespace CodeBase.Infrastructure.Factory
         private readonly AssetProviderService _assetProvider;
         private readonly IInstantiator _instantiator;
         private readonly PersistentProgressService _progressService;
-        private readonly RandomService _randomService;
-        private readonly ISaveLoadService _saveLoadService;
-        private readonly IStaticDataProviderService _staticData;
         private readonly WindowService _windowService;
         private bool _isWarmedUp;
 
         private GameObject _lootPrefab;
-        private GameObject _spawnerPrefab;
+
 
         [Inject]
-        public GameFactory(AssetProviderService assetProviderService, IStaticDataProviderService staticData, RandomService randomService,
-            PersistentProgressService progressService, ISaveLoadService saveLoadService, WindowService windowService,
-            IInstantiator instantiator)
+        public GameFactory(AssetProviderService assetProviderService, PersistentProgressService progressService,
+            WindowService windowService, IInstantiator instantiator)
         {
             _assetProvider = assetProviderService;
-            _staticData = staticData;
-            _randomService = randomService;
             _progressService = progressService;
-            _saveLoadService = saveLoadService;
             _windowService = windowService;
             _instantiator = instantiator;
         }
-
 
         public async Task Warmup()
         {
@@ -54,12 +38,7 @@ namespace CodeBase.Infrastructure.Factory
 
             _isWarmedUp = true;
 
-            Task<GameObject> loadLoot = _assetProvider.LoadAsync<GameObject>(AssetAddress.Loot, false);
-            Task<GameObject> loadSpawner = _assetProvider.LoadAsync<GameObject>(AssetAddress.EnemySpawner, false);
-            await Task.WhenAll(loadLoot, loadSpawner);
-
-            _lootPrefab = loadLoot.Result;
-            _spawnerPrefab = loadSpawner.Result;
+            _lootPrefab = await _assetProvider.LoadAsync<GameObject>(AssetAddress.Loot, false);
         }
 
         public void Cleanup()
@@ -70,8 +49,6 @@ namespace CodeBase.Infrastructure.Factory
 
             Addressables.Release(_lootPrefab); // Работает отлично
             _lootPrefab = null;
-            Addressables.Release(_spawnerPrefab);
-            _spawnerPrefab = null;
         }
 
         public async Task<GameObject> CreateHud()
@@ -89,30 +66,6 @@ namespace CodeBase.Infrastructure.Factory
             return hud;
         }
 
-        public async Task<GameObject> CreateMonster(MonsterTypeId typeId, Transform parent)
-        {
-            MonsterStaticData monsterData = _staticData.ForMonster(typeId);
-
-            //todo нужно держать все ссылки на созданных монстров и релизить их, подписавшись на DeathComponent. Либо даже добавить CleanupComponent
-            GameObject prefab = await _assetProvider.LoadAsync(monsterData.PrefabReference);
-            GameObject monsterGo = _instantiator.InstantiatePrefab(prefab, parent.position, Quaternion.identity, parent);
-
-            var health = monsterGo.GetComponent<EnemyHealth>();
-            health.Construct(monsterData.HealthData);
-
-            monsterGo.GetComponent<ActorUI>().Construct(health);
-
-            monsterGo.GetComponent<NavMeshAgent>().speed = monsterData.MoveSpeed;
-
-            var attack = monsterGo.GetComponent<AttackTarget>();
-            attack.Construct(monsterData.AttackData);
-
-            var lootSpawner = monsterGo.GetComponentInChildren<LootSpawner>();
-            lootSpawner.Construct(this, _randomService, monsterData.LootData);
-
-            return monsterGo;
-        }
-
         public LootPiece CreateLoot(Vector3 at)
         {
             var lootPiece = Object.Instantiate(_lootPrefab, at, Quaternion.identity)
@@ -121,14 +74,6 @@ namespace CodeBase.Infrastructure.Factory
             lootPiece.Construct(_progressService.Progress.PlayerState.LootData);
 
             return lootPiece;
-        }
-
-        public void CreateSpawner(EnemySpawnerData spawnerData)
-        {
-            var spawner = Object.Instantiate(_spawnerPrefab, spawnerData.Position, Quaternion.identity)
-                .GetComponent<SpawnPoint>();
-
-            spawner.Construct(this, _saveLoadService, _progressService, spawnerData.Id, spawnerData.MonsterTypeId);
         }
     }
 }

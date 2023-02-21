@@ -17,7 +17,7 @@ namespace CodeBase.Infrastructure.Factory
             _instantiator = instantiator;
         }
 
-        public async Task<GameObject> CreateHero(Vector3 initialHeroPosition, Transform parent)
+        public async Task<GameObject> CreateHero(Vector3 initialHeroPosition, Transform parent = null)
         {
             var prefab = await _assetProvider.LoadAsync<GameObject>(AssetAddress.HeroPath);
 

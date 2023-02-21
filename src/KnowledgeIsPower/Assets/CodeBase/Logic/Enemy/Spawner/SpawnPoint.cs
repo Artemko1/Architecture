@@ -5,12 +5,13 @@ using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
 using CodeBase.StaticData.Monsters;
 using UnityEngine;
+using Zenject;
 
 namespace CodeBase.Logic.Enemy.Spawner
 {
     public class SpawnPoint : MonoBehaviour
     {
-        private GameFactory _factory;
+        private EnemyFactory _enemyFactory;
         private string _id;
 
         private MonsterTypeId _monsterTypeId;
@@ -19,12 +20,16 @@ namespace CodeBase.Logic.Enemy.Spawner
 
         private bool _slain;
 
-        public void Construct(GameFactory gameFactory, ISaveLoadService saveLoadService, PersistentProgressService progressService,
-            string id, MonsterTypeId monsterTypeId)
+        [Inject]
+        private void Construct(EnemyFactory enemyFactory, ISaveLoadService saveLoadService, PersistentProgressService progressService)
         {
-            _factory = gameFactory;
+            _enemyFactory = enemyFactory;
             _saveLoadService = saveLoadService;
             _progress = progressService.Progress;
+        }
+
+        public void Construct(string id, MonsterTypeId monsterTypeId)
+        {
             _id = id;
             _monsterTypeId = monsterTypeId;
         }
@@ -62,7 +67,7 @@ namespace CodeBase.Logic.Enemy.Spawner
 
         private async void Spawn()
         {
-            GameObject monster = await _factory.CreateMonster(_monsterTypeId, transform);
+            GameObject monster = await _enemyFactory.CreateMonster(_monsterTypeId, transform);
             monster.GetComponent<IHealth>().Died += Slay;
         }
 
