@@ -47,6 +47,7 @@ namespace CodeBase.Infrastructure.Factory
             _instantiator = instantiator;
         }
 
+
         public async Task Warmup()
         {
             Assert.IsFalse(_isWarmedUp, "Factory is already warmed up. It should be cleanedUp before next warmup");
@@ -71,13 +72,6 @@ namespace CodeBase.Infrastructure.Factory
             _lootPrefab = null;
             Addressables.Release(_spawnerPrefab);
             _spawnerPrefab = null;
-        }
-
-        public async Task<GameObject> CreateHero(Vector3 initialHeroPosition, Transform parent)
-        {
-            var prefab = await _assetProvider.LoadAsync<GameObject>(AssetAddress.HeroPath);
-
-            return _instantiator.InstantiatePrefab(prefab, initialHeroPosition, Quaternion.identity, parent);
         }
 
         public async Task<GameObject> CreateHud()

@@ -20,6 +20,7 @@ namespace CodeBase.Infrastructure.States
         private readonly AssetProviderService _assetProvider;
         private readonly LoadingCurtain _curtain;
         private readonly GameFactory _gameFactory;
+        private readonly HeroFactory _heroFactory;
         private readonly SceneLoader _sceneLoader;
 
         private readonly GameStateMachine _stateMachine;
@@ -28,7 +29,7 @@ namespace CodeBase.Infrastructure.States
 
         [Inject]
         public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, GameFactory gameFactory,
-            IStaticDataProviderService staticData, UIFactory uiFactory, AssetProviderService assetProvider)
+            IStaticDataProviderService staticData, UIFactory uiFactory, AssetProviderService assetProvider, HeroFactory heroFactory)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
@@ -37,6 +38,7 @@ namespace CodeBase.Infrastructure.States
             _staticData = staticData;
             _uiFactory = uiFactory;
             _assetProvider = assetProvider;
+            _heroFactory = heroFactory;
         }
 
         public async void Enter(string sceneName)
@@ -77,7 +79,7 @@ namespace CodeBase.Infrastructure.States
         private Task<GameObject> CreateHero(LevelStaticData levelStaticData)
         {
             var sceneContext = Object.FindAnyObjectByType<SceneContext>();
-            return _gameFactory.CreateHero(levelStaticData.InitialHeroPosition, sceneContext.transform);
+            return _heroFactory.CreateHero(levelStaticData.InitialHeroPosition, sceneContext.transform);
         }
 
         private void CameraFollow(GameObject hero) =>
