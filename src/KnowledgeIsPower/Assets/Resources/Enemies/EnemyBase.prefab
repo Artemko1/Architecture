@@ -48,7 +48,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &9500000
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -65,7 +65,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!114 &4073728962471009513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,9 +151,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Target>k__BackingField: {fileID: 0}
-  Cleavage: 0.8
-  EffectiveDistance: 0.75
-  Damage: 5
   _attackCooldown: 3
   _rangeObserver: {fileID: 4208631067281441215}
 --- !u!114 &7299013773521890215
@@ -169,7 +166,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _current: 5
-  _max: 5
 --- !u!114 &4812375546809364506
 MonoBehaviour:
   m_ObjectHideFlags: 0

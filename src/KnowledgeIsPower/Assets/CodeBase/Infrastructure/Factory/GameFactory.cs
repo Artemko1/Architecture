@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using CodeBase.Logic;
+using CodeBase.Logic.Enemy;
 using CodeBase.Logic.Enemy.Loot;
 using CodeBase.Logic.Enemy.Spawner;
 using CodeBase.Logic.Enemy.Targets;
@@ -101,22 +101,17 @@ namespace CodeBase.Infrastructure.Factory
 
             //todo нужно держать все ссылки на созданных монстров и релизить их, подписавшись на DeathComponent. Либо даже добавить CleanupComponent
             GameObject prefab = await _assetProvider.LoadAsync(monsterData.PrefabReference);
-            GameObject monsterGo = Object.Instantiate(prefab, parent.position, Quaternion.identity, parent);
+            GameObject monsterGo = _instantiator.InstantiatePrefab(prefab, parent.position, Quaternion.identity, parent);
 
-            // todo передалать на спаун из контейреа, чтобы убрать из IHealth метод Construct
-            {
-                var health = monsterGo.GetComponent<IHealth>();
-                health.Construct(monsterData.HealthData);
+            var health = monsterGo.GetComponent<EnemyHealth>();
+            health.Construct(monsterData.HealthData);
 
-                monsterGo.GetComponent<ActorUI>().Construct(health);
-            }
+            monsterGo.GetComponent<ActorUI>().Construct(health);
 
             monsterGo.GetComponent<NavMeshAgent>().speed = monsterData.MoveSpeed;
 
-            {
-                var attack = monsterGo.GetComponent<AttackTarget>();
-                attack.Construct(monsterData.AttackData);
-            }
+            var attack = monsterGo.GetComponent<AttackTarget>();
+            attack.Construct(monsterData.AttackData);
 
             var lootSpawner = monsterGo.GetComponentInChildren<LootSpawner>();
             lootSpawner.Construct(this, _randomService, monsterData.LootData);

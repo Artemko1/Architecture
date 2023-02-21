@@ -1,5 +1,4 @@
 ﻿using System;
-using CodeBase.StaticData.ForComponents;
 
 namespace CodeBase.Logic
 {
@@ -10,6 +9,5 @@ namespace CodeBase.Logic
         event Action HealthChanged;
         event Action Died;
         void TakeDamage(float amount);
-        void Construct(HealthData healthData);
     }
 }

@@ -6,12 +6,14 @@ using CodeBase.StaticData.Monsters;
 using CodeBase.StaticData.Windows;
 using CodeBase.UI.Services.Windows;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace CodeBase.Services.StaticDataProvider
 {
     public class StaticDataProviderService : IStaticDataProviderService
     {
         private const string DefaultLevelName = "Main";
+        private bool _isLoaded;
 
         private Dictionary<string, LevelStaticData> _levels;
         private Dictionary<MonsterTypeId, MonsterStaticData> _monsters;
@@ -31,19 +33,33 @@ namespace CodeBase.Services.StaticDataProvider
                 .Load<WindowStaticData>("StaticData/UI/WindowStaticData")
                 .Configs
                 .ToDictionary(config => config.WindowId, config => config);
+
+            _isLoaded = true;
             return Task.CompletedTask;
         }
 
-        public MonsterStaticData ForMonster(MonsterTypeId typeId) =>
-            _monsters[typeId];
+        public MonsterStaticData ForMonster(MonsterTypeId typeId)
+        {
+            Assert.IsTrue(_isLoaded);
+            return _monsters[typeId];
+        }
 
-        public LevelStaticData ForLevel(string sceneKey) =>
-            _levels[sceneKey];
+        public LevelStaticData ForLevel(string sceneKey)
+        {
+            Assert.IsTrue(_isLoaded);
+            return _levels[sceneKey];
+        }
 
-        public LevelStaticData ForDefaultLevel() =>
-            _levels[DefaultLevelName];
+        public LevelStaticData ForDefaultLevel()
+        {
+            Assert.IsTrue(_isLoaded);
+            return _levels[DefaultLevelName];
+        }
 
-        public WindowConfig ForWindow(WindowId id) =>
-            _windows[id];
+        public WindowConfig ForWindow(WindowId id)
+        {
+            Assert.IsTrue(_isLoaded);
+            return _windows[id];
+        }
     }
 }
