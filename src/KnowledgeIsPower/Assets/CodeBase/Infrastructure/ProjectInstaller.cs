@@ -11,7 +11,7 @@ using CodeBase.UI.Services.Windows;
 using UnityEngine;
 using Zenject;
 
-namespace CodeBase.Infrastructure.Installers
+namespace CodeBase.Infrastructure
 {
     public class ProjectInstaller : MonoInstaller
     {

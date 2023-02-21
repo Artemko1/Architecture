@@ -1,9 +1,8 @@
-﻿using CodeBase.Infrastructure.Factory;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
 
-namespace CodeBase.Infrastructure.Installers
+namespace CodeBase.Infrastructure.Factory
 {
     public class FactoryInstaller : MonoInstaller
     {

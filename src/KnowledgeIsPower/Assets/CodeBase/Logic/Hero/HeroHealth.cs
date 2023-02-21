@@ -9,47 +9,57 @@ using Zenject;
 namespace CodeBase.Logic.Hero
 {
     [RequireComponent(typeof(HeroAnimator))]
-    public class HeroHealth : MonoBehaviour, ISavedProgressReader, IHealth
+    public class HeroHealth : MonoBehaviour, IHealth
     {
-        [SerializeField] private float _current = 5;
-
         private HealthData _healthData;
 
         private HeroAnimator _heroAnimator;
+        private PlayerProgress _progress;
         private ISaveLoadService _saveLoadService;
 
         [Inject]
-        private void Construct(ISaveLoadService saveLoadService) =>
+        private void Construct(ISaveLoadService saveLoadService, PersistentProgressService progressService, HealthData healthData)
+        {
             _saveLoadService = saveLoadService;
+            _progress = progressService.Progress;
+            _healthData = healthData;
+        }
 
         private void Awake() =>
             _heroAnimator = GetComponent<HeroAnimator>();
 
-        private void Start() =>
+        private void Start()
+        {
             _saveLoadService.OnSave += WriteToProgress;
+
+            Current = ClampCurrentHp(Current);
+            HealthChanged?.Invoke();
+        }
 
         private void OnDestroy() =>
             _saveLoadService.OnSave -= WriteToProgress;
-
-        public void Construct(HealthData healthData) =>
-            _healthData = healthData;
 
         public event Action HealthChanged;
         public event Action Died;
 
 
-        public float Current => _current;
+        public float Current
+        {
+            get => _progress.PlayerState.CurrentHP;
+            private set => _progress.PlayerState.CurrentHP = value;
+        }
+
         public float Max => _healthData.MaxHp;
 
         public void TakeDamage(float amount)
         {
-            if (_current <= 0 || amount <= 0) return;
+            if (Current <= 0 || amount <= 0) return;
 
-            _current = ClampCurrentHp(_current - amount);
+            Current = ClampCurrentHp(Current - amount);
 
             HealthChanged?.Invoke();
 
-            if (_current <= 0)
+            if (Current <= 0)
             {
                 _heroAnimator.PlayDeath();
                 Died?.Invoke();
@@ -60,11 +70,8 @@ namespace CodeBase.Logic.Hero
             }
         }
 
-        public void ReadFromProgress(PlayerProgress progress)
-        {
-            _current = ClampCurrentHp(progress.PlayerState.CurrentHP);
-            HealthChanged?.Invoke();
-        }
+        public void Construct(HealthData healthData) =>
+            throw new NotImplementedException();
 
         private void WriteToProgress(PlayerProgress progress) =>
             progress.PlayerState.CurrentHP = Current;

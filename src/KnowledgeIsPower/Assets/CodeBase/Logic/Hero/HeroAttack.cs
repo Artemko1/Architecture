@@ -19,11 +19,11 @@ namespace CodeBase.Logic.Hero
         private IInputService _inputService;
 
         [Inject]
-        private void Construct(IInputService inputService) =>
+        private void Construct(IInputService inputService, AttackData attackData)
+        {
             _inputService = inputService;
-
-        public void Construct(AttackData attackData) =>
             _attackData = attackData;
+        }
 
         private void Awake()
         {

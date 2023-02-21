@@ -3,13 +3,11 @@ using CodeBase.Logic;
 using CodeBase.Logic.Enemy.Loot;
 using CodeBase.Logic.Enemy.Spawner;
 using CodeBase.Logic.Enemy.Targets;
-using CodeBase.Logic.Hero;
 using CodeBase.Services.AssetProvider;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.Randomizer;
 using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticDataProvider;
-using CodeBase.StaticData.Hero;
 using CodeBase.StaticData.Monsters;
 using CodeBase.UI.Elements;
 using CodeBase.UI.Services.Windows;
@@ -78,18 +76,8 @@ namespace CodeBase.Infrastructure.Factory
         public async Task<GameObject> CreateHero(Vector3 initialHeroPosition, Transform parent)
         {
             var prefab = await _assetProvider.LoadAsync<GameObject>(AssetAddress.HeroPath);
-            GameObject heroGameObject = _instantiator.InstantiatePrefab(prefab, initialHeroPosition, Quaternion.identity, parent);
-            HeroStaticData heroStaticData = _staticData.ForHero();
 
-            heroGameObject
-                .GetComponent<HeroHealth>()
-                .Construct(heroStaticData.HealthData);
-            heroGameObject
-                .GetComponent<HeroAttack>()
-                .Construct(heroStaticData.AttackData);
-
-            ActivateProgressReaders(heroGameObject);
-            return heroGameObject;
+            return _instantiator.InstantiatePrefab(prefab, initialHeroPosition, Quaternion.identity, parent);
         }
 
         public async Task<GameObject> CreateHud()
@@ -104,7 +92,6 @@ namespace CodeBase.Infrastructure.Factory
                 windowButton.Construct(_windowService);
             }
 
-            ActivateProgressReaders(hud);
             return hud;
         }
 
@@ -116,6 +103,7 @@ namespace CodeBase.Infrastructure.Factory
             GameObject prefab = await _assetProvider.LoadAsync(monsterData.PrefabReference);
             GameObject monsterGo = Object.Instantiate(prefab, parent.position, Quaternion.identity, parent);
 
+            // todo передалать на спаун из контейреа, чтобы убрать из IHealth метод Construct
             {
                 var health = monsterGo.GetComponent<IHealth>();
                 health.Construct(monsterData.HealthData);
@@ -143,27 +131,15 @@ namespace CodeBase.Infrastructure.Factory
 
             lootPiece.Construct(_progressService.Progress.PlayerState.LootData);
 
-            ActivateProgressReaders(lootPiece.gameObject);
-
             return lootPiece;
         }
 
-        public void CreateSpawner(Vector3 at, string spawnerId, MonsterTypeId monsterTypeId)
+        public void CreateSpawner(EnemySpawnerData spawnerData)
         {
-            var spawner = Object.Instantiate(_spawnerPrefab, at, Quaternion.identity)
+            var spawner = Object.Instantiate(_spawnerPrefab, spawnerData.Position, Quaternion.identity)
                 .GetComponent<SpawnPoint>();
 
-            spawner.Construct(this, _saveLoadService, spawnerId, monsterTypeId);
-
-            ActivateProgressReaders(spawner.gameObject);
-        }
-
-        private void ActivateProgressReaders(GameObject gameObject)
-        {
-            foreach (ISavedProgressReader progressReader in gameObject.GetComponentsInChildren<ISavedProgressReader>())
-            {
-                progressReader.ReadFromProgress(_progressService.Progress);
-            }
+            spawner.Construct(this, _saveLoadService, _progressService, spawnerData.Id, spawnerData.MonsterTypeId);
         }
     }
 }

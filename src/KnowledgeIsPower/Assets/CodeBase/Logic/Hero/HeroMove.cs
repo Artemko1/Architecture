@@ -8,24 +8,28 @@ using Zenject;
 
 namespace CodeBase.Logic.Hero
 {
-    public class HeroMove : MonoBehaviour, ISavedProgressReader
+    public class HeroMove : MonoBehaviour
     {
         [SerializeField] private float _movementSpeed = 4.0f;
 
         private CharacterController _characterController;
         private IInputService _inputService;
+        private PlayerProgress _progress;
         private ISaveLoadService _saveLoadService;
 
         [Inject]
-        private void Construct(IInputService inputService, ISaveLoadService saveLoadService)
+        private void Construct(IInputService inputService, ISaveLoadService saveLoadService, PersistentProgressService progressService)
         {
-            Debug.Log("HeroMove construct");
             _inputService = inputService;
             _saveLoadService = saveLoadService;
+            _progress = progressService.Progress;
         }
 
-        private void Awake() =>
+        private void Awake()
+        {
             _characterController = GetComponent<CharacterController>();
+            ReadFromProgress();
+        }
 
         private void Start() =>
             _saveLoadService.OnSave += WriteToProgress;
@@ -52,11 +56,11 @@ namespace CodeBase.Logic.Hero
         private void OnDestroy() =>
             _saveLoadService.OnSave -= WriteToProgress;
 
-        public void ReadFromProgress(PlayerProgress progress)
+        private void ReadFromProgress()
         {
-            if (GetCurrentLevel() != progress.PlayerState.PositionOnLevel.LevelName) return;
+            if (GetCurrentLevel() != _progress.PlayerState.PositionOnLevel.LevelName) return;
 
-            Vector3 savedPosition = progress.PlayerState.PositionOnLevel.Position.AsUnityVector3();
+            Vector3 savedPosition = _progress.PlayerState.PositionOnLevel.Position.AsUnityVector3();
 
             Warp(savedPosition);
         }

@@ -41,7 +41,6 @@ namespace CodeBase.Infrastructure.States
 
         public async void Enter(string sceneName)
         {
-            Debug.Log("LoadLevelState Enter");
             _curtain.Show();
             _assetProvider.Cleanup();
             _gameFactory.Cleanup();
@@ -90,7 +89,7 @@ namespace CodeBase.Infrastructure.States
         {
             foreach (EnemySpawnerData spawnerData in levelData.EnemySpawners)
             {
-                _gameFactory.CreateSpawner(spawnerData.Position, spawnerData.Id, spawnerData.MonsterTypeId);
+                _gameFactory.CreateSpawner(spawnerData);
             }
         }
 
