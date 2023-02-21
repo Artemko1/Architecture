@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using CodeBase.Logic.Enemy;
 using CodeBase.Logic.Enemy.Loot;
 using CodeBase.Logic.Enemy.Spawner;
@@ -15,10 +16,11 @@ using Zenject;
 
 namespace CodeBase.Infrastructure.Factory
 {
-    public class EnemyFactory
+    public class EnemyFactory : IInitializable, IDisposable
     {
         private readonly AssetProviderService _assetProvider;
         private readonly IInstantiator _instantiator;
+        private readonly SceneLoader _sceneLoader;
         private readonly IStaticDataProviderService _staticData;
 
         private bool _isWarmedUp;
@@ -26,14 +28,26 @@ namespace CodeBase.Infrastructure.Factory
         private GameObject _spawnerPrefab;
 
         [Inject]
-        public EnemyFactory(AssetProviderService assetProviderService, IStaticDataProviderService staticData, IInstantiator instantiator)
+        public EnemyFactory(AssetProviderService assetProviderService, IStaticDataProviderService staticData, IInstantiator instantiator,
+            SceneLoader sceneLoader)
         {
             _assetProvider = assetProviderService;
             _staticData = staticData;
             _instantiator = instantiator;
+            _sceneLoader = sceneLoader;
         }
 
-        public async Task Warmup()
+        public void Dispose() =>
+            Cleanup();
+
+        public async void Initialize()
+        {
+            _sceneLoader.RegisterLoading();
+            await Warmup();
+            _sceneLoader.UnregisterLoading();
+        }
+
+        private async Task Warmup()
         {
             Assert.IsFalse(_isWarmedUp, "Factory is already warmed up. It should be cleanedUp before next warmup");
             _isWarmedUp = true;
@@ -41,13 +55,21 @@ namespace CodeBase.Infrastructure.Factory
             _spawnerPrefab = await _assetProvider.LoadAsync<GameObject>(AssetAddress.EnemySpawner, false);
         }
 
-        public void Cleanup()
+        private void Cleanup()
         {
             if (!_isWarmedUp) return;
             _isWarmedUp = false;
 
             Addressables.Release(_spawnerPrefab);
             _spawnerPrefab = null;
+        }
+
+        public void CreateSpawner(EnemySpawnerData spawnerData, Transform parent)
+        {
+            var spawner = _instantiator.InstantiatePrefabForComponent<SpawnPoint>(_spawnerPrefab, spawnerData.Position, Quaternion.identity,
+                parent);
+
+            spawner.Construct(spawnerData.Id, spawnerData.MonsterTypeId);
         }
 
         public async Task<GameObject> CreateMonster(MonsterTypeId typeId, Transform parent)
@@ -72,15 +94,6 @@ namespace CodeBase.Infrastructure.Factory
             lootSpawner.Construct(monsterData.LootData);
 
             return monsterGo;
-        }
-
-
-        public void CreateSpawner(EnemySpawnerData spawnerData, Transform parent)
-        {
-            var spawner = _instantiator.InstantiatePrefabForComponent<SpawnPoint>(_spawnerPrefab, spawnerData.Position, Quaternion.identity,
-                parent);
-
-            spawner.Construct(spawnerData.Id, spawnerData.MonsterTypeId);
         }
     }
 }

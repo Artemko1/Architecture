@@ -10,6 +10,8 @@ namespace CodeBase.Infrastructure
     public class SceneLoader
     {
         private readonly ICoroutineRunner _coroutineRunner;
+
+        private int _remainingLoadings;
         private bool _sceneInitialized;
 
         [Inject]
@@ -36,6 +38,7 @@ namespace CodeBase.Infrastructure
             AsyncOperation waitNextScene = SceneManager.LoadSceneAsync(name);
 
             yield return new WaitUntil(() => waitNextScene.isDone);
+            Debug.Log("waitNextScene.isDone");
             yield return new WaitUntil(() => _sceneInitialized);
 
             _sceneInitialized = false;
@@ -43,7 +46,18 @@ namespace CodeBase.Infrastructure
             onLoaded?.Invoke();
         }
 
-        public void OnSceneInitializationFinish() =>
-            _sceneInitialized = true;
+        public void RegisterLoading() =>
+            _remainingLoadings++;
+
+        public void UnregisterLoading()
+        {
+            Assert.IsTrue(_remainingLoadings > 0);
+
+            _remainingLoadings--;
+            if (_remainingLoadings == 0)
+            {
+                _sceneInitialized = true;
+            }
+        }
     }
 }

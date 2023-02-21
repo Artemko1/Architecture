@@ -1,14 +1,10 @@
-﻿using UnityEngine;
-using Zenject;
+﻿using Zenject;
 
 namespace CodeBase.Infrastructure.Factory
 {
     public class LootFactoryInstaller : MonoInstaller<LootFactoryInstaller>
     {
-        public override void InstallBindings()
-        {
-            Debug.Log($"Binding LootFactory");
-            Container.Bind<LootFactory>().AsSingle();
-        }
+        public override void InstallBindings() =>
+            Container.BindInterfacesAndSelfTo<LootFactory>().AsSingle();
     }
 }
