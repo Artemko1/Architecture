@@ -6,7 +6,6 @@ using CodeBase.Services.StaticDataProvider;
 using CodeBase.StaticData;
 using CodeBase.StaticData.Monsters;
 using CodeBase.UI.Elements;
-using CodeBase.UI.Services.Factory;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
@@ -20,15 +19,13 @@ namespace CodeBase.Infrastructure
         private readonly HudFactory _hudFactory;
         private readonly SceneLoader _sceneLoader;
         private readonly IStaticDataProviderService _staticData;
-        private readonly UIFactory _uiFactory;
 
         // todo split this class to many
         [Inject]
-        public SceneInitializer(HudFactory hudFactory, UIFactory uiFactory, HeroFactory heroFactory, EnemyFactory enemyFactory,
+        public SceneInitializer(HudFactory hudFactory, HeroFactory heroFactory, EnemyFactory enemyFactory,
             IStaticDataProviderService staticData, SceneLoader sceneLoader)
         {
             _hudFactory = hudFactory;
-            _uiFactory = uiFactory;
             _heroFactory = heroFactory;
             _enemyFactory = enemyFactory;
             _staticData = staticData;
@@ -39,14 +36,10 @@ namespace CodeBase.Infrastructure
         {
             _sceneLoader.RegisterLoading();
 
-            await InitUIRoot();
             await InitGameWorld();
 
             _sceneLoader.UnregisterLoading();
         }
-
-        private Task InitUIRoot() =>
-            _uiFactory.CreateUIRoot();
 
         private async Task InitGameWorld()
         {

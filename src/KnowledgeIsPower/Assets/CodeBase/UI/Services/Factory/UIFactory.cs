@@ -9,20 +9,30 @@ using Zenject;
 
 namespace CodeBase.UI.Services.Factory
 {
-    public class UIFactory
+    public class UIFactory : IInitializable
     {
         private readonly AssetProviderService _assets;
         private readonly IInstantiator _instantiator;
+        private readonly SceneLoader _sceneLoader;
         private readonly IStaticDataProviderService _staticData;
 
         private Transform _uiRoot;
 
         [Inject]
-        public UIFactory(AssetProviderService assets, IStaticDataProviderService staticData, IInstantiator instantiator)
+        public UIFactory(AssetProviderService assets, IStaticDataProviderService staticData, IInstantiator instantiator,
+            SceneLoader sceneLoader)
         {
             _assets = assets;
             _staticData = staticData;
             _instantiator = instantiator;
+            _sceneLoader = sceneLoader;
+        }
+
+        public async void Initialize()
+        {
+            _sceneLoader.RegisterLoading();
+            await CreateUIRoot();
+            _sceneLoader.UnregisterLoading();
         }
 
         public void CreateShop()
@@ -31,7 +41,7 @@ namespace CodeBase.UI.Services.Factory
             _instantiator.InstantiatePrefab(config.Prefab, _uiRoot);
         }
 
-        public async Task CreateUIRoot()
+        private async Task CreateUIRoot()
         {
             var prefab = await _assets.LoadAsync<GameObject>(AssetAddress.UIRoot);
             _uiRoot = Object.Instantiate(prefab).transform;
