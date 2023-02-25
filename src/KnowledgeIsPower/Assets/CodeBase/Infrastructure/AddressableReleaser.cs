@@ -1,19 +1,20 @@
-﻿using UnityEngine;
-using UnityEngine.AddressableAssets;
+﻿using CodeBase.Services.AssetProvider;
+using UnityEngine;
 
 namespace CodeBase.Infrastructure
 {
     public class AddressableReleaser : MonoBehaviour
     {
+        private AssetProviderService _assetProviderService;
         private GameObject _prefab;
 
-        public void Construct(GameObject addressablePrefabForRelease) =>
-            _prefab = addressablePrefabForRelease;
-
-        private void OnDestroy()
+        public void Construct(AssetProviderService assetProviderService, GameObject addressablePrefabForRelease)
         {
-            Debug.Log($"Releasing {_prefab.name}");
-            Addressables.Release(_prefab);
+            _prefab = addressablePrefabForRelease;
+            _assetProviderService = assetProviderService;
         }
+
+        private void OnDestroy() => _assetProviderService.PendForRelease(_prefab);
+        // Addressables.Release(_prefab);
     }
 }

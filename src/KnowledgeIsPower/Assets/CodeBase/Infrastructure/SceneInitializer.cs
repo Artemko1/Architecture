@@ -5,6 +5,7 @@ using CodeBase.Logic.Enemy.Factory;
 using CodeBase.Logic.Hero;
 using CodeBase.Logic.Hero.Factory;
 using CodeBase.Logic.Hud;
+using CodeBase.Services.AssetProvider;
 using CodeBase.Services.StaticDataProvider;
 using CodeBase.StaticData;
 using CodeBase.StaticData.Monsters;
@@ -17,6 +18,7 @@ namespace CodeBase.Infrastructure
 {
     public class SceneInitializer : IInitializable
     {
+        private readonly AssetProviderService _assetProvider;
         private readonly EnemyFactory _enemyFactory;
         private readonly HeroFactory _heroFactory;
         private readonly HudFactory _hudFactory;
@@ -26,7 +28,7 @@ namespace CodeBase.Infrastructure
 
         [Inject]
         public SceneInitializer(HudFactory hudFactory, HeroFactory heroFactory, EnemyFactory enemyFactory,
-            IStaticDataProviderService staticData, SceneLoader sceneLoader, IWarmupable[] warmupable)
+            IStaticDataProviderService staticData, SceneLoader sceneLoader, IWarmupable[] warmupable, AssetProviderService assetProvider)
         {
             _hudFactory = hudFactory;
             _heroFactory = heroFactory;
@@ -34,6 +36,7 @@ namespace CodeBase.Infrastructure
             _staticData = staticData;
             _sceneLoader = sceneLoader;
             _warmupable = warmupable;
+            _assetProvider = assetProvider;
         }
 
         public async void Initialize()
@@ -41,6 +44,7 @@ namespace CodeBase.Infrastructure
             _sceneLoader.RegisterLoading();
 
             await WarmupAll();
+            CleanupMemory();
             await InitGameWorld();
 
             _sceneLoader.UnregisterLoading();
@@ -48,6 +52,9 @@ namespace CodeBase.Infrastructure
 
         private async Task WarmupAll() =>
             await Task.WhenAll(_warmupable.Select(warmupable => warmupable.Warmup()));
+
+        private void CleanupMemory() =>
+            _assetProvider.ReleasePendingAssets();
 
         private async Task InitGameWorld()
         {

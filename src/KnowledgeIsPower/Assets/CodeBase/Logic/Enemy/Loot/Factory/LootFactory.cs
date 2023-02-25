@@ -4,7 +4,6 @@ using CodeBase.Infrastructure;
 using CodeBase.Services.AssetProvider;
 using CodeBase.Services.PersistentProgress;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
 using Zenject;
 using Object = UnityEngine.Object;
@@ -45,7 +44,7 @@ namespace CodeBase.Logic.Enemy.Loot.Factory
 
             _isWarmedUp = false;
 
-            Addressables.Release(_lootPrefab); // Работает отлично
+            _assetProvider.PendForRelease(_lootPrefab);
             _lootPrefab = null;
         }
 

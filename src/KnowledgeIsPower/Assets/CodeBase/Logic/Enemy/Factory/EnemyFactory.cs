@@ -9,7 +9,6 @@ using CodeBase.Services.StaticDataProvider;
 using CodeBase.StaticData.Monsters;
 using CodeBase.UI.Elements;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.AI;
 using UnityEngine.Assertions;
 using Zenject;
@@ -50,7 +49,7 @@ namespace CodeBase.Logic.Enemy.Factory
             if (!_isWarmedUp) return;
             _isWarmedUp = false;
 
-            Addressables.Release(_spawnerPrefab);
+            _assetProvider.PendForRelease(_spawnerPrefab);
             _spawnerPrefab = null;
         }
 
@@ -71,7 +70,7 @@ namespace CodeBase.Logic.Enemy.Factory
 
             monsterGo
                 .GetComponent<AddressableReleaser>()
-                .Construct(prefab);
+                .Construct(_assetProvider, prefab);
 
             var health = monsterGo.GetComponent<EnemyHealth>();
             health.Construct(monsterData.HealthData);

@@ -11,16 +11,16 @@ namespace CodeBase.UI.Services.Factory
 {
     public class UIFactory : IWarmupable
     {
-        private readonly AssetProviderService _assets;
+        private readonly AssetProviderService _assetProvider;
         private readonly IInstantiator _instantiator;
         private readonly IStaticDataProviderService _staticData;
 
         private Transform _uiRoot;
 
         [Inject]
-        public UIFactory(AssetProviderService assets, IStaticDataProviderService staticData, IInstantiator instantiator)
+        public UIFactory(AssetProviderService assetProvider, IStaticDataProviderService staticData, IInstantiator instantiator)
         {
-            _assets = assets;
+            _assetProvider = assetProvider;
             _staticData = staticData;
             _instantiator = instantiator;
         }
@@ -36,12 +36,12 @@ namespace CodeBase.UI.Services.Factory
 
         private async Task CreateUIRoot()
         {
-            var prefab = await _assets.LoadAsync<GameObject>(AssetAddress.UIRoot);
+            var prefab = await _assetProvider.LoadAsync<GameObject>(AssetAddress.UIRoot);
             _uiRoot = Object.Instantiate(prefab).transform;
 
             _uiRoot
                 .GetComponent<AddressableReleaser>()
-                .Construct(prefab);
+                .Construct(_assetProvider, prefab);
         }
     }
 }

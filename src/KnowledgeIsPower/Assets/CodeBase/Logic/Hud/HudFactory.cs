@@ -31,7 +31,7 @@ namespace CodeBase.Logic.Hud
                 .Construct(_progressService.Progress.PlayerState.LootData);
             hud
                 .GetComponent<AddressableReleaser>()
-                .Construct(prefab);
+                .Construct(_assetProvider, prefab);
             return hud;
         }
     }

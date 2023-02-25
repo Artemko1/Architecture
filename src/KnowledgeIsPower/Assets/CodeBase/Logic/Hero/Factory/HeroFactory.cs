@@ -26,7 +26,7 @@ namespace CodeBase.Logic.Hero.Factory
 
             hero
                 .GetComponent<AddressableReleaser>()
-                .Construct(prefab);
+                .Construct(_assetProvider, prefab);
 
             return hero;
         }
