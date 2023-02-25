@@ -42,7 +42,7 @@ namespace CodeBase.Logic.Enemy.Factory
             Assert.IsFalse(_isWarmedUp, "Factory is already warmed up. It should be cleanedUp before next warmup");
             _isWarmedUp = true;
 
-            _spawnerPrefab = await _assetProvider.LoadAsync<GameObject>(AssetAddress.EnemySpawner, false);
+            _spawnerPrefab = await _assetProvider.LoadAsync<GameObject>(AssetAddress.EnemySpawner);
         }
 
         private void Cleanup()
@@ -66,22 +66,31 @@ namespace CodeBase.Logic.Enemy.Factory
         {
             MonsterStaticData monsterData = _staticData.ForMonster(typeId);
 
-            //todo нужно держать все ссылки на созданных монстров и релизить их, подписавшись на DeathComponent. Либо даже добавить CleanupComponent
             GameObject prefab = await _assetProvider.LoadAsync(monsterData.PrefabReference);
             GameObject monsterGo = _instantiator.InstantiatePrefab(prefab, parent.position, Quaternion.identity, parent);
+
+            monsterGo
+                .GetComponent<AddressableReleaser>()
+                .Construct(prefab);
 
             var health = monsterGo.GetComponent<EnemyHealth>();
             health.Construct(monsterData.HealthData);
 
-            monsterGo.GetComponent<ActorUI>().Construct(health);
+            monsterGo
+                .GetComponent<ActorUI>()
+                .Construct(health);
 
-            monsterGo.GetComponent<NavMeshAgent>().speed = monsterData.MoveSpeed;
+            monsterGo
+                .GetComponent<NavMeshAgent>()
+                .speed = monsterData.MoveSpeed;
 
-            var attack = monsterGo.GetComponent<AttackTarget>();
-            attack.Construct(monsterData.AttackData);
+            monsterGo
+                .GetComponent<AttackTarget>()
+                .Construct(monsterData.AttackData);
 
-            var lootSpawner = monsterGo.GetComponentInChildren<LootSpawner>();
-            lootSpawner.Construct(monsterData.LootData);
+            monsterGo
+                .GetComponentInChildren<LootSpawner>()
+                .Construct(monsterData.LootData);
 
             return monsterGo;
         }

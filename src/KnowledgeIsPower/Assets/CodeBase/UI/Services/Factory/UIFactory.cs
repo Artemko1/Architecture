@@ -38,6 +38,10 @@ namespace CodeBase.UI.Services.Factory
         {
             var prefab = await _assets.LoadAsync<GameObject>(AssetAddress.UIRoot);
             _uiRoot = Object.Instantiate(prefab).transform;
+
+            _uiRoot
+                .GetComponent<AddressableReleaser>()
+                .Construct(prefab);
         }
     }
 }

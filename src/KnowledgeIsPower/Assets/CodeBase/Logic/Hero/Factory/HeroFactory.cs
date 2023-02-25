@@ -22,7 +22,13 @@ namespace CodeBase.Logic.Hero.Factory
         {
             var prefab = await _assetProvider.LoadAsync<GameObject>(AssetAddress.HeroPath);
 
-            return _instantiator.InstantiatePrefab(prefab, initialHeroPosition, Quaternion.identity, parent);
+            GameObject hero = _instantiator.InstantiatePrefab(prefab, initialHeroPosition, Quaternion.identity, parent);
+
+            hero
+                .GetComponent<AddressableReleaser>()
+                .Construct(prefab);
+
+            return hero;
         }
     }
 }

@@ -26,9 +26,12 @@ namespace CodeBase.Logic.Hud
         {
             var prefab = await _assetProvider.LoadAsync<GameObject>(AssetAddress.HudPath);
             GameObject hud = _instantiator.InstantiatePrefab(prefab);
-            hud.GetComponentInChildren<LootCounter>()
+            hud
+                .GetComponentInChildren<LootCounter>()
                 .Construct(_progressService.Progress.PlayerState.LootData);
-
+            hud
+                .GetComponent<AddressableReleaser>()
+                .Construct(prefab);
             return hud;
         }
     }

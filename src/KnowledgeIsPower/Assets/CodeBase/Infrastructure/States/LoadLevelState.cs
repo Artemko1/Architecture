@@ -27,7 +27,6 @@ namespace CodeBase.Infrastructure.States
         public void Enter(string sceneName)
         {
             _curtain.Show();
-            _assetProvider.Cleanup();
             _sceneLoader.Load(sceneName, OnLoaded);
         }
 
