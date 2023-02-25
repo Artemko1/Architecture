@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CodeBase.Logic.Enemy.Loot;
+using CodeBase.Infrastructure;
 using CodeBase.Services.AssetProvider;
 using CodeBase.Services.PersistentProgress;
 using UnityEngine;
@@ -9,40 +9,28 @@ using UnityEngine.Assertions;
 using Zenject;
 using Object = UnityEngine.Object;
 
-namespace CodeBase.Infrastructure.Factory
+namespace CodeBase.Logic.Enemy.Loot.Factory
 {
-    public class LootFactory : IInitializable, IDisposable
+    public class LootFactory : IWarmupable, IDisposable
     {
         private readonly AssetProviderService _assetProvider;
-        private readonly IInstantiator _instantiator;
         private readonly PersistentProgressService _progressService;
-        private readonly SceneLoader _sceneLoader;
 
         private bool _isWarmedUp;
 
         private GameObject _lootPrefab;
 
         [Inject]
-        public LootFactory(AssetProviderService assetProviderService, PersistentProgressService progressService, IInstantiator instantiator,
-            SceneLoader sceneLoader)
+        public LootFactory(AssetProviderService assetProviderService, PersistentProgressService progressService)
         {
             _assetProvider = assetProviderService;
             _progressService = progressService;
-            _instantiator = instantiator;
-            _sceneLoader = sceneLoader;
         }
 
         public void Dispose() =>
             Cleanup();
 
-        public async void Initialize()
-        {
-            _sceneLoader.RegisterLoading();
-            await Warmup();
-            _sceneLoader.UnregisterLoading();
-        }
-
-        private async Task Warmup()
+        public async Task Warmup()
         {
             Assert.IsFalse(_isWarmedUp, "Factory is already warmed up. It should be cleanedUp before next warmup");
 

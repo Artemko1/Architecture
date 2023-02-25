@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-namespace CodeBase.Infrastructure.Factory
+namespace CodeBase.Logic.Enemy.Loot.Factory
 {
     public class LootFactoryInstaller : MonoInstaller<LootFactoryInstaller>
     {

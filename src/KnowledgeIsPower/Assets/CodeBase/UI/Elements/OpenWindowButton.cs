@@ -1,6 +1,7 @@
 ﻿using CodeBase.UI.Services.Windows;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace CodeBase.UI.Elements
 {
@@ -11,6 +12,7 @@ namespace CodeBase.UI.Elements
         [SerializeField] private WindowId _windowId;
         private WindowService _windowService;
 
+        [Inject]
         public void Construct(WindowService windowService) =>
             _windowService = windowService;
 

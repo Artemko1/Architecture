@@ -1,5 +1,5 @@
-﻿using CodeBase.Infrastructure.Factory;
-using CodeBase.Logic;
+﻿using CodeBase.Logic;
+using CodeBase.Logic.Hero.Factory;
 using CodeBase.Services.AssetProvider;
 using Zenject;
 

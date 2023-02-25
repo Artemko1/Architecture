@@ -1,7 +1,10 @@
-﻿using System.Threading.Tasks;
-using CodeBase.Infrastructure.Factory;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using CodeBase.Logic.Camera;
+using CodeBase.Logic.Enemy.Factory;
 using CodeBase.Logic.Hero;
+using CodeBase.Logic.Hero.Factory;
+using CodeBase.Logic.Hud;
 using CodeBase.Services.StaticDataProvider;
 using CodeBase.StaticData;
 using CodeBase.StaticData.Monsters;
@@ -19,27 +22,32 @@ namespace CodeBase.Infrastructure
         private readonly HudFactory _hudFactory;
         private readonly SceneLoader _sceneLoader;
         private readonly IStaticDataProviderService _staticData;
+        private readonly IWarmupable[] _warmupable;
 
-        // todo split this class to many
         [Inject]
         public SceneInitializer(HudFactory hudFactory, HeroFactory heroFactory, EnemyFactory enemyFactory,
-            IStaticDataProviderService staticData, SceneLoader sceneLoader)
+            IStaticDataProviderService staticData, SceneLoader sceneLoader, IWarmupable[] warmupable)
         {
             _hudFactory = hudFactory;
             _heroFactory = heroFactory;
             _enemyFactory = enemyFactory;
             _staticData = staticData;
             _sceneLoader = sceneLoader;
+            _warmupable = warmupable;
         }
 
         public async void Initialize()
         {
             _sceneLoader.RegisterLoading();
 
+            await WarmupAll();
             await InitGameWorld();
 
             _sceneLoader.UnregisterLoading();
         }
+
+        private async Task WarmupAll() =>
+            await Task.WhenAll(_warmupable.Select(warmupable => warmupable.Warmup()));
 
         private async Task InitGameWorld()
         {
@@ -56,7 +64,7 @@ namespace CodeBase.Infrastructure
         private Task<GameObject> CreateHero(LevelStaticData levelStaticData) =>
             _heroFactory.CreateHero(levelStaticData.InitialHeroPosition);
 
-        private void CameraFollow(GameObject hero) =>
+        private static void CameraFollow(GameObject hero) =>
             Camera.main
                 .GetComponent<CameraFollow>()
                 .Follow(hero);

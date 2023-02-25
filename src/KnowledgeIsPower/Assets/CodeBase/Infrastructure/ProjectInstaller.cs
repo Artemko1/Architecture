@@ -6,8 +6,6 @@ using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.Randomizer;
 using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticDataProvider;
-using CodeBase.UI.Services.Factory;
-using CodeBase.UI.Services.Windows;
 using UnityEngine;
 using Zenject;
 
@@ -20,14 +18,11 @@ namespace CodeBase.Infrastructure
 
         public override void InstallBindings()
         {
-            Debug.Log("Installing Project bindings");
-
             InstallCoroutineRunner();
             InstallEventSystem();
             InstallCurtain();
 
             BindGame();
-            BindSceneLoader();
             BindServices();
         }
 
@@ -55,8 +50,6 @@ namespace CodeBase.Infrastructure
             Container.BindFactory<GameLoopState, GameLoopState.Factory>().AsSingle();
         }
 
-        private void BindSceneLoader() =>
-            Container.Bind<SceneLoader>().AsSingle();
 
         private void BindServices()
         {
@@ -65,12 +58,12 @@ namespace CodeBase.Infrastructure
                 : new MobileInputService();
             Container.Bind<IInputService>().FromInstance(inputService).AsSingle();
 
+            Container.Bind<SceneLoader>().AsSingle();
+
             Container.Bind<AssetProviderService>().AsSingle();
             Container.Bind<IStaticDataProviderService>().To<StaticDataProviderService>().AsSingle();
             Container.Bind<PersistentProgressService>().AsSingle();
             Container.Bind<ISaveLoadService>().To<SaveLoadService>().AsSingle();
-            Container.Bind<UIFactory>().AsSingle();
-            Container.Bind<WindowService>().AsSingle();
             Container.Bind<RandomService>().AsSingle();
         }
     }

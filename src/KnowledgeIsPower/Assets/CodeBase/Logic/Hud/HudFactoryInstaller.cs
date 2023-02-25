@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-namespace CodeBase.Infrastructure.Factory
+namespace CodeBase.Logic.Hud
 {
     public class HudFactoryInstaller : MonoInstaller
     {

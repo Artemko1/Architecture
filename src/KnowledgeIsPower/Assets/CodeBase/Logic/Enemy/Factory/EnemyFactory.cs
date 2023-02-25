@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CodeBase.Logic.Enemy;
+using CodeBase.Infrastructure;
 using CodeBase.Logic.Enemy.Loot;
 using CodeBase.Logic.Enemy.Spawner;
 using CodeBase.Logic.Enemy.Targets;
@@ -14,13 +14,12 @@ using UnityEngine.AI;
 using UnityEngine.Assertions;
 using Zenject;
 
-namespace CodeBase.Infrastructure.Factory
+namespace CodeBase.Logic.Enemy.Factory
 {
-    public class EnemyFactory : IInitializable, IDisposable
+    public class EnemyFactory : IWarmupable, IDisposable
     {
         private readonly AssetProviderService _assetProvider;
         private readonly IInstantiator _instantiator;
-        private readonly SceneLoader _sceneLoader;
         private readonly IStaticDataProviderService _staticData;
 
         private bool _isWarmedUp;
@@ -28,26 +27,17 @@ namespace CodeBase.Infrastructure.Factory
         private GameObject _spawnerPrefab;
 
         [Inject]
-        public EnemyFactory(AssetProviderService assetProviderService, IStaticDataProviderService staticData, IInstantiator instantiator,
-            SceneLoader sceneLoader)
+        public EnemyFactory(AssetProviderService assetProviderService, IStaticDataProviderService staticData, IInstantiator instantiator)
         {
             _assetProvider = assetProviderService;
             _staticData = staticData;
             _instantiator = instantiator;
-            _sceneLoader = sceneLoader;
         }
 
         public void Dispose() =>
             Cleanup();
 
-        public async void Initialize()
-        {
-            _sceneLoader.RegisterLoading();
-            await Warmup();
-            _sceneLoader.UnregisterLoading();
-        }
-
-        private async Task Warmup()
+        public async Task Warmup()
         {
             Assert.IsFalse(_isWarmedUp, "Factory is already warmed up. It should be cleanedUp before next warmup");
             _isWarmedUp = true;

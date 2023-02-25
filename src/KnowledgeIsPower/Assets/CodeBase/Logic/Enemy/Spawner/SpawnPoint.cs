@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Data;
-using CodeBase.Infrastructure.Factory;
+using CodeBase.Logic.Enemy.Factory;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
 using CodeBase.StaticData.Monsters;

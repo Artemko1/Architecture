@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
+using CodeBase.Infrastructure;
 using CodeBase.Services.AssetProvider;
 using UnityEngine;
 using Zenject;
 
-namespace CodeBase.Infrastructure.Factory
+namespace CodeBase.Logic.Hero.Factory
 {
     public class HeroFactory
     {

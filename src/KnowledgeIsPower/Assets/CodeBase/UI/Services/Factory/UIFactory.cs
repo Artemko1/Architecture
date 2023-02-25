@@ -9,31 +9,24 @@ using Zenject;
 
 namespace CodeBase.UI.Services.Factory
 {
-    public class UIFactory : IInitializable
+    public class UIFactory : IWarmupable
     {
         private readonly AssetProviderService _assets;
         private readonly IInstantiator _instantiator;
-        private readonly SceneLoader _sceneLoader;
         private readonly IStaticDataProviderService _staticData;
 
         private Transform _uiRoot;
 
         [Inject]
-        public UIFactory(AssetProviderService assets, IStaticDataProviderService staticData, IInstantiator instantiator,
-            SceneLoader sceneLoader)
+        public UIFactory(AssetProviderService assets, IStaticDataProviderService staticData, IInstantiator instantiator)
         {
             _assets = assets;
             _staticData = staticData;
             _instantiator = instantiator;
-            _sceneLoader = sceneLoader;
         }
 
-        public async void Initialize()
-        {
-            _sceneLoader.RegisterLoading();
-            await CreateUIRoot();
-            _sceneLoader.UnregisterLoading();
-        }
+        public Task Warmup() =>
+            CreateUIRoot();
 
         public void CreateShop()
         {
