@@ -38,7 +38,6 @@ namespace CodeBase.Infrastructure
             AsyncOperation waitNextScene = SceneManager.LoadSceneAsync(name);
 
             yield return new WaitUntil(() => waitNextScene.isDone);
-            Debug.Log("waitNextScene.isDone");
             yield return new WaitUntil(() => _sceneInitialized);
 
             _sceneInitialized = false;

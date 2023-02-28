@@ -1,5 +1,6 @@
 ﻿using CodeBase.Services.AssetProvider;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace CodeBase.Infrastructure
 {
@@ -14,7 +15,10 @@ namespace CodeBase.Infrastructure
             _assetProviderService = assetProviderService;
         }
 
-        private void OnDestroy() => _assetProviderService.PendForRelease(_prefab);
-        // Addressables.Release(_prefab);
+        private void OnDestroy()
+        {
+            Assert.IsNotNull(_prefab);
+            _assetProviderService.PendForRelease(_prefab);
+        }
     }
 }

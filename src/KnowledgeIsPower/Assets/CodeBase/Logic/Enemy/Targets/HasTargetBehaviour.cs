@@ -2,14 +2,14 @@
 
 namespace CodeBase.Logic.Enemy.Targets
 {
-    [RequireComponent(typeof(TargetNotifier))]
+    [RequireComponent(typeof(ITargetNotifier))]
     public abstract class HasTargetBehaviour : MonoBehaviour
     {
-        private TargetNotifier _targetNotifier;
+        private ITargetNotifier _targetNotifier;
         [field: SerializeField] protected Transform Target { get; private set; }
 
         protected virtual void Awake() =>
-            _targetNotifier = GetComponent<TargetNotifier>();
+            _targetNotifier = GetComponent<ITargetNotifier>();
 
         private void OnEnable()
         {

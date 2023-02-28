@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace CodeBase.Logic.Enemy.Targets
 {
-    public class AggroTargetNotifier : TargetNotifier
+    public class AggroTargetNotifier : MonoBehaviour, ITargetNotifier
     {
         private const float Delay = 3f;
 
@@ -26,6 +27,9 @@ namespace CodeBase.Logic.Enemy.Targets
 
             StopAggroInstant();
         }
+
+        public event Action<Transform> NewTarget;
+        public event Action LostTarget;
 
         private void StartAggro(Collider other)
         {
@@ -64,5 +68,8 @@ namespace CodeBase.Logic.Enemy.Targets
             StopAggroProlongCoroutine();
             OnLostTarget();
         }
+
+        private void OnNewTarget(Transform target) => NewTarget?.Invoke(target);
+        private void OnLostTarget() => LostTarget?.Invoke();
     }
 }

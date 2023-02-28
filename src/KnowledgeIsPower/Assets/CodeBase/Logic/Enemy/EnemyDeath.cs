@@ -23,7 +23,7 @@ namespace CodeBase.Logic.Enemy
         private void OnDied()
         {
             SpawnDeathFx();
-            GetComponent<TargetNotifier>()
+            GetComponent<AggroTargetNotifier>()
                 .enabled = false;
 
             Destroy(gameObject, 4f);

@@ -18,7 +18,6 @@ namespace CodeBase.Logic
 
         private IEnumerator DoFadeIn()
         {
-            Debug.Log("Hiding curtain");
             while (Curtain.alpha > 0)
             {
                 Curtain.alpha -= 0.03f;
