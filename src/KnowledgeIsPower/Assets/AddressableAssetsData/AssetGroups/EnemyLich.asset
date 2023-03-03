@@ -10,28 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Default Local Group
+  m_Name: EnemyLich
   m_EditorClassIdentifier: 
-  m_GroupName: Default Local Group
+  m_GroupName: EnemyLich
   m_Data:
     m_SerializedData: []
-  m_GUID: c10805e1e570b8b47b922de185b5c8c1
+  m_GUID: 14010652678200d43a6017b3e0c044e6
   m_SerializeEntries:
-  - m_GUID: fa1ac6882d419a7409a0ba11a75b9462
-    m_Address: SpawnPoint
+  - m_GUID: 1488b9d9048d6354ca7fbcb150952b28
+    m_Address: Lich
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: f6395af14c6ae2d4ea00c7e97e633ad3
-    m_Address: Hud
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 6c3838748e36e644c8a62a9d652facb4
-    m_Address: UIRoot
+  - m_GUID: ca0f93043ea50da418e95098fd1832a5
+    m_Address: Enemies/Lich
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f9633f93b62200044896bb85076475bc, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 7d5b26c6feb3ccd4cb096836f48b0af4, type: 2}
-    - {fileID: 11400000, guid: 670392c81f130ed449408bb4b7171d18, type: 2}
+    - {fileID: 11400000, guid: f86754f00daea9440b02155cb26ac5d0, type: 2}
+    - {fileID: 11400000, guid: 3da47d43877195c408a8d4d54304c5ef, type: 2}

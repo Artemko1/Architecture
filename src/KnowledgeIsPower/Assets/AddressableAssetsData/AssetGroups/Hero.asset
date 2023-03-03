@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Hero
+  m_EditorClassIdentifier: 
+  m_GroupName: Hero
+  m_Data:
+    m_SerializedData: []
+  m_GUID: d99a335a504bbb24fae259d565163810
+  m_SerializeEntries:
+  - m_GUID: 181862a89f60d7a459002f9870860ad4
+    m_Address: Hero
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 446b67edb2cc0c640903adc7b69660a8
+    m_Address: Assets/Resources_moved/Hero/Heavy Knight PBR/Animations
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fb4bd0667fd4df54098e5bdc90bb8bc1
+    m_Address: Assets/Resources_moved/Hero/Heavy Knight PBR/AnimControllers
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d5d32c49e9e2b8641913f92c21fdeae5
+    m_Address: Assets/Resources_moved/Hero/Heavy Knight PBR/Materials
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b00a0b059b3307141b48c0a0b5defa26
+    m_Address: Assets/Resources_moved/Hero/Heavy Knight PBR/Meshes
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1ebc56f909d7844459c044fc161958d3
+    m_Address: Assets/Resources_moved/Hero/Heavy Knight PBR/Textures
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: f9633f93b62200044896bb85076475bc, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: b2898745d8e99e241a841b04328f6714, type: 2}
+    - {fileID: 11400000, guid: eeb304335d27fd2409a695327a3aaf14, type: 2}

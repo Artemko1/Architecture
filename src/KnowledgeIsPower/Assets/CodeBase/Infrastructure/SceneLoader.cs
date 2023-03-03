@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 using Zenject;
 
@@ -35,9 +38,9 @@ namespace CodeBase.Infrastructure
                 yield break;
             }
 
-            AsyncOperation waitNextScene = SceneManager.LoadSceneAsync(name);
+            AsyncOperationHandle<SceneInstance> waitNextScene = Addressables.LoadSceneAsync(name);
 
-            yield return new WaitUntil(() => waitNextScene.isDone);
+            yield return new WaitUntil(() => waitNextScene.IsDone);
             yield return new WaitUntil(() => _sceneInitialized);
 
             _sceneInitialized = false;
