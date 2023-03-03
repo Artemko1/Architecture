@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: e9df079524346b44cb15f789ae4d73ee
   m_SerializeEntries:
   - m_GUID: d8fced3327c2f2c42850913c5f5a1b58
-    m_Address: Levels/Graveyard
+    m_Address: Graveyard
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 81cdc51a8718dea428d18c2049a89e18

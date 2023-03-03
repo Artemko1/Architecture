@@ -18,11 +18,11 @@ MonoBehaviour:
   m_GUID: a5d77c58238293b4099c24ba44a2cc03
   m_SerializeEntries:
   - m_GUID: 114d9f5ea8ed2eb48a0c7b4f6b7655a0
-    m_Address: Assets/Scenes/Dungeon/Dungeon.unity
+    m_Address: Dungeon
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: a0d521a961ab74972bc3467bb55243b3
-    m_Address: Assets/Resources_moved/Levels/Dungeon
+    m_Address: Dungeon
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
