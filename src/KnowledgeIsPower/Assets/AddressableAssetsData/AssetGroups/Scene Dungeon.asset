@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: EnemyLich
+  m_Name: Scene Dungeon
   m_EditorClassIdentifier: 
-  m_GroupName: EnemyLich
+  m_GroupName: Scene Dungeon
   m_Data:
     m_SerializedData: []
-  m_GUID: 14010652678200d43a6017b3e0c044e6
+  m_GUID: a5d77c58238293b4099c24ba44a2cc03
   m_SerializeEntries:
-  - m_GUID: 1488b9d9048d6354ca7fbcb150952b28
-    m_Address: Lich
+  - m_GUID: 114d9f5ea8ed2eb48a0c7b4f6b7655a0
+    m_Address: Dungeon
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: ca0f93043ea50da418e95098fd1832a5
-    m_Address: Enemies/Lich
+  - m_GUID: a0d521a961ab74972bc3467bb55243b3
+    m_Address: Levels/Dungeon
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f9633f93b62200044896bb85076475bc, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: f86754f00daea9440b02155cb26ac5d0, type: 2}
-    - {fileID: 11400000, guid: 3da47d43877195c408a8d4d54304c5ef, type: 2}
+    - {fileID: 11400000, guid: be86cd3affe60e244bbb3f394676292b, type: 2}
+    - {fileID: 11400000, guid: 63db31bfcf425a246bfcfe5e368cf676, type: 2}

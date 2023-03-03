@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: EnemyDragon
+  m_Name: Enemy Lich
   m_EditorClassIdentifier: 
-  m_GroupName: EnemyDragon
+  m_GroupName: Enemy Lich
   m_Data:
     m_SerializedData: []
-  m_GUID: d1352205c10e8e4429ae1a8d4879db29
+  m_GUID: 14010652678200d43a6017b3e0c044e6
   m_SerializeEntries:
-  - m_GUID: 2b6fe3d432419e148af55c6339f6f308
-    m_Address: FatDragon
+  - m_GUID: 1488b9d9048d6354ca7fbcb150952b28
+    m_Address: Lich
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: fa4d557214a0c408b813bc8fb9d3e8cd
-    m_Address: Enemies/IncrediblyFatDragon
+  - m_GUID: ca0f93043ea50da418e95098fd1832a5
+    m_Address: Enemies/Lich
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f9633f93b62200044896bb85076475bc, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 2ffb86009d7527a4d8047eeddfd4a353, type: 2}
-    - {fileID: 11400000, guid: c35b4a75cc2367046b3935434e9fb520, type: 2}
+    - {fileID: 11400000, guid: f86754f00daea9440b02155cb26ac5d0, type: 2}
+    - {fileID: 11400000, guid: 3da47d43877195c408a8d4d54304c5ef, type: 2}

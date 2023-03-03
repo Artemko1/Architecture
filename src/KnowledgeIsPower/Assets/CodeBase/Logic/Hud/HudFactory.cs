@@ -24,7 +24,7 @@ namespace CodeBase.Logic.Hud
 
         public async Task<GameObject> CreateHud()
         {
-            var prefab = await _assetProvider.LoadAsync<GameObject>(AssetAddress.HudPath);
+            var prefab = await _assetProvider.LoadAsync<GameObject>(Constants.AssetAddress.HudPath);
             GameObject hud = _instantiator.InstantiatePrefab(prefab);
             hud
                 .GetComponentInChildren<LootCounter>()

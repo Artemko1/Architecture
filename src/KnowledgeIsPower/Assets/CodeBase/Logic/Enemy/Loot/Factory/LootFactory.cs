@@ -35,7 +35,7 @@ namespace CodeBase.Logic.Enemy.Loot.Factory
 
             _isWarmedUp = true;
 
-            _lootPrefab = await _assetProvider.LoadAsync<GameObject>(AssetAddress.Loot);
+            _lootPrefab = await _assetProvider.LoadAsync<GameObject>(Constants.AssetAddress.Loot);
         }
 
         private void Cleanup()

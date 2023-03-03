@@ -12,7 +12,6 @@ namespace CodeBase.Services.StaticDataProvider
 {
     public class StaticDataProviderService : IStaticDataProviderService
     {
-        private const string DefaultLevelName = "Main";
         private bool _isLoaded;
 
         private Dictionary<string, LevelStaticData> _levels;
@@ -53,7 +52,7 @@ namespace CodeBase.Services.StaticDataProvider
         public LevelStaticData ForDefaultLevel()
         {
             Assert.IsTrue(_isLoaded);
-            return _levels[DefaultLevelName];
+            return _levels[Constants.SceneNames.Graveyard];
         }
 
         public WindowConfig ForWindow(WindowId id)

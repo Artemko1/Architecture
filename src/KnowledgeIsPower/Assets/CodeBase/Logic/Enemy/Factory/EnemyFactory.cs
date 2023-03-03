@@ -41,7 +41,7 @@ namespace CodeBase.Logic.Enemy.Factory
             Assert.IsFalse(_isWarmedUp, "Factory is already warmed up. It should be cleanedUp before next warmup");
             _isWarmedUp = true;
 
-            _spawnerPrefab = await _assetProvider.LoadAsync<GameObject>(AssetAddress.EnemySpawner);
+            _spawnerPrefab = await _assetProvider.LoadAsync<GameObject>(Constants.AssetAddress.EnemySpawner);
         }
 
         private void Cleanup()
