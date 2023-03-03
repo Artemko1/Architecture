@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Static data
+  m_EditorClassIdentifier: 
+  m_GroupName: Static data
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 92e6793cb93ebee4dbefb36da098c988
+  m_SerializeEntries:
+  - m_GUID: 4803133e45c56c746bb54f07f24113f4
+    m_Address: Assets/Resources_moved/StaticData/Hero
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 478101dbf2748f843bf18fc495066ea5
+    m_Address: Assets/Resources_moved/StaticData/Monsters
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - StaticDataMonsters
+  - m_GUID: af3a8e285e42e7f4ebe97ea9f0ec26c2
+    m_Address: Assets/Resources_moved/StaticData/Levels
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - StaticDataLevels
+  - m_GUID: d24bc4d32f126d249998263f544cbf61
+    m_Address: WindowStaticData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: f9633f93b62200044896bb85076475bc, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 561a2e503c529b54db32691ba7da04e9, type: 2}
+    - {fileID: 11400000, guid: b67a1469bea3c0c4ba69d10177855a22, type: 2}

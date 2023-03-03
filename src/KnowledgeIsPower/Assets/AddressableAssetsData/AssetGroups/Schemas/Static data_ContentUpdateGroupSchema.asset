@@ -9,12 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7091ed81a2281824a93ca99f85d2c7aa, type: 3}
-  m_Name: HeroStaticDataInstaller
+  m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
+  m_Name: Static data_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
-  AttackData:
-    <Damage>k__BackingField: 10
-    <Radius>k__BackingField: 1
-    <Distance>k__BackingField: 1
-  HealthData:
-    <MaxHp>k__BackingField: 100
+  m_Group: {fileID: 11400000, guid: 1883db2c892d5db40bc5b6e6a53beba8, type: 2}
+  m_StaticContent: 0

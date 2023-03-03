@@ -61,7 +61,7 @@ namespace CodeBase.Infrastructure
             Container.Bind<SceneLoader>().AsSingle();
 
             Container.Bind<AssetProviderService>().AsSingle();
-            Container.Bind<IStaticDataProviderService>().To<StaticDataProviderService>().AsSingle();
+            Container.Bind<StaticDataProviderService>().AsSingle();
             Container.Bind<PersistentProgressService>().AsSingle();
             Container.Bind<ISaveLoadService>().To<SaveLoadService>().AsSingle();
             Container.Bind<RandomService>().AsSingle();

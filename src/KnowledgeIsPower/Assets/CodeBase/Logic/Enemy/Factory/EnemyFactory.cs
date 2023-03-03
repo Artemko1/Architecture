@@ -19,14 +19,14 @@ namespace CodeBase.Logic.Enemy.Factory
     {
         private readonly AssetProviderService _assetProvider;
         private readonly IInstantiator _instantiator;
-        private readonly IStaticDataProviderService _staticData;
+        private readonly StaticDataProviderService _staticData;
 
         private bool _isWarmedUp;
 
         private GameObject _spawnerPrefab;
 
         [Inject]
-        public EnemyFactory(AssetProviderService assetProviderService, IStaticDataProviderService staticData, IInstantiator instantiator)
+        public EnemyFactory(AssetProviderService assetProviderService, StaticDataProviderService staticData, IInstantiator instantiator)
         {
             _assetProvider = assetProviderService;
             _staticData = staticData;

@@ -23,12 +23,12 @@ namespace CodeBase.Infrastructure
         private readonly HeroFactory _heroFactory;
         private readonly HudFactory _hudFactory;
         private readonly SceneLoader _sceneLoader;
-        private readonly IStaticDataProviderService _staticData;
+        private readonly StaticDataProviderService _staticData;
         private readonly IWarmupable[] _warmupable;
 
         [Inject]
         public SceneInitializer(HudFactory hudFactory, HeroFactory heroFactory, EnemyFactory enemyFactory,
-            IStaticDataProviderService staticData, SceneLoader sceneLoader, IWarmupable[] warmupable, AssetProviderService assetProvider)
+            StaticDataProviderService staticData, SceneLoader sceneLoader, IWarmupable[] warmupable, AssetProviderService assetProvider)
         {
             _hudFactory = hudFactory;
             _heroFactory = heroFactory;

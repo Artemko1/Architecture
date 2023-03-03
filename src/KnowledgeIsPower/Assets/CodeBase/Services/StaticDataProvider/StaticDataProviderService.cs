@@ -5,36 +5,45 @@ using CodeBase.StaticData;
 using CodeBase.StaticData.Monsters;
 using CodeBase.StaticData.Windows;
 using CodeBase.UI.Services.Windows;
-using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
+using Zenject;
 
 namespace CodeBase.Services.StaticDataProvider
 {
-    public class StaticDataProviderService : IStaticDataProviderService
+    public class StaticDataProviderService
     {
-        private bool _isLoaded;
+        private readonly StaticDataLabels _labels;
 
-        private Dictionary<string, LevelStaticData> _levels;
-        private Dictionary<MonsterTypeId, MonsterStaticData> _monsters;
+        private readonly Dictionary<string, LevelStaticData> _levels = new Dictionary<string, LevelStaticData>();
+        private readonly Dictionary<MonsterTypeId, MonsterStaticData> _monsters = new Dictionary<MonsterTypeId, MonsterStaticData>();
+        private bool _isLoaded;
         private Dictionary<WindowId, WindowConfig> _windows;
 
-        public Task Load()
+        [Inject]
+        public StaticDataProviderService(StaticDataLabels labels)
         {
-            _monsters = Resources
-                .LoadAll<MonsterStaticData>("StaticData/Monsters")
-                .ToDictionary(data => data.MonsterTypeId, data => data);
+            _labels = labels;
+        }
 
-            _levels = Resources
-                .LoadAll<LevelStaticData>("StaticData/Levels")
-                .ToDictionary(data => data.LevelKey, data => data);
+        public async Task Load()
+        {
+            Assert.IsFalse(_isLoaded);
 
-            _windows = Resources
-                .Load<WindowStaticData>("StaticData/UI/WindowStaticData")
+            Task<IList<MonsterStaticData>> loadMonstersTask =
+                Addressables.LoadAssetsAsync<MonsterStaticData>(_labels.Monsters, data => _monsters.Add(data.MonsterTypeId, data)).Task;
+
+            Task<IList<LevelStaticData>> loadLevelsTask =
+                Addressables.LoadAssetsAsync<LevelStaticData>(_labels.Levels, data => _levels.Add(data.LevelKey, data)).Task;
+
+            _windows = (await Addressables.LoadAssetAsync<WindowStaticData>("WindowStaticData").Task)
                 .Configs
                 .ToDictionary(config => config.WindowId, config => config);
 
+            await loadMonstersTask;
+            await loadLevelsTask;
+
             _isLoaded = true;
-            return Task.CompletedTask;
         }
 
         public MonsterStaticData ForMonster(MonsterTypeId typeId)

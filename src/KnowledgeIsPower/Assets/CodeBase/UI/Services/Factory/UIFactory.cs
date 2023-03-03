@@ -13,12 +13,12 @@ namespace CodeBase.UI.Services.Factory
     {
         private readonly AssetProviderService _assetProvider;
         private readonly IInstantiator _instantiator;
-        private readonly IStaticDataProviderService _staticData;
+        private readonly StaticDataProviderService _staticData;
 
         private Transform _uiRoot;
 
         [Inject]
-        public UIFactory(AssetProviderService assetProvider, IStaticDataProviderService staticData, IInstantiator instantiator)
+        public UIFactory(AssetProviderService assetProvider, StaticDataProviderService staticData, IInstantiator instantiator)
         {
             _assetProvider = assetProvider;
             _staticData = staticData;

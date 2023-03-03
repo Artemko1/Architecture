@@ -9,10 +9,10 @@ namespace CodeBase.Infrastructure.States
     public class BootstrapState : IState
     {
         private readonly GameStateMachine _stateMachine;
-        private readonly IStaticDataProviderService _staticDataProviderService;
+        private readonly StaticDataProviderService _staticDataProviderService;
 
         [Inject]
-        public BootstrapState(GameStateMachine stateMachine, IStaticDataProviderService staticDataProviderService)
+        public BootstrapState(GameStateMachine stateMachine, StaticDataProviderService staticDataProviderService)
         {
             _stateMachine = stateMachine;
             _staticDataProviderService = staticDataProviderService;
