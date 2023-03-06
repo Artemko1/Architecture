@@ -21,8 +21,8 @@ MonoBehaviour:
     m_Address: Assets/Resources_moved/UI
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 188e62d9fbf516a44b4317c8718377ab
-    m_Address: EventSystem
+  - m_GUID: 5d264758051b88d4d9ff7b172274a0c6
+    m_Address: blank
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 6c3838748e36e644c8a62a9d652facb4

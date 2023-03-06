@@ -21,8 +21,20 @@ MonoBehaviour:
     m_Address: Hud
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: b48d687a468567141976bc1d3425c7cc
-    m_Address: Assets/Resources_moved/Hud
+  - m_GUID: 28279efcc5da90a478f439bc213a0fb1
+    m_Address: Assets/Content/Hud/Loot.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 95023891e971ce94b9f26e85a317ba2f
+    m_Address: Assets/Content/Hud/Graphics
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 33e1fb2cbfb3c714ab04535828996085
+    m_Address: Assets/Content/Hud/Shop_button.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 437446874a0681941bed2fcf3bf6d5ac
+    m_Address: Assets/Content/Hud/HealthSlider.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

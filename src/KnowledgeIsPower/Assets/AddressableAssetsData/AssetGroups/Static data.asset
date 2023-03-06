@@ -17,10 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 92e6793cb93ebee4dbefb36da098c988
   m_SerializeEntries:
-  - m_GUID: 4803133e45c56c746bb54f07f24113f4
-    m_Address: Assets/Resources_moved/StaticData/Hero
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 478101dbf2748f843bf18fc495066ea5
     m_Address: Assets/Resources_moved/StaticData/Monsters
     m_ReadOnly: 0

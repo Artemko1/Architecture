@@ -14,20 +14,15 @@ namespace CodeBase.Infrastructure
     public class ProjectInstaller : MonoInstaller
     {
         [SerializeField] private LoadingCurtain _loadingCurtainPrefab;
-        [SerializeField] private GameObject _eventSystem;
 
         public override void InstallBindings()
         {
             InstallCoroutineRunner();
-            InstallEventSystem();
             InstallCurtain();
 
             BindGame();
             BindServices();
         }
-
-        private void InstallEventSystem() =>
-            Container.InstantiatePrefab(_eventSystem);
 
         private void InstallCoroutineRunner() =>
             Container.Bind<ICoroutineRunner>()
