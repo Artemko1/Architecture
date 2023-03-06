@@ -10,28 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Default Local Group
+  m_Name: Hud
   m_EditorClassIdentifier: 
-  m_GroupName: Default Local Group
+  m_GroupName: Hud
   m_Data:
     m_SerializedData: []
-  m_GUID: c10805e1e570b8b47b922de185b5c8c1
+  m_GUID: ce4b1b4e01533e240a73b74024f92d64
   m_SerializeEntries:
-  - m_GUID: 5d264758051b88d4d9ff7b172274a0c6
-    m_Address: blank
+  - m_GUID: f6395af14c6ae2d4ea00c7e97e633ad3
+    m_Address: Hud
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 2d71d0bd42bc2674c96e5de987faa46b
-    m_Address: Assets/Scenes/Lighting Settings.lighting
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 9999f750a9cb62f4e95f2b25c7f6aec2
-    m_Address: Assets/Resources_moved/Hud/Curtain.prefab
+  - m_GUID: b48d687a468567141976bc1d3425c7cc
+    m_Address: Assets/Resources_moved/Hud
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f9633f93b62200044896bb85076475bc, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 7d5b26c6feb3ccd4cb096836f48b0af4, type: 2}
-    - {fileID: 11400000, guid: 670392c81f130ed449408bb4b7171d18, type: 2}
+    - {fileID: 11400000, guid: c97d70997355d8b41bf5fd414cf75b5e, type: 2}
+    - {fileID: 11400000, guid: 96a350aa7ea9e1149b7357e18554af24, type: 2}

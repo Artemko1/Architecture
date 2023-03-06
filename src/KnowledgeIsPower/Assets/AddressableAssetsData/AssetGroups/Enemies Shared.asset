@@ -10,28 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Default Local Group
+  m_Name: Enemies Shared
   m_EditorClassIdentifier: 
-  m_GroupName: Default Local Group
+  m_GroupName: Enemies Shared
   m_Data:
     m_SerializedData: []
-  m_GUID: c10805e1e570b8b47b922de185b5c8c1
+  m_GUID: b92a10bd2873e7d49bc1ce5223cc202b
   m_SerializeEntries:
-  - m_GUID: 5d264758051b88d4d9ff7b172274a0c6
-    m_Address: blank
+  - m_GUID: 7ed3e345f07e89940ae0c1e00eeb7d1d
+    m_Address: Assets/Resources_moved/Enemies/EnemyBase.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 2d71d0bd42bc2674c96e5de987faa46b
-    m_Address: Assets/Scenes/Lighting Settings.lighting
+  - m_GUID: c77cd49727ea4e640acd820c5cb84f65
+    m_Address: Assets/Resources_moved/Enemies/SpawnMarker.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 9999f750a9cb62f4e95f2b25c7f6aec2
-    m_Address: Assets/Resources_moved/Hud/Curtain.prefab
+  - m_GUID: fa1ac6882d419a7409a0ba11a75b9462
+    m_Address: SpawnPoint
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f9633f93b62200044896bb85076475bc, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 7d5b26c6feb3ccd4cb096836f48b0af4, type: 2}
-    - {fileID: 11400000, guid: 670392c81f130ed449408bb4b7171d18, type: 2}
+    - {fileID: 11400000, guid: dbc97fc690a5c93449c437a0256789b0, type: 2}
+    - {fileID: 11400000, guid: 5e0d57bec919ca34bad8aa4642b5b06a, type: 2}
