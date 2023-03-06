@@ -29,16 +29,16 @@ MonoBehaviour:
     m_Address: Assets/Resources_moved/Hero/Heavy Knight PBR/AnimControllers
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: d5d32c49e9e2b8641913f92c21fdeae5
-    m_Address: Assets/Resources_moved/Hero/Heavy Knight PBR/Materials
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: b00a0b059b3307141b48c0a0b5defa26
     m_Address: Assets/Resources_moved/Hero/Heavy Knight PBR/Meshes
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 1ebc56f909d7844459c044fc161958d3
-    m_Address: Assets/Resources_moved/Hero/Heavy Knight PBR/Textures
+  - m_GUID: 5de734270eabfca49bc1f81b728ff410
+    m_Address: Assets/Content/Hero/Heavy Knight PBR/Materials/knightPBRRed.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5b3c34f8a0159bc42a9dbb838688fced
+    m_Address: Assets/Content/Hero/Heavy Knight PBR/Textures/knightPBRRed
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
